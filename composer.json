@@ -11,11 +11,14 @@
     ],
     "require": {
         "php-task/php-task": "1.0.x-dev@dev",
-        "symfony/http-kernel": "^2.7"
+        "symfony/http-kernel": "^2.6",
+        "symfony/dependency-injection": "^2.6",
+        "symfony/config": "^2.6",
+        "symfony/console": "^2.6"
     },
     "autoload": {
         "psr-4": {
-            "": "src"
+            "Task\\TaskBundle": "src"
         }
     },
     "extra": {

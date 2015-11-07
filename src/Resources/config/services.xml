@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="task.name_factory" class="Task\Naming\NamingFactory"/>
+
+        <service id="task.scheduler" alias="%task.scheduler_service%"/>
+        <service id="task.runner" alias="%task.runner_service%"/>
+
+        <service id="task.command.run" class="Task\TaskBundle\Command\RunCommand" public="false">
+            <argument type="service" id="task.runner"/>
+
+            <tag name="console.command"/>
+        </service>
+
+        <service id="task.command.schedule_task" class="Task\TaskBundle\Command\ScheduleTaskCommand" public="false">
+            <argument type="service" id="task.scheduler"/>
+
+            <tag name="console.command"/>
+        </service>
+    </services>
+</container>
