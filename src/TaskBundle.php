@@ -2,9 +2,9 @@
 
 namespace Task\TaskBundle;
 
-use DependencyInjection\WorkerCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Task\TaskBundle\DependencyInjection\WorkerCompilerPass;
 
 /**
  * Integrates php-task into symfony.
