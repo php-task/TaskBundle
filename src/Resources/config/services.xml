@@ -3,7 +3,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="task.name_factory" class="Task\Naming\NamingFactory"/>
+        <service id="task.naming_factory" class="Task\Naming\NamingFactory"/>
 
         <service id="task.scheduler" alias="%task.scheduler_service%"/>
         <service id="task.runner" alias="%task.runner_service%"/>
