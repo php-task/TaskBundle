@@ -1,6 +1,6 @@
 {
     "name": "php-task/task-bundle",
-    "description": "Symfony integration for PHPTask library.",
+    "description": "Symfony integration for php-task library",
     "type": "bundle",
     "license": "MIT",
     "authors": [
@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Task\\TaskBundle": "src"
+            "Task\\TaskBundle\\": "src"
         }
     },
     "extra": {
