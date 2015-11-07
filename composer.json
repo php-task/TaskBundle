@@ -1,0 +1,26 @@
+{
+    "name": "php-task/task-bundle",
+    "description": "Symfony integration for PHPTask library.",
+    "type": "bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Johannes Wachter",
+            "email": "johannes.wachter@massiveart.at"
+        }
+    ],
+    "require": {
+        "php-task/php-task": "1.0.x-dev@dev",
+        "symfony/http-kernel": "^2.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
