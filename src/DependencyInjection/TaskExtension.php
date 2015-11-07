@@ -27,5 +27,8 @@ class TaskExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
+
+        $container->setAlias('task.scheduler', $container->getParameter('task.scheduler_service'));
+        $container->setAlias('task.runner', $container->getParameter('task.runner_service'));
     }
 }
