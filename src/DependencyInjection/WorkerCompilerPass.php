@@ -30,7 +30,12 @@ class WorkerCompilerPass implements CompilerPassInterface
 
         $taggedServices = $container->findTaggedServiceIds(self::WORKER_TAG);
         foreach ($taggedServices as $id => $tags) {
-            $definition->addMethodCall(self::ADD_FUNCTION_NAME, array(new Reference($id)));
+            foreach ($tags as $attributes) {
+                $definition->addMethodCall(
+                    self::ADD_FUNCTION_NAME,
+                    array($attributes['namespace'], $attributes['worker-name'], new Reference($id))
+                );
+            }
         }
     }
 }
