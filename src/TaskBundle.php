@@ -19,5 +19,4 @@ class TaskBundle extends Bundle
 
         $container->addCompilerPass(new WorkerCompilerPass());
     }
-
 }
