@@ -4,7 +4,7 @@ namespace Task\TaskBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Task\TaskBundle\DependencyInjection\WorkerCompilerPass;
+use Task\TaskBundle\DependencyInjection\HandlerCompilerPass;
 
 /**
  * Integrates php-task into symfony.
@@ -17,6 +17,6 @@ class TaskBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new WorkerCompilerPass());
+        $container->addCompilerPass(new HandlerCompilerPass());
     }
 }

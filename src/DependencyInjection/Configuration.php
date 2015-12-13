@@ -19,8 +19,7 @@ class Configuration implements ConfigurationInterface
 
         $treeBuilder->root('task')
             ->children()
-                ->scalarNode('scheduler_service')->isRequired()->cannotBeEmpty()->end()
-                ->scalarNode('runner_service')->isRequired()->cannotBeEmpty()->end()
+                ->enumNode('storage')->values(['array', 'doctrine'])->defaultValue('array')->end()
             ->end();
 
         return $treeBuilder;

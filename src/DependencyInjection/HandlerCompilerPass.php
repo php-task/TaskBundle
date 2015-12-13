@@ -11,29 +11,29 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @author @wachterjohannes <johannes.wachter@massiveart.com>
  */
-class WorkerCompilerPass implements CompilerPassInterface
+class HandlerCompilerPass implements CompilerPassInterface
 {
-    const TASK_RUNNER_ID = 'task.runner';
-    const WORKER_TAG = 'task.worker';
-    const ADD_FUNCTION_NAME = 'addWorker';
+    const REGISTRY_ID = 'task.handler_registry';
+    const HANDLER_TAG = 'task.handler';
+    const ADD_FUNCTION_NAME = 'add';
 
     /**
      * {@inheritdoc}
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->has(self::TASK_RUNNER_ID)) {
+        if (!$container->has(self::REGISTRY_ID)) {
             return;
         }
 
-        $definition = $container->findDefinition(self::TASK_RUNNER_ID);
+        $definition = $container->findDefinition(self::REGISTRY_ID);
 
-        $taggedServices = $container->findTaggedServiceIds(self::WORKER_TAG);
+        $taggedServices = $container->findTaggedServiceIds(self::HANDLER_TAG);
         foreach ($taggedServices as $id => $tags) {
             foreach ($tags as $attributes) {
                 $definition->addMethodCall(
                     self::ADD_FUNCTION_NAME,
-                    array($attributes['namespace'], $attributes['worker-name'], new Reference($id))
+                    [$attributes['name'], new Reference($id)]
                 );
             }
         }

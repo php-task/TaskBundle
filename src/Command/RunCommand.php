@@ -5,7 +5,7 @@ namespace Task\TaskBundle\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Task\TaskRunner\TaskRunnerInterface;
+use Task\SchedulerInterface;
 
 /**
  * Run pending tasks.
@@ -15,15 +15,15 @@ use Task\TaskRunner\TaskRunnerInterface;
 class RunCommand extends Command
 {
     /**
-     * @var TaskRunnerInterface
+     * @var SchedulerInterface
      */
-    private $taskRunner;
+    private $scheduler;
 
-    public function __construct(TaskRunnerInterface $taskRunner)
+    public function __construct(SchedulerInterface $scheduler)
     {
         parent::__construct('task:run');
 
-        $this->taskRunner = $taskRunner;
+        $this->scheduler = $scheduler;
     }
 
     /**
@@ -39,6 +39,6 @@ class RunCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->taskRunner->run();
+        $this->scheduler->run();
     }
 }

@@ -22,13 +22,8 @@ class TaskExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('task.scheduler_service', $config['scheduler_service']);
-        $container->setParameter('task.runner_service', $config['runner_service']);
-
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load(sprintf('storage/%s'), $config['storage']);
         $loader->load('services.xml');
-
-        $container->setAlias('task.scheduler', $container->getParameter('task.scheduler_service'));
-        $container->setAlias('task.runner', $container->getParameter('task.runner_service'));
     }
 }

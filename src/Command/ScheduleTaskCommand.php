@@ -6,8 +6,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Task\Scheduler\SchedulerInterface;
-use Task\Scheduler\Task;
+use Task\SchedulerInterface;
 
 /**
  * Schedule task.
@@ -44,6 +43,8 @@ class ScheduleTaskCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->scheduler->schedule(new Task($input->getArgument('workerName'), $input->getArgument('workload')));
+        $this->scheduler
+            ->createTask($input->getArgument('workerName'), $input->getArgument('workload'))
+            ->schedule();
     }
 }
