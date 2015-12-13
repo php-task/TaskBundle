@@ -26,5 +26,9 @@ class TaskExtension extends Extension
         $loader->load(sprintf('storage/%s.xml', $config['storage']));
         $loader->load('scheduler.xml');
         $loader->load('command.xml');
+
+        if ($config['run']['mode'] === 'listener') {
+            $loader->load('listener.xml');
+        }
     }
 }

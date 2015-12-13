@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="task.event_listener.run" class="Task\TaskBundle\EventListener\RunListener">
+            <argument type="service" id="task.scheduler" />
+
+            <tag name="kernel.event_listener" event="kernel.terminate" method="run" />
+        </service>
+    </services>
+</container>
