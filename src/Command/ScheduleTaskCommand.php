@@ -34,7 +34,7 @@ class ScheduleTaskCommand extends Command
     {
         $this
             ->setDescription('Run pending tasks')
-            ->addArgument('workerName', InputArgument::REQUIRED)
+            ->addArgument('handler', InputArgument::REQUIRED)
             ->addArgument('workload', InputArgument::OPTIONAL);
     }
 
@@ -44,7 +44,7 @@ class ScheduleTaskCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->scheduler
-            ->createTask($input->getArgument('workerName'), $input->getArgument('workload'))
+            ->createTask($input->getArgument('handler'), $input->getArgument('workload'))
             ->schedule();
     }
 }
