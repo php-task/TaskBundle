@@ -4,3 +4,6 @@ composer.phar
 
 *.iml
 /.idea
+
+tests/app/cache
+tests/app/logs
