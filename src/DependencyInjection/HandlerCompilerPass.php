@@ -33,7 +33,7 @@ class HandlerCompilerPass implements CompilerPassInterface
             foreach ($tags as $attributes) {
                 $definition->addMethodCall(
                     self::ADD_FUNCTION_NAME,
-                    [$attributes['name'], new Reference($id)]
+                    [$attributes['handler-name'], new Reference($id)]
                 );
             }
         }

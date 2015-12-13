@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Task\SchedulerInterface;
 use Task\Storage\ArrayStorage;
 
-class SchedulerTest extends KernelTestCase
+class BootstrapTest extends KernelTestCase
 {
     public function testBootstrap()
     {
