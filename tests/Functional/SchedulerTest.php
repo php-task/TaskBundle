@@ -9,7 +9,7 @@ use Task\SchedulerInterface;
 use Task\Storage\StorageInterface;
 use Task\Task;
 
-class Test extends KernelTestCase
+class SchedulerTest extends KernelTestCase
 {
     /**
      * @var SchedulerInterface
