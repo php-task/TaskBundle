@@ -10,6 +10,7 @@
             <argument type="service" id="task.storage"/>
             <argument type="service" id="task.handler_registry"/>
             <argument type="service" id="task.builder_factory"/>
+            <argument type="service" id="event_dispatcher"/>
             <argument type="service" id="logger" on-invalid="ignore"/>
         </service>
     </services>

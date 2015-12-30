@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="task.events.create" type="constant">Task\Event\Events::TASK_CREATE</parameter>
+        <parameter key="task.events.before" type="constant">Task\Event\Events::TASK_BEFORE</parameter>
+        <parameter key="task.events.after" type="constant">Task\Event\Events::TASK_AFTER</parameter>
+        <parameter key="task.events.passed" type="constant">Task\Event\Events::TASK_PASSED</parameter>
+        <parameter key="task.events.failed" type="constant">Task\Event\Events::TASK_FAILED</parameter>
+    </parameters>
+
+</container>

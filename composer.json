@@ -15,12 +15,14 @@
         "symfony/http-kernel": "^2.6",
         "symfony/dependency-injection": "^2.6",
         "symfony/config": "^2.6",
-        "symfony/console": "^2.6"
+        "symfony/console": "^2.6",
+        "doctrine/orm": "^2.5"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8",
         "symfony/framework-bundle": "^2.6",
-        "symfony/finder": "^2.6"
+        "symfony/finder": "^2.6",
+        "doctrine/doctrine-bundle": "^1.5"
     },
     "autoload": {
         "psr-4": {

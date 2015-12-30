@@ -17,7 +17,7 @@ class BootstrapTest extends KernelTestCase
 
         $this->assertInstanceOf(SchedulerInterface::class, $scheduler);
 
-        switch (getenv(\TestKernel::STORAGE_VAR_NAME)) {
+        switch (self::$kernel->getContainer()->getParameter('kernel.storage')) {
             case 'array':
                 $this->assertInstanceOf(ArrayStorage::class, $storage);
                 break;

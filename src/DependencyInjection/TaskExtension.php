@@ -24,6 +24,7 @@ class TaskExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load(sprintf('storage/%s.xml', $config['storage']));
+        $loader->load('task_event_listener.xml');
         $loader->load('scheduler.xml');
         $loader->load('command.xml');
 

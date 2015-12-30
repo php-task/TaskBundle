@@ -1,5 +1,7 @@
 <?php
 
+use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
+use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -11,11 +13,18 @@ class TestKernel extends Kernel
     const STORAGE_VAR_NAME = 'STORAGE';
 
     /**
+     * @var string
+     */
+    private $storage;
+
+    /**
      * {@inheritdoc}
      */
     public function registerBundles()
     {
         return [
+            new FrameworkBundle(),
+            new DoctrineBundle(),
             new TaskBundle(),
         ];
     }
@@ -25,7 +34,13 @@ class TestKernel extends Kernel
      */
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(sprintf('%s/config/config.%s.yml', __DIR__, getenv(self::STORAGE_VAR_NAME)));
+        $this->storage = getenv(self::STORAGE_VAR_NAME);
+        if ($this->storage === false) {
+            $this->storage = 'array';
+        }
+
+        $loader->load(sprintf('%s/config/config.yml', __DIR__));
+        $loader->load(sprintf('%s/config/config.%s.yml', __DIR__, $this->storage));
     }
 
     protected function buildContainer()
@@ -33,6 +48,8 @@ class TestKernel extends Kernel
         $container = parent::buildContainer();
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/config'));
         $loader->load('services.xml');
+
+        $container->setParameter('kernel.storage', $this->storage);
 
         return $container;
     }
