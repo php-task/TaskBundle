@@ -43,7 +43,12 @@ class DoctrineStorage implements StorageInterface
      */
     public function findScheduled()
     {
-        return $this->taskRepository->findScheduled();
+        return array_map(
+            function (TaskEntity $entity) {
+                return $entity->getTask();
+            },
+            $this->taskRepository->findScheduled()
+        );
     }
 
     /**
@@ -51,7 +56,12 @@ class DoctrineStorage implements StorageInterface
      */
     public function findAll()
     {
-        return $this->taskRepository->findAll();
+        return array_map(
+            function (TaskEntity $entity) {
+                return $entity->getTask();
+            },
+            $this->taskRepository->findAll()
+        );
     }
 
     /**
@@ -62,6 +72,16 @@ class DoctrineStorage implements StorageInterface
         $entity = $this->taskRepository->findByUuid($task->getUuid());
         $this->setTask($entity, $task);
 
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function clear()
+    {
+        $this->taskRepository->deleteAll();
         $this->entityManager->flush();
     }
 

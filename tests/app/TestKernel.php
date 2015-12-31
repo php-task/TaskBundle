@@ -43,6 +43,9 @@ class TestKernel extends Kernel
         $loader->load(sprintf('%s/config/config.%s.yml', __DIR__, $this->storage));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function buildContainer()
     {
         $container = parent::buildContainer();
@@ -52,6 +55,24 @@ class TestKernel extends Kernel
         $container->setParameter('kernel.storage', $this->storage);
 
         return $container;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function initializeContainer()
+    {
+        $fresh = false;
+
+        $container = $this->buildContainer();
+        $container->compile();
+
+        $this->container = $container;
+        $this->container->set('kernel', $this);
+
+        if (!$fresh && $this->container->has('cache_warmer')) {
+            $this->container->get('cache_warmer')->warmUp($this->container->getParameter('kernel.cache_dir'));
+        }
     }
 }
 
