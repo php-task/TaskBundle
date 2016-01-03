@@ -9,7 +9,7 @@ use Task\SchedulerInterface;
 use Task\Storage\StorageInterface;
 use Task\Task;
 
-class Test extends KernelTestCase
+class SchedulerTest extends KernelTestCase
 {
     /**
      * @var SchedulerInterface
@@ -32,16 +32,21 @@ class Test extends KernelTestCase
 
     public function testSchedule()
     {
+        $this->storage->clear();
+
         $this->scheduler->schedule(new Task('test', 'workload'));
 
         $scheduled = $this->storage->findScheduled();
         $this->assertCount(1, $scheduled);
         $this->assertEquals('test', $scheduled[0]->getTaskName());
         $this->assertEquals('workload', $scheduled[0]->getWorkload());
+        $this->assertFalse($scheduled[0]->isCompleted());
     }
 
     public function testRun()
     {
+        $this->storage->clear();
+
         $this->scheduler->schedule(new Task('test', 'workload'));
         $this->scheduler->run();
 

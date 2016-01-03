@@ -1,0 +1,16 @@
+task:
+    storage: doctrine
+
+doctrine:
+    orm:
+        auto_generate_proxy_classes: %kernel.debug%
+        auto_mapping: true
+    dbal:
+        driver: pdo_sqlite
+        host: localhost
+        port: ~
+        dbname: task_test
+        user: root
+        password: ~
+        charset: UTF8
+        path: '%kernel.root_dir%/data/database.sqlite'

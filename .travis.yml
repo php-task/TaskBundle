@@ -8,11 +8,16 @@ php:
 
 env:
   - STORAGE=array
+  - STORAGE=doctrine
 
 install:
    - composer self-update
    - composer update
    - wget https://scrutinizer-ci.com/ocular.phar
+
+before_script:
+  - STORAGE=doctrine tests/app/console doctrine:database:create
+  - STORAGE=doctrine tests/app/console doctrine:schema:create
 
 script:
    - phpunit -c phpunit.xml.dist --coverage-clover=coverage.clover
