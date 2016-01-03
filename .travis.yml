@@ -1,5 +1,8 @@
 language: php
 
+services:
+  - mysql
+
 php:
   - 5.5
   - 5.6
@@ -8,11 +11,15 @@ php:
 
 env:
   - STORAGE=array
+  - STORAGE=doctrine
 
 install:
    - composer self-update
    - composer update
    - wget https://scrutinizer-ci.com/ocular.phar
+
+before_script:
+  - mysql -e 'create database task_test;'
 
 script:
    - phpunit -c phpunit.xml.dist --coverage-clover=coverage.clover
