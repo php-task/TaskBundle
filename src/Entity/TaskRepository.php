@@ -10,7 +10,7 @@ class TaskRepository extends EntityRepository
     {
         $query = $this->createQueryBuilder('task')
             ->where('task.completed = :completed')
-            ->andWhere('task.executionDate < :date')
+            ->andWhere('task.executionDate <= :date')
             ->setParameter('completed', false)
             ->setParameter('date', new \DateTime())
             ->getQuery();
