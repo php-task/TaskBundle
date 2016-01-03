@@ -1,8 +1,5 @@
 language: php
 
-services:
-  - mysql
-
 php:
   - 5.5
   - 5.6
@@ -19,7 +16,8 @@ install:
    - wget https://scrutinizer-ci.com/ocular.phar
 
 before_script:
-  - mysql -e 'create database task_test;'
+  - STORAGE=doctrine tests/app/console doctrine:database:create
+  - STORAGE=doctrine tests/app/console doctrine:schema:create
 
 script:
    - phpunit -c phpunit.xml.dist --coverage-clover=coverage.clover
