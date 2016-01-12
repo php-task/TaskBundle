@@ -17,6 +17,11 @@ class Task
     private $uuid;
 
     /**
+     * @var string
+     */
+    private $key;
+
+    /**
      * @var TaskInterface
      */
     private $task;
@@ -101,5 +106,22 @@ class Task
     public function setCompleted($completed)
     {
         $this->completed = $completed;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * @param string $key
+     * @return $this
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
     }
 }

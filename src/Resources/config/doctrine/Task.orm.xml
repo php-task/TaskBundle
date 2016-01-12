@@ -12,6 +12,7 @@
 
         <field name="task" type="object"/>
         <field name="uuid" type="string" length="100"/>
+        <field name="key" type="string" length="255" nullable="true" column="task_key"/>
         <field name="executionDate" type="datetime"/>
         <field name="completed" type="boolean"/>
 

@@ -32,6 +32,22 @@ class DoctrineStorage implements StorageInterface
     public function store(TaskInterface $task)
     {
         $entity = new TaskEntity();
+
+        if ($task->getKey()) {
+            $oldEntity = $this->taskRepository->findOneBy(
+                [
+                    'key' => $task->getKey(),
+                    'completed' => false,
+                ]
+            );
+
+            if ($oldEntity) {
+                // TODO update task (warning execution date should not be changed)
+
+                return;
+            }
+        }
+
         $this->setTask($entity, $task);
 
         $this->entityManager->persist($entity);
@@ -89,6 +105,7 @@ class DoctrineStorage implements StorageInterface
     {
         $entity->setTask($task);
         $entity->setUuid($task->getUuid());
+        $entity->setKey($task->getKey());
         $entity->setCompleted($task->isCompleted());
         $entity->setExecutionDate($task->getExecutionDate());
     }
