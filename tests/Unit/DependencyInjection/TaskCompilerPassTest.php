@@ -67,7 +67,5 @@ class TaskCompilerPassTest extends \PHPUnit_Framework_TestCase
             TaskCompilerPass::CREATE_FUNCTION_NAME,
             ['handler-2', 'test-workload-2', 'daily', 'handler-2_daily_s:15:"test-workload-2";']
         )->shouldBeCalledTimes(1);
-
-        // TODO this test always returns true should be extended
     }
 }
