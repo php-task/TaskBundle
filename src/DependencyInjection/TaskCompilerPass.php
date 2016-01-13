@@ -4,7 +4,6 @@ namespace Task\TaskBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Compiler pass which collects worker services.
@@ -36,6 +35,7 @@ class TaskCompilerPass implements CompilerPassInterface
             $handlerDefinition = $container->getDefinition($id);
             $tag = $handlerDefinition->getTag(HandlerCompilerPass::HANDLER_TAG);
 
+            // TODO handle also multiple handler tag here
             $handler = $tag[0][HandlerCompilerPass::HANDLER_NAME_ATTRIBUTE];
 
             // remove all tasks with $id and not completed
@@ -48,13 +48,12 @@ class TaskCompilerPass implements CompilerPassInterface
                     $key = $handler . '_' . $interval . '_' . serialize($workload);
                 }
 
-
                 $schedulerDefinition->addMethodCall(
                     self::CREATE_FUNCTION_NAME,
                     [
                         $handler,
-                        $interval,
                         $workload,
+                        $interval,
                         $key,
                     ]
                 );
