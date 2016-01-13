@@ -24,7 +24,7 @@ class DoctrineStorageTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider storeDataProvider
      */
-    public function testStore($date, $completed, $uuid)
+    public function testStore($date, $completed, $uuid, $key = null)
     {
         $entityManager = $this->prophesize(EntityManagerInterface::class);
         $repository = $this->prophesize(TaskRepository::class);
@@ -33,6 +33,7 @@ class DoctrineStorageTest extends \PHPUnit_Framework_TestCase
 
         $task = $this->prophesize(TaskInterface::class);
         $task->getUuid()->willReturn($uuid);
+        $task->getKey()->willReturn($key);
         $task->isCompleted()->willReturn($completed);
         $task->getExecutionDate()->willReturn($date);
 
