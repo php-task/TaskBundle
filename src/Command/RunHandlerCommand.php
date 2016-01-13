@@ -12,7 +12,7 @@ use Task\SchedulerInterface;
 /**
  * Run pending tasks.
  *
- * @author @wachterjohannes <johannes.wachter@massiveart.com>
+ * @author Alexander Schranz <alexander.schranz@massiveart.com>
  */
 class RunHandlerCommand extends Command
 {
@@ -43,6 +43,13 @@ class RunHandlerCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->registry->run($input->getArgument('handler'), $input->getArgument('workload'));
+        $handler = $input->getArgument('handler');
+        $workload = $input->getArgument('workload');
+
+        $output->writeln(sprintf('Run command "%s" with workload "%s"', $handler, $workload));
+
+        $result = $this->registry->run($handler, $workload);
+
+        $output->writeln(sprintf('Result: "%s"', $result));
     }
 }

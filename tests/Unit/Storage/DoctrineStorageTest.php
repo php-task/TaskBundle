@@ -81,11 +81,24 @@ class DoctrineStorageTest extends \PHPUnit_Framework_TestCase
             $oldTask = $this->prophesize(TaskInterface::class);
 
             $repository->findOneBy(['key' => $key, 'completed' => false])->willReturn($oldTask)->shouldBeCalledTimes(1);
+
+            $entityManager->persist(Argument::any())->shouldNotBeCalled();
+            $entityManager->flush()->shouldNotBeCalled();
+        } else {
+            $entityManager->persist(
+                Argument::that(
+                    function (TaskEntity $entity) use ($date, $completed, $uuid) {
+                        $this->assertEquals($uuid, $entity->getUuid());
+                        $this->assertEquals($completed, $entity->isCompleted());
+                        $this->assertEquals($date, $entity->getExecutionDate());
+
+                        return true;
+                    }
+                )
+            )->shouldBeCalledTimes(1);
+            $entityManager->flush()->shouldBeCalledTimes(1);
         }
 
         $storage->store($task->reveal());
-
-        $entityManager->persist(Argument::any())->shouldNotBeCalled();
-        $entityManager->flush()->shouldNotBeCalled();
     }
 }

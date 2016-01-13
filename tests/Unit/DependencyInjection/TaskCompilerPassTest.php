@@ -57,39 +57,15 @@ class TaskCompilerPassTest extends \PHPUnit_Framework_TestCase
 
         $schedulerDefinition->addMethodCall(
             TaskCompilerPass::CREATE_FUNCTION_NAME,
-            Argument::that(
-                function ($arguments) {
-                    return
-                        $arguments[0] === 'handler-1'
-                        && $arguments[1] === 'test-workload'
-                        && $arguments[2] === 'daily'
-                        && $arguments[3] === 'test-key';
-                }
-            )
+            ['handler-1', 'test-workload', 'daily', 'test-key']
         )->shouldBeCalledTimes(1);
         $schedulerDefinition->addMethodCall(
             TaskCompilerPass::CREATE_FUNCTION_NAME,
-            Argument::that(
-                function ($arguments) {
-                    return
-                        $arguments[0] === 'handler-2'
-                        && $arguments[1] === null
-                        && $arguments[2] === 'daily'
-                        && $arguments[3] === 'test-key';
-                }
-            )
+            ['handler-2', null, 'daily', 'test-key-1']
         )->shouldBeCalledTimes(1);
         $schedulerDefinition->addMethodCall(
             TaskCompilerPass::CREATE_FUNCTION_NAME,
-            Argument::that(
-                function ($arguments) {
-                    return
-                        $arguments[0] === 'handler-2'
-                        && $arguments[1] === 'test-workload-2'
-                        && $arguments[2] === 'daily'
-                        && $arguments[3] === 'handler-2_daily_s:15:"test-workload-2";';
-                }
-            )
+            ['handler-2', 'test-workload-2', 'daily', 'handler-2_daily_s:15:"test-workload-2";']
         )->shouldBeCalledTimes(1);
 
         // TODO this test always returns true should be extended
