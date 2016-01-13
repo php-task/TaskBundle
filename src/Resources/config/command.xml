@@ -9,6 +9,12 @@
             <tag name="console.command"/>
         </service>
 
+        <service id="task.command.run.handler" class="Task\TaskBundle\Command\RunHandlerCommand">
+            <argument type="service" id="task.handler_registry"/>
+
+            <tag name="console.command"/>
+        </service>
+
         <service id="task.command.schedule_task" class="Task\TaskBundle\Command\ScheduleTaskCommand">
             <argument type="service" id="task.scheduler"/>
 

@@ -16,6 +16,7 @@ class HandlerCompilerPass implements CompilerPassInterface
     const REGISTRY_ID = 'task.handler_registry';
     const HANDLER_TAG = 'task.handler';
     const ADD_FUNCTION_NAME = 'add';
+    const HANDLER_NAME_ATTRIBUTE = 'handler-name';
 
     /**
      * {@inheritdoc}
@@ -33,7 +34,7 @@ class HandlerCompilerPass implements CompilerPassInterface
             foreach ($tags as $attributes) {
                 $definition->addMethodCall(
                     self::ADD_FUNCTION_NAME,
-                    [$attributes['handler-name'], new Reference($id)]
+                    [$attributes[self::HANDLER_NAME_ATTRIBUTE], new Reference($id)]
                 );
             }
         }

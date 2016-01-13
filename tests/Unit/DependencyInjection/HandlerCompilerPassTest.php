@@ -21,11 +21,11 @@ class HandlerCompilerPassTest extends \PHPUnit_Framework_TestCase
             ->willReturn(
                 [
                     'id-1' => [
-                        ['handler-name' => 'name-1'],
+                        [HandlerCompilerPass::HANDLER_NAME_ATTRIBUTE => 'name-1'],
                     ],
                     'id-2' => [
-                        ['handler-name' => 'name-2-1'],
-                        ['handler-name' => 'name-2-2'],
+                        [HandlerCompilerPass::HANDLER_NAME_ATTRIBUTE => 'name-2-1'],
+                        [HandlerCompilerPass::HANDLER_NAME_ATTRIBUTE => 'name-2-2'],
                     ],
                 ]
             );
