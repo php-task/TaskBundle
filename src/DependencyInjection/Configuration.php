@@ -23,7 +23,10 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('run')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->enumNode('mode')->values(['off', 'listener'])->defaultValue('off')->end()
+                        ->enumNode('mode')
+                            ->values(['off', 'listener'])
+                            ->defaultValue('off')
+                        ->end()
                     ->end()
                 ->end()
             ->end();
