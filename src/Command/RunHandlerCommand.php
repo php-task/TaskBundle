@@ -21,9 +21,9 @@ class RunHandlerCommand extends Command
      */
     private $registry;
 
-    public function __construct(RegistryInterface $registry)
+    public function __construct($name, RegistryInterface $registry)
     {
-        parent::__construct('task:run:handler');
+        parent::__construct($name);
 
         $this->registry = $registry;
     }

@@ -13,7 +13,7 @@ class RunHandlerCommandTest extends \PHPUnit_Framework_TestCase
     public function testConfigure()
     {
         $scheduler = $this->prophesize(RegistryInterface::class);
-        $command = new RunHandlerCommand($scheduler->reveal());
+        $command = new RunHandlerCommand('task:run:handler', $scheduler->reveal());
 
         $this->assertEquals('task:run:handler', $command->getName());
     }
@@ -43,7 +43,7 @@ class RunHandlerCommandTest extends \PHPUnit_Framework_TestCase
         $input->getArgument('workload')->willReturn($workload);
 
         $registry = $this->prophesize(RegistryInterface::class);
-        $command = new RunHandlerCommand($registry->reveal());
+        $command = new RunHandlerCommand('task:run:handler', $registry->reveal());
 
         $command->run($input->reveal(), $output->reveal());
 

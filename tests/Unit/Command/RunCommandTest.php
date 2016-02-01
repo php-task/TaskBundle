@@ -12,7 +12,7 @@ class RunCommandTest extends \PHPUnit_Framework_TestCase
     public function testConfigure()
     {
         $scheduler = $this->prophesize(SchedulerInterface::class);
-        $command = new RunCommand($scheduler->reveal());
+        $command = new RunCommand('task:run', $scheduler->reveal());
 
         $this->assertEquals('task:run', $command->getName());
     }
@@ -23,7 +23,7 @@ class RunCommandTest extends \PHPUnit_Framework_TestCase
         $output = $this->prophesize(OutputInterface::class);
 
         $scheduler = $this->prophesize(SchedulerInterface::class);
-        $command = new RunCommand($scheduler->reveal());
+        $command = new RunCommand('task:run', $scheduler->reveal());
 
         $command->run($input->reveal(), $output->reveal());
 

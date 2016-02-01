@@ -20,9 +20,9 @@ class ScheduleTaskCommand extends Command
      */
     private $scheduler;
 
-    public function __construct(SchedulerInterface $scheduler)
+    public function __construct($name, SchedulerInterface $scheduler)
     {
-        parent::__construct('task:schedule:task');
+        parent::__construct($name);
 
         $this->scheduler = $scheduler;
     }

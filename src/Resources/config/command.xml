@@ -4,18 +4,21 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="task.command.run" class="Task\TaskBundle\Command\RunCommand">
+            <argument type="string">task:run</argument>
             <argument type="service" id="task.scheduler"/>
 
             <tag name="console.command"/>
         </service>
 
         <service id="task.command.run.handler" class="Task\TaskBundle\Command\RunHandlerCommand">
+            <argument type="string">task:run:handler</argument>
             <argument type="service" id="task.handler_registry"/>
 
             <tag name="console.command"/>
         </service>
 
         <service id="task.command.schedule_task" class="Task\TaskBundle\Command\ScheduleTaskCommand">
+            <argument type="string">task:schedule:task</argument>
             <argument type="service" id="task.scheduler"/>
 
             <tag name="console.command"/>

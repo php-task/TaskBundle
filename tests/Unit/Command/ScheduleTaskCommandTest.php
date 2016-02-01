@@ -14,7 +14,7 @@ class ScheduleTaskCommandTest extends \PHPUnit_Framework_TestCase
     public function testConfigure()
     {
         $scheduler = $this->prophesize(SchedulerInterface::class);
-        $command = new ScheduleTaskCommand($scheduler->reveal());
+        $command = new ScheduleTaskCommand('task:schedule:task', $scheduler->reveal());
 
         $this->assertEquals('task:schedule:task', $command->getName());
         $this->assertTrue($command->getDefinition()->hasArgument('handler'));
@@ -48,7 +48,7 @@ class ScheduleTaskCommandTest extends \PHPUnit_Framework_TestCase
         $input->getArgument('workload')->willReturn($workload);
 
         $scheduler = $this->prophesize(SchedulerInterface::class);
-        $command = new ScheduleTaskCommand($scheduler->reveal());
+        $command = new ScheduleTaskCommand('task:schedule:task', $scheduler->reveal());
 
         $scheduler->createTask($handler, $workload)->shouldBeCalledTimes(1)->willReturn($taskBuilder->reveal());
 
