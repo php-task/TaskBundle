@@ -118,6 +118,7 @@ class Task
 
     /**
      * @param string $key
+     *
      * @return $this
      */
     public function setKey($key)

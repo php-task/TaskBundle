@@ -3,8 +3,6 @@
 namespace Functional;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Task\SchedulerInterface;
 use Task\Storage\StorageInterface;
 use Task\Task;

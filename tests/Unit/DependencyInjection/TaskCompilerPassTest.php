@@ -2,7 +2,6 @@
 
 namespace Unit\DependencyInjection;
 
-use Prophecy\Argument;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Task\TaskBundle\DependencyInjection\HandlerCompilerPass;
@@ -29,17 +28,17 @@ class TaskCompilerPassTest extends \PHPUnit_Framework_TestCase
                         [
                             TaskCompilerPass::INTERVAL_ATTRIBUTE => 'daily',
                             TaskCompilerPass::WORKLOAD_ATTRIBUTE => 'test-workload',
-                            TaskCompilerPass::KEY_ATTRIBUTE => 'test-key'
+                            TaskCompilerPass::KEY_ATTRIBUTE => 'test-key',
                         ],
                     ],
                     'id-2' => [
                         [
                             TaskCompilerPass::INTERVAL_ATTRIBUTE => 'daily',
-                            TaskCompilerPass::KEY_ATTRIBUTE => 'test-key-1'
+                            TaskCompilerPass::KEY_ATTRIBUTE => 'test-key-1',
                         ],
                         [
                             TaskCompilerPass::INTERVAL_ATTRIBUTE => 'daily',
-                            TaskCompilerPass::WORKLOAD_ATTRIBUTE => 'test-workload-2'
+                            TaskCompilerPass::WORKLOAD_ATTRIBUTE => 'test-workload-2',
                         ],
                     ],
                 ]

@@ -24,15 +24,22 @@ class ScheduleTaskCommandTest extends \PHPUnit_Framework_TestCase
     public function runProvider()
     {
         return [
+            ['test-handler'],
             ['test-handler', 'test-workload'],
             ['test-handler-1', 'test-workload-1'],
+            ['test-handler', 'test-workload', '1 * * * *'],
+            ['test-handler', 'test-workload', '1 * * * *', '+1 week'],
+            ['test-handler', 'test-workload', '1 * * * *', '+1 week', 'test-key'],
+            ['test-handler', 'test-workload', '1 * * * *', null, 'test-key'],
+            ['test-handler', 'test-workload', null, null, 'test-key'],
+            ['test-handler', 'test-workload', null, '+1 week', 'test-key'],
         ];
     }
 
     /**
      * @dataProvider runProvider
      */
-    public function testRun($handler, $workload)
+    public function testRun($handler, $workload = null, $cronExpression = null, $endDateString = null, $key = null)
     {
         $taskBuilder = $this->prophesize(TaskBuilderInterface::class);
 
@@ -46,14 +53,34 @@ class ScheduleTaskCommandTest extends \PHPUnit_Framework_TestCase
 
         $input->getArgument('handler')->willReturn($handler);
         $input->getArgument('workload')->willReturn($workload);
+        $input->getOption('cron-expression')->willReturn($cronExpression);
+        $input->getOption('end-date')->willReturn($endDateString);
+        $input->getOption('key')->willReturn($key);
 
         $scheduler = $this->prophesize(SchedulerInterface::class);
         $command = new ScheduleTaskCommand('task:schedule:task', $scheduler->reveal());
 
         $scheduler->createTask($handler, $workload)->shouldBeCalledTimes(1)->willReturn($taskBuilder->reveal());
 
-        $command->run($input->reveal(), $output->reveal());
+        if ($key !== null) {
+            $taskBuilder->setKey($key)->shouldBeCalled();
+        } else {
+            $taskBuilder->setKey(Argument::any())->shouldNotBeCalled();
+        }
+        if ($cronExpression !== null) {
+            $endDate = null;
+            if ($endDateString !== null) {
+                $endDate = new \DateTime($endDateString);
+            }
 
+            $taskBuilder->cron($cronExpression, Argument::type(\DateTime::class), $endDate)->shouldBeCalled()
+                ->willReturn($taskBuilder->reveal());
+        } else {
+            $taskBuilder->cron(Argument::any(), Argument::any(), Argument::any())->shouldNotBeCalled()
+                ->willReturn($taskBuilder->reveal());
+        }
         $taskBuilder->schedule()->shouldBeCalledTimes(1);
+
+        $command->run($input->reveal(), $output->reveal());
     }
 }

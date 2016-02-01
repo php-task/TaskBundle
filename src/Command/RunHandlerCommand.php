@@ -7,7 +7,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Task\Handler\RegistryInterface;
-use Task\SchedulerInterface;
 
 /**
  * Run pending tasks.
@@ -46,10 +45,14 @@ class RunHandlerCommand extends Command
         $handler = $input->getArgument('handler');
         $workload = $input->getArgument('workload');
 
-        $output->writeln(sprintf('Run command "%s" with workload "%s"', $handler, $workload));
+        if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+            $output->writeln(sprintf('Run command "%s" with workload "%s"', $handler, $workload));
+        }
 
         $result = $this->registry->run($handler, $workload);
 
-        $output->writeln(sprintf('Result: "%s"', $result));
+        if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+            $output->writeln(sprintf('Result: %s', json_encode($result)));
+        }
     }
 }
