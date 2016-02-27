@@ -5,6 +5,7 @@ namespace Task\TaskBundle\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Task\Storage\StorageInterface;
 
@@ -33,8 +34,8 @@ class DebugTasksCommand extends Command
     protected function configure()
     {
         $this->setDescription('Debug tasks')
-            ->addOption('limit', 'l')
-            ->addOption('key');
+            ->addOption('limit', 'l', InputOption::VALUE_REQUIRED, '', null)
+            ->addOption('key', 'k', InputOption::VALUE_REQUIRED, '', null);
     }
 
     /**
@@ -57,7 +58,7 @@ class DebugTasksCommand extends Command
         foreach ($tasks as $task) {
             $start = null;
             $duration = null;
-            if (null !== $task->getLastExecution()) {
+            if ($task->getLastExecution()) {
                 $start = $task->getLastExecution()->getFinishedAtAsDateTime()->format(\DateTime::RFC3339);
                 $duration = $task->getLastExecution()->getExecutionDuration();
             }

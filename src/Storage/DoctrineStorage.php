@@ -116,7 +116,7 @@ class DoctrineStorage implements StorageInterface
 
     private function setTask(TaskEntity $entity, TaskInterface $task)
     {
-        $entity->setTask($task);
+        $entity->setTask(clone $task);
         $entity->setUuid($task->getUuid());
         $entity->setKey($task->getKey());
         $entity->setCompleted($task->isCompleted());
