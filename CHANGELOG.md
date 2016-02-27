@@ -1,6 +1,7 @@
 # CHANGELOG
 
 * 0.2.0 (2016-02-27)
+    * ENHANCEMENT #-- Added debug tasks command and extended storage   
     * ENHANCEMENT #-- Moved command name to service definition   
     * FEATURE     #13 Added options to command schedule task for cron tasks
 
