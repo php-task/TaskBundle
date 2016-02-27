@@ -73,7 +73,17 @@ class ScheduleTaskCommandTest extends \PHPUnit_Framework_TestCase
                 $endDate = new \DateTime($endDateString);
             }
 
-            $taskBuilder->cron($cronExpression, Argument::type(\DateTime::class), $endDate)->shouldBeCalled()
+            $taskBuilder->cron(
+                $cronExpression,
+                Argument::type(\DateTime::class),
+                Argument::that(
+                    function ($argument) use ($endDate) {
+                        $this->assertEquals($endDate, $argument, '', 2);
+
+                        return true;
+                    }
+                )
+            )->shouldBeCalled()
                 ->willReturn($taskBuilder->reveal());
         } else {
             $taskBuilder->cron(Argument::any(), Argument::any(), Argument::any())->shouldNotBeCalled()
