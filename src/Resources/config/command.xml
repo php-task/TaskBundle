@@ -23,5 +23,12 @@
 
             <tag name="console.command"/>
         </service>
+
+        <service id="task.command.debug_tasks" class="Task\TaskBundle\Command\DebugTasksCommand">
+            <argument type="string">debug:tasks</argument>
+            <argument type="service" id="task.storage"/>
+
+            <tag name="console.command"/>
+        </service>
     </services>
 </container>

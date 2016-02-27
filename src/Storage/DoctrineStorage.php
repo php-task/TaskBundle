@@ -70,13 +70,26 @@ class DoctrineStorage implements StorageInterface
     /**
      * {@inheritdoc}
      */
-    public function findAll()
+    public function findAll($limit = null)
     {
         return array_map(
             function (TaskEntity $entity) {
                 return $entity->getTask();
             },
-            $this->taskRepository->findAll()
+            $this->taskRepository->findBy([], null, $limit)
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findByKey($key, $limit = null)
+    {
+        return array_map(
+            function (TaskEntity $entity) {
+                return $entity->getTask();
+            },
+            $this->taskRepository->findBy(['key' => $key], null, $limit)
         );
     }
 
@@ -103,7 +116,7 @@ class DoctrineStorage implements StorageInterface
 
     private function setTask(TaskEntity $entity, TaskInterface $task)
     {
-        $entity->setTask($task);
+        $entity->setTask(clone $task);
         $entity->setUuid($task->getUuid());
         $entity->setKey($task->getKey());
         $entity->setCompleted($task->isCompleted());
