@@ -53,7 +53,7 @@ class DebugTasksCommand extends Command
         }
 
         $table = new Table($output);
-        $table->setHeaders(array('uuid', 'key', 'task-name', 'execution-date', 'completed', 'start', 'duration'));
+        $table->setHeaders(['uuid', 'key', 'task-name', 'execution-date', 'completed', 'start', 'duration']);
 
         foreach ($tasks as $task) {
             $start = null;

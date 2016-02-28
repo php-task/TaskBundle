@@ -6,39 +6,11 @@ use Doctrine\ORM\EntityRepository;
 
 class TaskRepository extends EntityRepository
 {
-    public function findScheduled()
+    public function findEndBefore(\DateTime $dateTime)
     {
-        $query = $this->createQueryBuilder('task')
-            ->where('task.completed = :completed')
-            ->andWhere('task.executionDate <= :date')
-            ->setParameter('completed', false)
-            ->setParameter('date', new \DateTime())
-            ->getQuery();
-
-        return $query->getResult();
-    }
-
-    /**
-     * @param string $uuid
-     *
-     * @return Task
-     */
-    public function findByUuid($uuid)
-    {
-        $query = $this->createQueryBuilder('task')
-            ->where('task.uuid = :uuid')
-            ->setParameter('uuid', $uuid)
-            ->getQuery();
-
-        return $query->getSingleResult();
-    }
-
-    public function deleteAll()
-    {
-        $query = $this->_em->createQueryBuilder()
-            ->delete($this->_entityName, 'task')
-            ->getQuery();
-
-        $query->execute();
+        $this->createQueryBuilder('t')
+            ->where('t.lastExecution IS NOT NULL OR t.lastExecution > :dateTime')
+            ->setParameter('dateTime', $dateTime)
+            ->getQuery()->getResult();
     }
 }

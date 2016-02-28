@@ -2,9 +2,10 @@
 
 namespace Task\TaskBundle\Entity;
 
-use Task\TaskInterface;
+use Cron\CronExpression;
+use Task\Task as BaseTask;
 
-class Task
+class Task extends BaseTask
 {
     /**
      * @var int
@@ -14,27 +15,7 @@ class Task
     /**
      * @var string
      */
-    private $uuid;
-
-    /**
-     * @var string
-     */
-    private $key;
-
-    /**
-     * @var TaskInterface
-     */
-    private $task;
-
-    /**
-     * @var \DateTime
-     */
-    private $executionDate;
-
-    /**
-     * @var bool
-     */
-    private $completed;
+    private $intervalExpression;
 
     /**
      * @return int
@@ -45,84 +26,20 @@ class Task
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getUuid()
+    public function getIntervalExpression()
     {
-        return $this->uuid;
+        return $this->intervalExpression;
     }
 
     /**
-     * @param string $uuid
+     * {@inheritdoc}
      */
-    public function setUuid($uuid)
+    public function setInterval(CronExpression $interval, \DateTime $firstExecution = null, \DateTime $lastExecution = null)
     {
-        $this->uuid = $uuid;
-    }
+        parent::setInterval($interval, $firstExecution, $lastExecution);
 
-    /**
-     * @return TaskInterface
-     */
-    public function getTask()
-    {
-        return $this->task;
-    }
-
-    /**
-     * @param TaskInterface $task
-     */
-    public function setTask($task)
-    {
-        $this->task = $task;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getExecutionDate()
-    {
-        return $this->executionDate;
-    }
-
-    /**
-     * @param \DateTime $executionDate
-     */
-    public function setExecutionDate($executionDate)
-    {
-        $this->executionDate = $executionDate;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isCompleted()
-    {
-        return $this->completed;
-    }
-
-    /**
-     * @param bool $completed
-     */
-    public function setCompleted($completed)
-    {
-        $this->completed = $completed;
-    }
-
-    /**
-     * @return string
-     */
-    public function getKey()
-    {
-        return $this->key;
-    }
-
-    /**
-     * @param string $key
-     *
-     * @return $this
-     */
-    public function setKey($key)
-    {
-        $this->key = $key;
+        $this->intervalExpression = $interval->getExpression();
     }
 }
