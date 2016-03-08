@@ -70,7 +70,7 @@ class DoctrineStorage implements StorageInterface
     /**
      * {@inheritdoc}
      */
-    public function findAll($limit = null, $sortOrder= 'ASC')
+    public function findAll($limit = null, $sortOrder = 'ASC')
     {
         return array_map(
             function (TaskEntity $entity) {
@@ -83,7 +83,7 @@ class DoctrineStorage implements StorageInterface
     /**
      * {@inheritdoc}
      */
-    public function findByKey($key, $limit = null, $sortOrder= 'ASC')
+    public function findByKey($key, $limit = null, $sortOrder = 'ASC')
     {
         return array_map(
             function (TaskEntity $entity) {

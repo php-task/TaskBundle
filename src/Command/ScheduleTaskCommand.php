@@ -38,7 +38,7 @@ class ScheduleTaskCommand extends Command
             ->addArgument('handler', InputArgument::REQUIRED)
             ->addArgument('workload', InputArgument::OPTIONAL)
             ->addOption('cron-expression', 'c', InputOption::VALUE_REQUIRED)
-            ->addOption('end-date', 'e', InputOption::VALUE_REQUIRED)
+            ->addOption('end-date', null, InputOption::VALUE_REQUIRED)
             ->addOption('key', 'k', InputOption::VALUE_REQUIRED);
     }
 
