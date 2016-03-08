@@ -47,9 +47,9 @@ class DebugTasksCommand extends Command
         $limit = $input->getOption('limit');
 
         if (null !== $key) {
-            $tasks = $this->storage->findByKey($key, $limit);
+            $tasks = $this->storage->findByKey($key, $limit, 'DESC');
         } else {
-            $tasks = $this->storage->findAll($limit);
+            $tasks = $this->storage->findAll($limit, 'DESC');
         }
 
         $table = new Table($output);
