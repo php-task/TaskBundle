@@ -3,10 +3,12 @@
 namespace Task\TaskBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Task\Execution\TaskExecutionInterface;
+use Task\Storage\TaskExecutionRepositoryInterface;
 use Task\TaskInterface;
 use Task\TaskStatus;
 
-class TaskExecutionRepository extends EntityRepository
+class TaskExecutionRepository extends EntityRepository implements TaskExecutionRepositoryInterface
 {
     public function findByStartTime(TaskInterface $task, \DateTime $scheduleTime)
     {
@@ -20,8 +22,12 @@ class TaskExecutionRepository extends EntityRepository
             ->getResult();
     }
 
-    public function findScheduled(\DateTime $dateTime)
+    public function findScheduled(\DateTime $dateTime = null)
     {
+        if ($dateTime === null) {
+            $dateTime = new \DateTime();
+        }
+
         return $this->createQueryBuilder('e')
             ->innerJoin('e.task', 't')
             ->where('e.status = :status AND e.scheduleTime < :dateTime')
@@ -29,5 +35,16 @@ class TaskExecutionRepository extends EntityRepository
             ->setParameter('dateTime', $dateTime)
             ->getQuery()
             ->getResult();
+    }
+
+    public function save(TaskExecutionInterface $execution)
+    {
+        $this->_em->flush();
+    }
+
+    public function add(TaskExecutionInterface $execution)
+    {
+        $this->_em->persist($execution);
+        $this->_em->flush();
     }
 }

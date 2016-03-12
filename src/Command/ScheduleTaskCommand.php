@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Task\SchedulerInterface;
+use Task\Scheduler\SchedulerInterface;
 
 /**
  * Schedule task.
@@ -38,8 +38,7 @@ class ScheduleTaskCommand extends Command
             ->addArgument('handler', InputArgument::REQUIRED)
             ->addArgument('workload', InputArgument::OPTIONAL)
             ->addOption('cron-expression', 'c', InputOption::VALUE_REQUIRED)
-            ->addOption('end-date', 'e', InputOption::VALUE_REQUIRED)
-            ->addOption('key', 'k', InputOption::VALUE_REQUIRED);
+            ->addOption('end-date', 'e', InputOption::VALUE_REQUIRED);
     }
 
     /**
@@ -51,7 +50,6 @@ class ScheduleTaskCommand extends Command
         $workload = $input->getArgument('workload');
         $cronExpression = $input->getOption('cron-expression');
         $endDateString = $input->getOption('end-date');
-        $key = $input->getOption('key');
 
         if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
             $output->writeln(sprintf('Schedule task "%s" with workload "%s"', $handler, $workload));
@@ -66,10 +64,6 @@ class ScheduleTaskCommand extends Command
             }
 
             $taskBuilder->cron($cronExpression, new \DateTime(), $endDate);
-        }
-
-        if ($key !== null) {
-            $taskBuilder->setKey($key);
         }
 
         $taskBuilder->schedule();
