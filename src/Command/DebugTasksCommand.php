@@ -47,13 +47,13 @@ class DebugTasksCommand extends Command
         $limit = $input->getOption('limit');
 
         if (null !== $key) {
-            $tasks = $this->storage->findByKey($key, $limit);
+            $tasks = $this->storage->findByKey($key, $limit, 'DESC');
         } else {
-            $tasks = $this->storage->findAll($limit);
+            $tasks = $this->storage->findAll($limit, 'DESC');
         }
 
         $table = new Table($output);
-        $table->setHeaders(array('uuid', 'key', 'task-name', 'execution-date', 'completed', 'start', 'duration'));
+        $table->setHeaders(['uuid', 'key', 'task-name', 'execution-date', 'completed', 'start', 'duration']);
 
         foreach ($tasks as $task) {
             $start = null;
