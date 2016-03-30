@@ -1,6 +1,6 @@
 # CHANGELOG
 
-* dev-master
+* 0.2.1 (2016-03-30)
     * HOTFIX      #18 Fixed command issues (sorting and shortcut)
 
 * 0.2.0 (2016-02-27)
