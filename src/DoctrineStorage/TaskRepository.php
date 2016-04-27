@@ -20,6 +20,16 @@ class TaskRepository implements TaskRepositoryInterface
     private $taskRepository;
 
     /**
+     * @param ObjectManager $objectManager
+     * @param ORMTaskRepository $taskRepository
+     */
+    public function __construct(ObjectManager $objectManager, ORMTaskRepository $taskRepository)
+    {
+        $this->objectManager = $objectManager;
+        $this->taskRepository = $taskRepository;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function add(TaskInterface $task)
@@ -31,9 +41,9 @@ class TaskRepository implements TaskRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function findAll()
+    public function findAll($limit = null)
     {
-        return $this->taskRepository->findAll();
+        return $this->taskRepository->findBy([], null, $limit);
     }
 
     /**

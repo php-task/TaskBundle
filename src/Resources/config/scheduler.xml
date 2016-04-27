@@ -5,18 +5,6 @@
     <services>
         <service id="task.factory" class="Task\TaskBundle\Factory"/>
 
-        <service id="task.storage.task" class="Task\TaskBundle\Entity\TaskRepository">
-            <factory service="doctrine.orm.entity_manager" method="getRepository"/>
-
-            <argument type="string">TaskBundle:Task</argument>
-        </service>
-
-        <service id="task.storage.task_execution" class="Task\TaskBundle\Entity\TaskExecutionRepository">
-            <factory service="doctrine.orm.entity_manager" method="getRepository"/>
-
-            <argument type="string">TaskBundle:TaskExecution</argument>
-        </service>
-
         <service id="task.scheduler" class="Task\Scheduler\Scheduler">
             <argument type="service" id="task.factory"/>
             <argument type="service" id="task.storage.task"/>

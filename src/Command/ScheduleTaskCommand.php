@@ -21,11 +21,11 @@ class ScheduleTaskCommand extends Command
      */
     private $scheduler;
 
-    public function __construct($name, SchedulerInterface $scheduler)
+    public function __construct($name, SchedulerInterface $runner)
     {
         parent::__construct($name);
 
-        $this->scheduler = $scheduler;
+        $this->scheduler = $runner;
     }
 
     /**

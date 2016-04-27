@@ -6,7 +6,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Task\Handler\RegistryInterface;
+use Task\Handler\TaskHandlerFactoryInterface;
 
 /**
  * Run pending tasks.
@@ -16,15 +16,15 @@ use Task\Handler\RegistryInterface;
 class RunHandlerCommand extends Command
 {
     /**
-     * @var RegistryInterface
+     * @var TaskHandlerFactoryInterface
      */
-    private $registry;
+    private $handlerFactory;
 
-    public function __construct($name, RegistryInterface $registry)
+    public function __construct($name, TaskHandlerFactoryInterface $handlerFactory)
     {
         parent::__construct($name);
 
-        $this->registry = $registry;
+        $this->handlerFactory = $handlerFactory;
     }
 
     /**
@@ -33,7 +33,7 @@ class RunHandlerCommand extends Command
     protected function configure()
     {
         $this->setDescription('Run pending tasks')
-            ->addArgument('handler', InputArgument::REQUIRED)
+            ->addArgument('handlerClass', InputArgument::REQUIRED)
             ->addArgument('workload', InputArgument::OPTIONAL);
     }
 
@@ -42,14 +42,14 @@ class RunHandlerCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $handler = $input->getArgument('handler');
+        $handlerClass = $input->getArgument('handlerClass');
         $workload = $input->getArgument('workload');
 
         if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
-            $output->writeln(sprintf('Run command "%s" with workload "%s"', $handler, $workload));
+            $output->writeln(sprintf('Run command "%s" with workload "%s"', $handlerClass, $workload));
         }
 
-        $result = $this->registry->run($handler, $workload);
+        $result = $this->handlerFactory->create($handlerClass)->handle($workload);
 
         if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
             $output->writeln(sprintf('Result: %s', json_encode($result)));

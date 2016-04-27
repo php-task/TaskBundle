@@ -6,6 +6,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Task\Runner\TaskRunnerInterface;
+use Task\Scheduler\SchedulerInterface;
 
 /**
  * Run pending tasks.
@@ -19,11 +20,17 @@ class RunCommand extends Command
      */
     private $runner;
 
-    public function __construct($name, TaskRunnerInterface $scheduler)
+    /**
+     * @var SchedulerInterface
+     */
+    private $scheduler;
+
+    public function __construct($name, TaskRunnerInterface $runner, SchedulerInterface $scheduler)
     {
         parent::__construct($name);
 
-        $this->runner = $scheduler;
+        $this->runner = $runner;
+        $this->scheduler = $scheduler;
     }
 
     /**
@@ -40,5 +47,6 @@ class RunCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->runner->runTasks();
+        $this->scheduler->scheduleTasks();
     }
 }
