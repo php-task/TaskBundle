@@ -15,7 +15,6 @@ class HandlerCompilerPass implements CompilerPassInterface
 {
     const REGISTRY_ID = 'task.handler.factory';
     const HANDLER_TAG = 'task.handler';
-    const HANDLER_NAME_ATTRIBUTE = 'handler-name';
 
     /**
      * {@inheritdoc}
