@@ -9,6 +9,7 @@
             <argument type="service" id="task.factory"/>
             <argument type="service" id="task.storage.task"/>
             <argument type="service" id="task.storage.task_execution"/>
+            <argument type="service" id="event_dispatcher"/>
         </service>
 
         <service id="task.handler.factory" class="Task\TaskBundle\Handler\TaskHandlerFactory">
@@ -18,6 +19,7 @@
         <service id="task.runner" class="Task\Runner\TaskRunner">
             <argument type="service" id="task.storage.task_execution"/>
             <argument type="service" id="task.handler.factory"/>
+            <argument type="service" id="event_dispatcher"/>
         </service>
     </services>
 </container>

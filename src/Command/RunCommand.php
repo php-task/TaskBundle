@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of php-task library.
+ *
+ * (c) php-task
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Task\TaskBundle\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -10,8 +19,6 @@ use Task\Scheduler\SchedulerInterface;
 
 /**
  * Run pending tasks.
- *
- * @author @wachterjohannes <johannes.wachter@massiveart.com>
  */
 class RunCommand extends Command
 {
@@ -25,6 +32,11 @@ class RunCommand extends Command
      */
     private $scheduler;
 
+    /**
+     * @param string $name
+     * @param TaskRunnerInterface $runner
+     * @param SchedulerInterface $scheduler
+     */
     public function __construct($name, TaskRunnerInterface $runner, SchedulerInterface $scheduler)
     {
         parent::__construct($name);

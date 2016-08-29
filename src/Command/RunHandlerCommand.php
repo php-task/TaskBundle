@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of php-task library.
+ *
+ * (c) php-task
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Task\TaskBundle\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -10,8 +19,6 @@ use Task\Handler\TaskHandlerFactoryInterface;
 
 /**
  * Run pending tasks.
- *
- * @author Alexander Schranz <alexander.schranz@massiveart.com>
  */
 class RunHandlerCommand extends Command
 {
@@ -20,6 +27,10 @@ class RunHandlerCommand extends Command
      */
     private $handlerFactory;
 
+    /**
+     * @param string $name
+     * @param TaskHandlerFactoryInterface $handlerFactory
+     */
     public function __construct($name, TaskHandlerFactoryInterface $handlerFactory)
     {
         parent::__construct($name);

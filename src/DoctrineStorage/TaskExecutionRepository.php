@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of php-task library.
+ *
+ * (c) php-task
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Task\TaskBundle\DoctrineStorage;
 
 use Doctrine\Common\Persistence\ObjectManager;
@@ -8,6 +17,9 @@ use Task\Execution\TaskExecutionRepositoryInterface;
 use Task\TaskBundle\Entity\TaskExecutionRepository as ORMTaskExecutionRepository;
 use Task\TaskInterface;
 
+/**
+ * Task-execution storage using doctrine.
+ */
 class TaskExecutionRepository implements TaskExecutionRepositoryInterface
 {
     /**
@@ -33,19 +45,43 @@ class TaskExecutionRepository implements TaskExecutionRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function save(TaskExecutionInterface $execution)
+    public function store(TaskExecutionInterface $execution)
     {
         $this->objectManager->persist($execution);
+
+        // FIXME move this flush to somewhere else (:
         $this->objectManager->flush();
+
+        return $this;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function add(TaskExecutionInterface $execution)
+    public function save(TaskExecutionInterface $execution)
     {
         $this->objectManager->persist($execution);
+
+        // FIXME move this flush to somewhere else (:
         $this->objectManager->flush();
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findByStartTime(TaskInterface $task, \DateTime $scheduleTime)
+    {
+        return $this->taskExecutionRepository->findByScheduledTime($task, $scheduleTime);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findAll($limit = null)
+    {
+        return $this->taskExecutionRepository->findBy([], ['scheduleTime' => 'ASC'], $limit);
     }
 
     /**
@@ -54,23 +90,5 @@ class TaskExecutionRepository implements TaskExecutionRepositoryInterface
     public function findScheduled()
     {
         return $this->taskExecutionRepository->findScheduled(new \DateTime());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function findByStartTime(TaskInterface $task, \DateTime $scheduleTime)
-    {
-        return $this->taskExecutionRepository->findByStartTime($task, $scheduleTime);
-    }
-
-    public function findAll($limit = null)
-    {
-        return $this->taskExecutionRepository->findBy([], ['scheduleTime' => 'ASC'], $limit);
-    }
-
-    public function get($uuid)
-    {
-        // TODO: Implement get() method.
     }
 }

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of php-task library.
+ *
+ * (c) php-task
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Task\TaskBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
@@ -8,9 +17,20 @@ use Task\Execution\TaskExecutionInterface;
 use Task\TaskInterface;
 use Task\TaskStatus;
 
+/**
+ * Repository for task-execution.
+ */
 class TaskExecutionRepository extends EntityRepository
 {
-    public function findByStartTime(TaskInterface $task, \DateTime $scheduleTime)
+    /**
+     * Returns task-execution by task and scheduled-time.
+     *
+     * @param TaskInterface $task
+     * @param \DateTime $scheduleTime
+     *
+     * @return TaskExecutionInterface
+     */
+    public function findByScheduledTime(TaskInterface $task, \DateTime $scheduleTime)
     {
         try {
             return $this->createQueryBuilder('e')
@@ -26,6 +46,13 @@ class TaskExecutionRepository extends EntityRepository
         }
     }
 
+    /**
+     * Returns scheduled task-execution.
+     *
+     * @param \DateTime|null $dateTime
+     *
+     * @return TaskExecutionInterface[]
+     */
     public function findScheduled(\DateTime $dateTime = null)
     {
         if ($dateTime === null) {
@@ -39,16 +66,5 @@ class TaskExecutionRepository extends EntityRepository
             ->setParameter('dateTime', $dateTime)
             ->getQuery()
             ->getResult();
-    }
-
-    public function save(TaskExecutionInterface $execution)
-    {
-        $this->_em->flush();
-    }
-
-    public function add(TaskExecutionInterface $execution)
-    {
-        $this->_em->persist($execution);
-        $this->_em->flush();
     }
 }

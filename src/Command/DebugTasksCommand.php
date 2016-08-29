@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of php-task library.
+ *
+ * (c) php-task
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Task\TaskBundle\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -11,8 +20,6 @@ use Task\Execution\TaskExecutionRepositoryInterface;
 
 /**
  * Run pending tasks.
- *
- * @author @wachterjohannes <johannes.wachter@massiveart.com>
  */
 class DebugTasksCommand extends Command
 {
@@ -21,6 +28,10 @@ class DebugTasksCommand extends Command
      */
     private $storage;
 
+    /**
+     * @param string $name
+     * @param TaskExecutionRepositoryInterface $storage
+     */
     public function __construct($name, TaskExecutionRepositoryInterface $storage)
     {
         parent::__construct($name);
