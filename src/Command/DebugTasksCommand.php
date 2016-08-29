@@ -57,7 +57,7 @@ class DebugTasksCommand extends Command
                     $execution->getHandlerClass(),
                     $execution->getScheduleTime()->format(\DateTime::RFC3339),
                     !$execution->getEndTime() ? '' : $execution->getEndTime()->format(\DateTime::RFC3339),
-                    $execution->getDuration(),
+                    (round($execution->getDuration(), 6) * 1000000) . 'ms',
                 ]
             );
         }

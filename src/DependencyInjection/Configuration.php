@@ -19,7 +19,7 @@ class Configuration implements ConfigurationInterface
 
         $treeBuilder->root('task')
             ->children()
-                ->enumNode('storage')->values(['array', 'doctrine'])->defaultValue('array')->end()
+                ->enumNode('storage')->values(['array', 'doctrine'])->defaultValue('doctrine')->end()
                 ->arrayNode('run')
                     ->addDefaultsIfNotSet()
                     ->children()
