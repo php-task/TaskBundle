@@ -33,6 +33,15 @@ class Task extends BaseTask
         return $this->intervalExpression;
     }
 
+    public function getInterval()
+    {
+        if (null === $this->interval && null !== $this->intervalExpression) {
+            $this->interval = CronExpression::factory($this->intervalExpression);
+        }
+
+        return parent::getInterval();
+    }
+
     /**
      * {@inheritdoc}
      */

@@ -21,7 +21,7 @@
         <field name="startTime" type="datetime" nullable="true"/>
         <field name="endTime" type="datetime" nullable="true"/>
         <field name="scheduleTime" column="schedule_time" type="datetime"/>
-        <field name="exception" type="object" nullable="true"/>
+        <field name="exception" type="text" nullable="true"/>
         <field name="result" type="object" nullable="true"/>
         <field name="status" type="string" length="20"/>
         
