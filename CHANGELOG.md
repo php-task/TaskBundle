@@ -1,5 +1,8 @@
 # CHANGELOG
 
+* 0.2.1 (2016-03-30)
+    * HOTFIX      #18 Fixed command issues (sorting and shortcut)
+
 * 0.2.0 (2016-02-27)
     * ENHANCEMENT #-- Added debug tasks command and extended storage   
     * ENHANCEMENT #-- Moved command name to service definition   
