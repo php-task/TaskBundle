@@ -47,6 +47,8 @@ class TaskRepository implements TaskRepositoryInterface
     public function store(TaskInterface $task)
     {
         $this->objectManager->persist($task);
+
+        // FIXME move this flush to somewhere else (:
         $this->objectManager->flush();
     }
 
@@ -64,5 +66,18 @@ class TaskRepository implements TaskRepositoryInterface
     public function findEndBeforeNow()
     {
         return $this->taskRepository->findEndBefore(new \DateTime());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function clear()
+    {
+        foreach ($this->taskRepository->findAll() as $task) {
+            $this->objectManager->remove($task);
+        }
+
+        // FIXME move this flush to somewhere else (:
+        $this->objectManager->flush();
     }
 }
