@@ -38,7 +38,7 @@ class ScheduleTaskCommand extends Command
             ->addArgument('handler', InputArgument::REQUIRED)
             ->addArgument('workload', InputArgument::OPTIONAL)
             ->addOption('cron-expression', 'c', InputOption::VALUE_REQUIRED)
-            ->addOption('end-date', 'e', InputOption::VALUE_REQUIRED);
+            ->addOption('end-date', null, InputOption::VALUE_REQUIRED);
     }
 
     /**
@@ -66,6 +66,6 @@ class ScheduleTaskCommand extends Command
             $taskBuilder->cron($cronExpression, new \DateTime(), $endDate);
         }
 
-        $taskBuilder->schedule();
+        $this->scheduler->addTask($taskBuilder->getTask());
     }
 }

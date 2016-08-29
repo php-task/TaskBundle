@@ -22,7 +22,7 @@ class TaskExecutionRepository extends EntityRepository
                 ->getQuery()
                 ->getSingleResult();
         } catch (NoResultException $e) {
-            return null;
+            return;
         }
     }
 

@@ -4,7 +4,7 @@ namespace Task\TaskBundle\DoctrineStorage;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Task\Execution\TaskExecutionInterface;
-use Task\Storage\TaskExecutionRepositoryInterface;
+use Task\Execution\TaskExecutionRepositoryInterface;
 use Task\TaskBundle\Entity\TaskExecutionRepository as ORMTaskExecutionRepository;
 use Task\TaskInterface;
 
@@ -67,5 +67,10 @@ class TaskExecutionRepository implements TaskExecutionRepositoryInterface
     public function findAll($limit = null)
     {
         return $this->taskExecutionRepository->findBy([], ['scheduleTime' => 'ASC'], $limit);
+    }
+
+    public function get($uuid)
+    {
+        // TODO: Implement get() method.
     }
 }

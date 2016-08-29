@@ -19,7 +19,7 @@
         </service>
 
         <service id="task.command.schedule_task" class="Task\TaskBundle\Command\ScheduleTaskCommand">
-            <argument type="string">task:schedule:task</argument>
+            <argument type="string">task:schedule</argument>
             <argument type="service" id="task.scheduler"/>
 
             <tag name="console.command"/>
