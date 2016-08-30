@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": "~5.5 || ~7.0",
-        "php-task/php-task": "dev-feature/refactoring",
+        "php-task/php-task": "dev-master",
         "symfony/http-kernel": "^2.6",
         "symfony/dependency-injection": "^2.6",
         "symfony/config": "^2.6",
