@@ -5,8 +5,9 @@
 
     <parameters>
         <parameter key="task.events.create" type="constant">Task\Event\Events::TASK_CREATE</parameter>
+        <parameter key="task.events.create_execution" type="constant">Task\Event\Events::TASK_EXECUTION_CREATE</parameter>
         <parameter key="task.events.before" type="constant">Task\Event\Events::TASK_BEFORE</parameter>
-        <parameter key="task.events.after" type="constant">Task\Event\Events::TASK_AFTER</parameter>
+        <parameter key="task.events.finished" type="constant">Task\Event\Events::TASK_FINISHED</parameter>
         <parameter key="task.events.passed" type="constant">Task\Event\Events::TASK_PASSED</parameter>
         <parameter key="task.events.failed" type="constant">Task\Event\Events::TASK_FAILED</parameter>
     </parameters>

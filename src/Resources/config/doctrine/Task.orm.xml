@@ -2,19 +2,23 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <entity name="Task\TaskBundle\Entity\Task"
-            repository-class="Task\TaskBundle\Entity\TaskRepository"
-            table="tasks">
+    <entity name="Task\TaskBundle\Entity\Task" table="ta_tasks"
+            repository-class="Task\TaskBundle\Entity\TaskRepository">
+
+        <indexes>
+            <index columns="uuid"/>
+        </indexes>
 
         <id name="id" type="integer">
             <generator strategy="AUTO"/>
         </id>
 
-        <field name="task" type="object"/>
-        <field name="uuid" type="string" length="100"/>
-        <field name="key" type="string" length="255" nullable="true" column="task_key"/>
-        <field name="executionDate" type="datetime"/>
-        <field name="completed" type="boolean"/>
+        <field name="uuid" type="string" length="100" unique="true"/>
+        <field name="handlerClass" type="string" length="255"/>
+        <field name="intervalExpression" type="string" length="255" nullable="true"/>
+        <field name="firstExecution" type="datetime" nullable="true"/>
+        <field name="lastExecution" type="datetime" nullable="true"/>
+        <field name="workload" type="object"/>
 
     </entity>
 </doctrine-mapping>

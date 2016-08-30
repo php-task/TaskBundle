@@ -1,25 +1,35 @@
 <?php
 
+/*
+ * This file is part of php-task library.
+ *
+ * (c) php-task
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Task\TaskBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\Event;
-use Task\SchedulerInterface;
+use Task\Runner\TaskRunnerInterface;
 
 /**
  * Listens to event and run scheduled tasks.
- *
- * @author @wachterjohannes <johannes.wachter@massiveart.com>
  */
 class RunListener
 {
     /**
-     * @var SchedulerInterface
+     * @var TaskRunnerInterface
      */
-    private $scheduler;
+    private $taskRunner;
 
-    public function __construct(SchedulerInterface $scheduler)
+    /**
+     * @param TaskRunnerInterface $taskRunner
+     */
+    public function __construct(TaskRunnerInterface $taskRunner)
     {
-        $this->scheduler = $scheduler;
+        $this->taskRunner = $taskRunner;
     }
 
     /**
@@ -29,6 +39,6 @@ class RunListener
      */
     public function run(Event $event)
     {
-        $this->scheduler->run();
+        $this->taskRunner->runTasks();
     }
 }

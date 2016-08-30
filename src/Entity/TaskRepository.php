@@ -1,44 +1,37 @@
 <?php
 
+/*
+ * This file is part of php-task library.
+ *
+ * (c) php-task
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Task\TaskBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Task\TaskInterface;
 
+/**
+ * Repository for task.
+ */
 class TaskRepository extends EntityRepository
 {
-    public function findScheduled()
-    {
-        $query = $this->createQueryBuilder('task')
-            ->where('task.completed = :completed')
-            ->andWhere('task.executionDate <= :date')
-            ->setParameter('completed', false)
-            ->setParameter('date', new \DateTime())
-            ->getQuery();
-
-        return $query->getResult();
-    }
-
     /**
-     * @param string $uuid
+     * Returns task where last-execution is before given date-time.
      *
-     * @return Task
+     * @param \DateTime $dateTime
+     *
+     * @return TaskInterface[]
      */
-    public function findByUuid($uuid)
+    public function findEndBefore(\DateTime $dateTime)
     {
-        $query = $this->createQueryBuilder('task')
-            ->where('task.uuid = :uuid')
-            ->setParameter('uuid', $uuid)
-            ->getQuery();
-
-        return $query->getSingleResult();
-    }
-
-    public function deleteAll()
-    {
-        $query = $this->_em->createQueryBuilder()
-            ->delete($this->_entityName, 'task')
-            ->getQuery();
-
-        $query->execute();
+        return $this->createQueryBuilder('t')
+            ->where('t.lastExecution IS NULL OR t.lastExecution >= :dateTime')
+            ->setParameter('dateTime', $dateTime)
+            ->getQuery()
+            ->getResult();
     }
 }

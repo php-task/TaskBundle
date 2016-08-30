@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Task\TaskBundle\Entity\TaskExecution" table="ta_task_executions"
+            repository-class="Task\TaskBundle\Entity\TaskExecutionRepository">
+
+        <indexes>
+            <index columns="uuid"/>
+            <index columns="schedule_time"/>
+        </indexes>
+
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="uuid" type="string" length="100" unique="true"/>
+        <field name="handlerClass" type="string" length="255"/>
+        <field name="workload" type="object"/>
+        <field name="duration" type="float" nullable="true"/>
+        <field name="startTime" type="datetime" nullable="true"/>
+        <field name="endTime" type="datetime" nullable="true"/>
+        <field name="scheduleTime" column="schedule_time" type="datetime"/>
+        <field name="exception" type="text" nullable="true"/>
+        <field name="result" type="object" nullable="true"/>
+        <field name="status" type="string" length="20"/>
+        
+        <many-to-one target-entity="Task\TaskBundle\Entity\Task" field="task"/>
+
+    </entity>
+</doctrine-mapping>

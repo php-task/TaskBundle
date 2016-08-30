@@ -5,6 +5,7 @@
     <services>
         <service id="task.command.run" class="Task\TaskBundle\Command\RunCommand">
             <argument type="string">task:run</argument>
+            <argument type="service" id="task.runner"/>
             <argument type="service" id="task.scheduler"/>
 
             <tag name="console.command"/>
@@ -12,13 +13,13 @@
 
         <service id="task.command.run.handler" class="Task\TaskBundle\Command\RunHandlerCommand">
             <argument type="string">task:run:handler</argument>
-            <argument type="service" id="task.handler_registry"/>
+            <argument type="service" id="task.handler.factory"/>
 
             <tag name="console.command"/>
         </service>
 
         <service id="task.command.schedule_task" class="Task\TaskBundle\Command\ScheduleTaskCommand">
-            <argument type="string">task:schedule:task</argument>
+            <argument type="string">task:schedule</argument>
             <argument type="service" id="task.scheduler"/>
 
             <tag name="console.command"/>
@@ -26,7 +27,7 @@
 
         <service id="task.command.debug_tasks" class="Task\TaskBundle\Command\DebugTasksCommand">
             <argument type="string">debug:tasks</argument>
-            <argument type="service" id="task.storage"/>
+            <argument type="service" id="task.storage.task_execution"/>
 
             <tag name="console.command"/>
         </service>

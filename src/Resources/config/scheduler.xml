@@ -3,15 +3,23 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="task.handler_registry" class="Task\Handler\Registry"/>
-        <service id="task.builder_factory" class="Task\TaskBuilderFactory"/>
+        <service id="task.factory" class="Task\TaskBundle\Factory"/>
 
-        <service id="task.scheduler" class="Task\Scheduler">
-            <argument type="service" id="task.storage"/>
-            <argument type="service" id="task.handler_registry"/>
-            <argument type="service" id="task.builder_factory"/>
+        <service id="task.scheduler" class="Task\Scheduler\Scheduler">
+            <argument type="service" id="task.factory"/>
+            <argument type="service" id="task.storage.task"/>
+            <argument type="service" id="task.storage.task_execution"/>
             <argument type="service" id="event_dispatcher"/>
-            <argument type="service" id="logger" on-invalid="ignore"/>
+        </service>
+
+        <service id="task.handler.factory" class="Task\TaskBundle\Handler\TaskHandlerFactory">
+            <argument type="collection"/>
+        </service>
+
+        <service id="task.runner" class="Task\Runner\TaskRunner">
+            <argument type="service" id="task.storage.task_execution"/>
+            <argument type="service" id="task.handler.factory"/>
+            <argument type="service" id="event_dispatcher"/>
         </service>
     </services>
 </container>

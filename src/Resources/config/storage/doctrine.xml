@@ -3,17 +3,25 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="task.storage.repository"
-                 class="Task\TaskBundle\Entity\TaskRepository"
-                 factory-service="doctrine.orm.entity_manager"
-                 factory-method="getRepository"
-                 public="false">
+        <service id="task.repository.task" class="Task\TaskBundle\Entity\TaskRepository">
+            <factory service="doctrine.orm.entity_manager" method="getRepository"/>
+
             <argument type="string">TaskBundle:Task</argument>
         </service>
 
-        <service id="task.storage" class="Task\TaskBundle\Storage\DoctrineStorage">
+        <service id="task.storage.task" class="Task\TaskBundle\DoctrineStorage\TaskRepository">
             <argument type="service" id="doctrine.orm.entity_manager"/>
-            <argument type="service" id="task.storage.repository"/>
+            <argument type="service" id="task.repository.task"/>
+        </service>
+        <service id="task.repository.task_execution" class="Task\TaskBundle\Entity\TaskExecutionRepository">
+            <factory service="doctrine.orm.entity_manager" method="getRepository"/>
+
+            <argument type="string">TaskBundle:TaskExecution</argument>
+        </service>
+
+        <service id="task.storage.task_execution" class="Task\TaskBundle\DoctrineStorage\TaskExecutionRepository">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="task.repository.task_execution"/>
         </service>
     </services>
 </container>
