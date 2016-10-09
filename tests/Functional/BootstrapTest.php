@@ -12,11 +12,11 @@
 namespace Functional;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Task\Scheduler\SchedulerInterface;
+use Task\Scheduler\TaskSchedulerInterface;
 use Task\Storage\ArrayStorage\ArrayTaskExecutionRepository;
 use Task\Storage\ArrayStorage\ArrayTaskRepository;
-use Task\TaskBundle\DoctrineStorage\TaskExecutionRepository;
-use Task\TaskBundle\DoctrineStorage\TaskRepository;
+use Task\TaskBundle\Entity\TaskExecutionRepository;
+use Task\TaskBundle\Entity\TaskRepository;
 
 class BootstrapTest extends KernelTestCase
 {
@@ -28,7 +28,7 @@ class BootstrapTest extends KernelTestCase
         $taskRepository = self::$kernel->getContainer()->get('task.storage.task');
         $taskExecutionRepository = self::$kernel->getContainer()->get('task.storage.task_execution');
 
-        $this->assertInstanceOf(SchedulerInterface::class, $scheduler);
+        $this->assertInstanceOf(TaskSchedulerInterface::class, $scheduler);
 
         switch (self::$kernel->getContainer()->getParameter('kernel.storage')) {
             case 'array':

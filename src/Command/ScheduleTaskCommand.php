@@ -16,7 +16,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Task\Scheduler\SchedulerInterface;
+use Task\Scheduler\TaskSchedulerInterface;
 
 /**
  * Schedule task.
@@ -24,15 +24,15 @@ use Task\Scheduler\SchedulerInterface;
 class ScheduleTaskCommand extends Command
 {
     /**
-     * @var SchedulerInterface
+     * @var TaskSchedulerInterface
      */
     private $scheduler;
 
     /**
      * @param string $name
-     * @param SchedulerInterface $runner
+     * @param TaskSchedulerInterface $runner
      */
-    public function __construct($name, SchedulerInterface $runner)
+    public function __construct($name, TaskSchedulerInterface $runner)
     {
         parent::__construct($name);
 

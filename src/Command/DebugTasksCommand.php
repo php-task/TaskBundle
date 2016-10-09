@@ -16,7 +16,7 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Task\Execution\TaskExecutionRepositoryInterface;
+use Task\Storage\TaskExecutionRepositoryInterface;
 
 /**
  * Run pending tasks.
@@ -45,7 +45,8 @@ class DebugTasksCommand extends Command
     protected function configure()
     {
         $this->setDescription('Debug tasks')
-            ->addOption('limit', 'l', InputOption::VALUE_REQUIRED, '', null);
+            ->addOption('page', 'p', InputOption::VALUE_REQUIRED, '', 1)
+            ->addOption('page-size', 's', InputOption::VALUE_REQUIRED, '', null);
     }
 
     /**
@@ -53,9 +54,10 @@ class DebugTasksCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $limit = $input->getOption('limit');
+        $page = $input->getOption('page');
+        $pageSize = $input->getOption('page-size');
 
-        $executions = $this->storage->findAll($limit);
+        $executions = $this->storage->findAll($page, $pageSize);
 
         $table = new Table($output);
         $table->setHeaders(['uuid', 'status', 'handler', 'schedule time', 'end time', 'duration']);

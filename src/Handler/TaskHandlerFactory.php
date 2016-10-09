@@ -11,8 +11,8 @@
 
 namespace Task\TaskBundle\Handler;
 
-use Symfony\Component\CssSelector\Parser\Handler\HandlerInterface;
 use Task\Handler\TaskHandlerFactoryInterface;
+use Task\Handler\TaskHandlerInterface;
 use Task\Handler\TaskHandlerNotExistsException;
 
 /**
@@ -21,7 +21,7 @@ use Task\Handler\TaskHandlerNotExistsException;
 class TaskHandlerFactory implements TaskHandlerFactoryInterface
 {
     /**
-     * @var HandlerInterface[]
+     * @var TaskHandlerInterface[]
      */
     private $handler = [];
 

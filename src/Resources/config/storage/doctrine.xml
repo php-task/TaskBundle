@@ -8,20 +8,13 @@
 
             <argument type="string">TaskBundle:Task</argument>
         </service>
+        <service id="task.storage.task" alias="task.repository.task"/>
 
-        <service id="task.storage.task" class="Task\TaskBundle\DoctrineStorage\TaskRepository">
-            <argument type="service" id="doctrine.orm.entity_manager"/>
-            <argument type="service" id="task.repository.task"/>
-        </service>
         <service id="task.repository.task_execution" class="Task\TaskBundle\Entity\TaskExecutionRepository">
             <factory service="doctrine.orm.entity_manager" method="getRepository"/>
 
             <argument type="string">TaskBundle:TaskExecution</argument>
         </service>
-
-        <service id="task.storage.task_execution" class="Task\TaskBundle\DoctrineStorage\TaskExecutionRepository">
-            <argument type="service" id="doctrine.orm.entity_manager"/>
-            <argument type="service" id="task.repository.task_execution"/>
-        </service>
+        <service id="task.storage.task_execution" alias="task.repository.task_execution"/>
     </services>
 </container>

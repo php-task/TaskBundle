@@ -14,23 +14,64 @@ namespace Task\TaskBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 use Task\Execution\TaskExecutionInterface;
+use Task\Storage\TaskExecutionRepositoryInterface;
 use Task\TaskInterface;
 use Task\TaskStatus;
 
 /**
  * Repository for task-execution.
  */
-class TaskExecutionRepository extends EntityRepository
+class TaskExecutionRepository extends EntityRepository implements TaskExecutionRepositoryInterface
 {
     /**
-     * Returns task-execution by task and scheduled-time.
-     *
-     * @param TaskInterface $task
-     * @param \DateTime $scheduleTime
-     *
-     * @return TaskExecutionInterface
+     * {@inheritdoc}
      */
-    public function findByScheduledTime(TaskInterface $task, \DateTime $scheduleTime)
+    public function create(TaskInterface $task, \DateTime $scheduleTime)
+    {
+        return new TaskExecution($task, $task->getHandlerClass(), $scheduleTime, $task->getWorkload());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function persist(TaskExecutionInterface $execution)
+    {
+        $this->_em->persist($execution);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function flush()
+    {
+        $this->_em->flush();
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findAll($page = 1, $pageSize = null)
+    {
+        $query = $this->createQueryBuilder('e')
+            ->innerJoin('e.task', 't')
+            ->getQuery();
+
+        if ($pageSize) {
+            $query->setMaxResults($pageSize);
+            $query->setFirstResult(($page - 1) * $pageSize);
+        }
+
+        return $query->getResult();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findByStartTime(TaskInterface $task, \DateTime $scheduleTime)
     {
         try {
             return $this->createQueryBuilder('e')
@@ -47,11 +88,7 @@ class TaskExecutionRepository extends EntityRepository
     }
 
     /**
-     * Returns scheduled task-execution.
-     *
-     * @param \DateTime|null $dateTime
-     *
-     * @return TaskExecutionInterface[]
+     * {@inheritdoc}
      */
     public function findScheduled(\DateTime $dateTime = null)
     {
