@@ -46,7 +46,7 @@ class ScheduleTaskCommand extends Command
     {
         $this
             ->setDescription('Run pending tasks')
-            ->addArgument('handler', InputArgument::REQUIRED)
+            ->addArgument('handlerClass', InputArgument::REQUIRED)
             ->addArgument('workload', InputArgument::OPTIONAL)
             ->addOption('cron-expression', 'c', InputOption::VALUE_REQUIRED)
             ->addOption('end-date', null, InputOption::VALUE_REQUIRED);
@@ -57,16 +57,16 @@ class ScheduleTaskCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $handler = $input->getArgument('handler');
+        $handlerClass = $input->getArgument('handlerClass');
         $workload = $input->getArgument('workload');
         $cronExpression = $input->getOption('cron-expression');
         $endDateString = $input->getOption('end-date');
 
         if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
-            $output->writeln(sprintf('Schedule task "%s" with workload "%s"', $handler, $workload));
+            $output->writeln(sprintf('Schedule task "%s" with workload "%s"', $handlerClass, $workload));
         }
 
-        $taskBuilder = $this->scheduler->createTask($input->getArgument('handler'), $input->getArgument('workload'));
+        $taskBuilder = $this->scheduler->createTask($handlerClass, $workload);
 
         if ($cronExpression !== null) {
             $endDate = null;

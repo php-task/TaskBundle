@@ -84,14 +84,3 @@ class TestKernel extends Kernel
         }
     }
 }
-
-class TestHandler implements \Task\Handler\TaskHandlerInterface
-{
-    /**
-     * {@inheritdoc}
-     */
-    public function handle($workload)
-    {
-        return strrev($workload);
-    }
-}

@@ -26,17 +26,17 @@ class DebugTasksCommand extends Command
     /**
      * @var TaskExecutionRepositoryInterface
      */
-    private $storage;
+    private $taskExecutionRepository;
 
     /**
      * @param string $name
-     * @param TaskExecutionRepositoryInterface $storage
+     * @param TaskExecutionRepositoryInterface $taskExecutionRepository
      */
-    public function __construct($name, TaskExecutionRepositoryInterface $storage)
+    public function __construct($name, TaskExecutionRepositoryInterface $taskExecutionRepository)
     {
         parent::__construct($name);
 
-        $this->storage = $storage;
+        $this->taskExecutionRepository = $taskExecutionRepository;
     }
 
     /**
@@ -46,7 +46,7 @@ class DebugTasksCommand extends Command
     {
         $this->setDescription('Debug tasks')
             ->addOption('page', 'p', InputOption::VALUE_REQUIRED, '', 1)
-            ->addOption('page-size', 's', InputOption::VALUE_REQUIRED, '', null);
+            ->addOption('page-size', null, InputOption::VALUE_REQUIRED, '', null);
     }
 
     /**
@@ -57,7 +57,7 @@ class DebugTasksCommand extends Command
         $page = $input->getOption('page');
         $pageSize = $input->getOption('page-size');
 
-        $executions = $this->storage->findAll($page, $pageSize);
+        $executions = $this->taskExecutionRepository->findAll($page, $pageSize);
 
         $table = new Table($output);
         $table->setHeaders(['uuid', 'status', 'handler', 'schedule time', 'end time', 'duration']);

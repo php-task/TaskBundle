@@ -82,7 +82,7 @@ class TaskRepository extends EntityRepository implements TaskRepositoryInterface
     public function findEndBefore(\DateTime $dateTime)
     {
         return $this->createQueryBuilder('t')
-            ->where('t.lastExecution IS NULL OR t.lastExecution >= :dateTime')
+            ->where('t.lastExecution IS NULL OR t.lastExecution > :dateTime')
             ->setParameter('dateTime', $dateTime)
             ->getQuery()
             ->getResult();

@@ -11,9 +11,9 @@
 
 namespace Task\TaskBundle\Tests\Unit\Handler;
 
-use Task\Handler\TaskHandlerInterface;
 use Task\Handler\TaskHandlerNotExistsException;
 use Task\TaskBundle\Handler\TaskHandlerFactory;
+use Task\TaskBundle\Tests\Functional\TestHandler;
 
 /**
  * Tests for class TaskHandlerFactory.
@@ -44,16 +44,5 @@ class TaskHandlerFactoryTest extends \PHPUnit_Framework_TestCase
         $taskHandlerFactory = new TaskHandlerFactory([]);
 
         $taskHandlerFactory->create(\stdClass::class);
-    }
-}
-
-class TestHandler implements TaskHandlerInterface
-{
-    /**
-     * {@inheritdoc}
-     */
-    public function handle($workload)
-    {
-        return strrev($workload);
     }
 }
