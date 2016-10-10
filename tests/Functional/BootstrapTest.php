@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Functional;
+namespace Task\TaskBundle\Tests\Functional;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Task\Scheduler\TaskSchedulerInterface;
@@ -18,6 +18,9 @@ use Task\Storage\ArrayStorage\ArrayTaskRepository;
 use Task\TaskBundle\Entity\TaskExecutionRepository;
 use Task\TaskBundle\Entity\TaskRepository;
 
+/**
+ * Tests the service definitions.
+ */
 class BootstrapTest extends KernelTestCase
 {
     public function testBootstrap()
