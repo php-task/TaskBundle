@@ -32,6 +32,11 @@ class ScheduleTaskCommandTest extends BaseCommandTestCase
         $this->assertCount(1, $tasks);
 
         $this->assertEquals(TestHandler::class, $tasks[0]->getHandlerClass());
+
+        $executions = $this->taskExecutionRepository->findAll();
+        $this->assertCount(1, $executions);
+
+        $this->assertEquals(TestHandler::class, $executions[0]->getHandlerClass());
     }
 
     public function testExecuteWithWorkload()
@@ -90,6 +95,31 @@ class ScheduleTaskCommandTest extends BaseCommandTestCase
         $this->assertEquals('Test workload 1', $tasks[0]->getWorkload());
         $this->assertEquals('0 * * * *', $tasks[0]->getInterval());
         $this->assertEquals($date, $tasks[0]->getLastExecution());
+    }
+
+    public function testExecuteWithExecutionDate()
+    {
+        $date = new \DateTime('+1 day');
+        $this->commandTester->execute(
+            [
+                'command' => $this->command->getName(),
+                'handlerClass' => TestHandler::class,
+                'workload' => 'Test workload 1',
+                '--execution-date' => '+1 day',
+            ]
+        );
+
+        $tasks = $this->taskRepository->findAll();
+        $this->assertCount(1, $tasks);
+
+        $this->assertEquals(TestHandler::class, $tasks[0]->getHandlerClass());
+        $this->assertEquals($date, $tasks[0]->getFirstExecution());
+
+        $executions = $this->taskExecutionRepository->findAll();
+        $this->assertCount(1, $executions);
+
+        $this->assertEquals(TestHandler::class, $executions[0]->getHandlerClass());
+        $this->assertEquals($date, $executions[0]->getScheduleTime());
     }
 
     /**

@@ -49,6 +49,7 @@ class ScheduleTaskCommand extends Command
             ->addArgument('handlerClass', InputArgument::REQUIRED)
             ->addArgument('workload', InputArgument::OPTIONAL)
             ->addOption('cron-expression', 'c', InputOption::VALUE_REQUIRED)
+            ->addOption('execution-date', null, InputOption::VALUE_REQUIRED)
             ->addOption('end-date', null, InputOption::VALUE_REQUIRED);
     }
 
@@ -60,6 +61,7 @@ class ScheduleTaskCommand extends Command
         $handlerClass = $input->getArgument('handlerClass');
         $workload = $input->getArgument('workload');
         $cronExpression = $input->getOption('cron-expression');
+        $executionDateString = $input->getOption('execution-date');
         $endDateString = $input->getOption('end-date');
 
         if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
@@ -75,6 +77,10 @@ class ScheduleTaskCommand extends Command
             }
 
             $taskBuilder->cron($cronExpression, new \DateTime(), $endDate);
+        }
+
+        if ($executionDateString !== null) {
+            $taskBuilder->executeAt(new \DateTime($executionDateString));
         }
 
         $this->scheduler->addTask($taskBuilder->getTask());
