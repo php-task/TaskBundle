@@ -9,12 +9,15 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Unit\EventListener;
+namespace Task\TaskBundle\Tests\Unit\EventListener;
 
 use Symfony\Component\EventDispatcher\Event;
 use Task\Runner\TaskRunnerInterface;
 use Task\TaskBundle\EventListener\RunListener;
 
+/**
+ * Tests for class RunListener.
+ */
 class RunListenerTest extends \PHPUnit_Framework_TestCase
 {
     public function testRun()

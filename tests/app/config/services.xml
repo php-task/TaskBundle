@@ -3,7 +3,10 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="test.handler" class="TestHandler">
+        <service id="test.handler" class="Task\TaskBundle\Tests\Functional\TestHandler">
+            <tag name="task.handler" handler-name="test"/>
+        </service>
+        <service id="test.fail_handler" class="Task\TaskBundle\Tests\Functional\FailTestHandler">
             <tag name="task.handler" handler-name="test"/>
         </service>
     </services>

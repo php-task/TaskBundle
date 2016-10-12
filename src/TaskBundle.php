@@ -8,8 +8,6 @@ use Task\TaskBundle\DependencyInjection\HandlerCompilerPass;
 
 /**
  * Integrates php-task into symfony.
- *
- * @author @wachterjohannes <johannes.wachter@massiveart.com>
  */
 class TaskBundle extends Bundle
 {
