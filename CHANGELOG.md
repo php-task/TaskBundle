@@ -1,5 +1,22 @@
 # Change Log
 
+## [0.3.0](https://github.com/php-task/TaskBundle/tree/0.3.0) (2016-10-15)
+[Full Changelog](https://github.com/php-task/TaskBundle/compare/0.2.1...0.3.0)
+
+**Fixed bugs:**
+
+- Cant use schema update when have tagged services [\#8](https://github.com/php-task/TaskBundle/issues/8)
+
+**Closed issues:**
+
+- Functional testcase for TaskCompilerPass [\#5](https://github.com/php-task/TaskBundle/issues/5)
+
+**Merged pull requests:**
+
+- Changed usage of task-builder because of reintroduce of schedule [\#21](https://github.com/php-task/TaskBundle/pull/21) ([wachterjohannes](https://github.com/wachterjohannes))
+- Improved Tests with unit and functional tests [\#20](https://github.com/php-task/TaskBundle/pull/20) ([wachterjohannes](https://github.com/wachterjohannes))
+- Improved architecture of bundle [\#15](https://github.com/php-task/TaskBundle/pull/15) ([wachterjohannes](https://github.com/wachterjohannes))
+
 ## [0.2.1](https://github.com/php-task/TaskBundle/tree/0.2.1) (2016-03-30)
 [Full Changelog](https://github.com/php-task/TaskBundle/compare/0.2.0...0.2.1)
 
