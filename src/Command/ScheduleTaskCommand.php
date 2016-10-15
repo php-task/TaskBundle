@@ -83,6 +83,6 @@ class ScheduleTaskCommand extends Command
             $taskBuilder->executeAt(new \DateTime($executionDateString));
         }
 
-        $this->scheduler->addTask($taskBuilder->getTask());
+        $taskBuilder->schedule();
     }
 }
