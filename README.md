@@ -11,13 +11,15 @@ Symfony integration for php-task library.
 Additional features which are implemented in this bundle.
 
 * Handler discovery
-* Automatic registration of frequent tasks
-* Different run possibilities (terminate event or command for a cron-job)
+* Different run possibilities
+* Different commands to manage and debug commands
+* Persist tasks and executions in database
+* Run statistics foreach execution of tasks
 
 ## Installation
 
 ```bash
-composer require php-task/TaskBundle @dev
+composer require php-task/task-bundle 1.0.x-dev
 ```
 
 ## Contribution
