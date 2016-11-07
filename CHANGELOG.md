@@ -1,5 +1,12 @@
 # Change Log
 
+## [0.3.1](https://github.com/php-task/TaskBundle/tree/0.3.1) (2016-11-07)
+[Full Changelog](https://github.com/php-task/TaskBundle/compare/0.3.0...0.3.1)
+
+**Merged pull requests:**
+
+- Updated required php version to allow 5.5 [\#22](https://github.com/php-task/TaskBundle/pull/22) ([janmassive](https://github.com/janmassive))
+
 ## [0.3.0](https://github.com/php-task/TaskBundle/tree/0.3.0) (2016-10-15)
 [Full Changelog](https://github.com/php-task/TaskBundle/compare/0.2.1...0.3.0)
 
