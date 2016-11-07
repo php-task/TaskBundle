@@ -6,7 +6,6 @@ matrix:
     - php: 5.5
       env:
         - STORAGE=doctrine
-        - CODE_COVERAGE=true
     - php: 5.5
       env:
         - STORAGE=array
