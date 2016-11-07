@@ -23,7 +23,7 @@
         "symfony/framework-bundle": "^2.6",
         "symfony/finder": "^2.6",
         "doctrine/doctrine-bundle": "^1.5",
-        "doctrine/data-fixtures": "^1.2"
+        "doctrine/data-fixtures": "^1.1"
     },
     "autoload": {
         "psr-4": {
