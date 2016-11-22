@@ -23,14 +23,14 @@ class TaskHandlerFactory implements TaskHandlerFactoryInterface
     /**
      * @var TaskHandlerInterface[]
      */
-    private $handler = [];
+    private $handlers = [];
 
     /**
-     * @param array $handler
+     * @param TaskHandlerInterface[] $handlers
      */
-    public function __construct(array $handler)
+    public function __construct(array $handlers)
     {
-        $this->handler = $handler;
+        $this->handlers = $handlers;
     }
 
     /**
@@ -38,10 +38,20 @@ class TaskHandlerFactory implements TaskHandlerFactoryInterface
      */
     public function create($className)
     {
-        if (!array_key_exists($className, $this->handler)) {
+        if (!array_key_exists($className, $this->handlers)) {
             throw new TaskHandlerNotExistsException($className);
         }
 
-        return $this->handler[$className];
+        return $this->handlers[$className];
+    }
+
+    /**
+     * Returns all known handler.
+     *
+     * @return TaskHandlerInterface[]
+     */
+    public function getHandlers()
+    {
+        return $this->handlers;
     }
 }
