@@ -104,8 +104,7 @@ abstract class BaseCommandTestCase extends KernelTestCase
         if ($cronExpression) {
             $task->setInterval($cronExpression, new \DateTime(), new \DateTime('+1 year'));
         }
-        $this->taskRepository->persist($task);
-        $this->taskRepository->flush();
+        $this->taskRepository->save($task);
 
         return $task;
     }
@@ -123,8 +122,9 @@ abstract class BaseCommandTestCase extends KernelTestCase
     {
         $execution = $this->taskExecutionRepository->create($task, $scheduleTime);
         $execution->setStatus($status);
-        $this->taskExecutionRepository->persist($execution);
-        $this->taskExecutionRepository->flush();
+        $this->taskExecutionRepository->save($execution);
+
+        $this->getEntityManager()->flush();
 
         return $execution;
     }
