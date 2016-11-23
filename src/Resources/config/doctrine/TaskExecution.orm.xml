@@ -24,7 +24,7 @@
         <field name="status" type="string" length="20"/>
         
         <many-to-one target-entity="Task\TaskBundle\Entity\Task" field="task">
-            <join-column name="task_id" referenced-column-name="uuid" on-delete="SET NULL"/>
+            <join-column name="task_id" referenced-column-name="uuid" on-delete="CASCADE"/>
         </many-to-one>
 
     </entity>
