@@ -31,6 +31,14 @@ class TaskRepository extends EntityRepository implements TaskRepositoryInterface
     /**
      * {@inheritdoc}
      */
+    public function findByUuid($uuid)
+    {
+        return $this->find($uuid);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function persist(TaskInterface $task)
     {
         $this->_em->persist($task);
