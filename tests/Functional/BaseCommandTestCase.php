@@ -124,7 +124,9 @@ abstract class BaseCommandTestCase extends KernelTestCase
         $execution->setStatus($status);
         $this->taskExecutionRepository->save($execution);
 
-        $this->getEntityManager()->flush();
+        if (self::$kernel->getContainer()->has('doctrine')) {
+            $this->getEntityManager()->flush();
+        }
 
         return $execution;
     }

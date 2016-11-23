@@ -35,7 +35,9 @@ class DebugTasksCommandTest extends BaseCommandTestCase
         $executions[1]->setResult(strrev($executions[1]->getWorkload()));
         $executions[1]->setDuration(0.0001);
 
-        $this->getEntityManager()->flush();
+        if (self::$kernel->getContainer()->has('doctrine')) {
+            $this->getEntityManager()->flush();
+        }
 
         $this->commandTester->execute(
             [
@@ -62,7 +64,9 @@ class DebugTasksCommandTest extends BaseCommandTestCase
             $this->createTaskExecution($task, new \DateTime('+1 hour')),
         ];
 
-        $this->getEntityManager()->flush();
+        if (self::$kernel->getContainer()->has('doctrine')) {
+            $this->getEntityManager()->flush();
+        }
 
         $this->commandTester->execute(
             [
