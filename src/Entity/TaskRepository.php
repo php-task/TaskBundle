@@ -49,6 +49,16 @@ class TaskRepository extends EntityRepository implements TaskRepositoryInterface
     /**
      * {@inheritdoc}
      */
+    public function remove(TaskInterface $task)
+    {
+        $this->_em->remove($task);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function flush()
     {
         $this->_em->flush();

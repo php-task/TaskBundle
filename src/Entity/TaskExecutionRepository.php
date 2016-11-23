@@ -44,6 +44,16 @@ class TaskExecutionRepository extends EntityRepository implements TaskExecutionR
     /**
      * {@inheritdoc}
      */
+    public function remove(TaskExecutionInterface $execution)
+    {
+        $this->_em->remove($execution);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function flush()
     {
         $this->_em->flush();
@@ -85,6 +95,19 @@ class TaskExecutionRepository extends EntityRepository implements TaskExecutionR
         } catch (NoResultException $e) {
             return;
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findByTask(TaskInterface $task)
+    {
+        return $this->createQueryBuilder('e')
+            ->innerJoin('e.task', 't')
+            ->where('t.uuid = :uuid')
+            ->setParameter('uuid', $task->getUuid())
+            ->getQuery()
+            ->getResult();
     }
 
     /**
