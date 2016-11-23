@@ -6,15 +6,13 @@
             repository-class="Task\TaskBundle\Entity\TaskExecutionRepository">
 
         <indexes>
-            <index columns="uuid"/>
             <index columns="schedule_time"/>
         </indexes>
 
-        <id name="id" type="integer">
-            <generator strategy="AUTO"/>
+        <id name="uuid" type="guid">
+            <generator strategy="NONE"/>
         </id>
 
-        <field name="uuid" type="string" length="100" unique="true"/>
         <field name="handlerClass" type="string" length="255"/>
         <field name="workload" type="object"/>
         <field name="duration" type="float" nullable="true"/>
@@ -25,7 +23,9 @@
         <field name="result" type="object" nullable="true"/>
         <field name="status" type="string" length="20"/>
         
-        <many-to-one target-entity="Task\TaskBundle\Entity\Task" field="task"/>
+        <many-to-one target-entity="Task\TaskBundle\Entity\Task" field="task">
+            <join-column name="task_id" referenced-column-name="uuid" on-delete="SET NULL"/>
+        </many-to-one>
 
     </entity>
 </doctrine-mapping>

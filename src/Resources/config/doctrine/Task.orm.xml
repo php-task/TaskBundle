@@ -9,11 +9,10 @@
             <index columns="uuid"/>
         </indexes>
 
-        <id name="id" type="integer">
-            <generator strategy="AUTO"/>
+        <id name="uuid" type="guid">
+            <generator strategy="NONE"/>
         </id>
 
-        <field name="uuid" type="string" length="100" unique="true"/>
         <field name="handlerClass" type="string" length="255"/>
         <field name="intervalExpression" type="string" length="255" nullable="true"/>
         <field name="firstExecution" type="datetime" nullable="true"/>
