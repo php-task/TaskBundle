@@ -14,6 +14,7 @@ namespace Task\TaskBundle\DependencyInjection;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
@@ -37,6 +38,14 @@ class TaskExtension extends Extension
 
         if ($config['run']['mode'] === 'listener') {
             $loader->load('listener.xml');
+        }
+
+        if ('doctrine' === $config['storage']) {
+            // FIXME move to compiler pass
+            $container->getDefinition('task.command.schedule_task')
+                ->addArgument(new Reference('doctrine.orm.entity_manager'));
+            $container->getDefinition('task.command.run')
+                ->addArgument(new Reference('doctrine.orm.entity_manager'));
         }
     }
 }

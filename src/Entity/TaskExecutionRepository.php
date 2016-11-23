@@ -34,7 +34,7 @@ class TaskExecutionRepository extends EntityRepository implements TaskExecutionR
     /**
      * {@inheritdoc}
      */
-    public function persist(TaskExecutionInterface $execution)
+    public function save(TaskExecutionInterface $execution)
     {
         $this->_em->persist($execution);
 
@@ -47,16 +47,6 @@ class TaskExecutionRepository extends EntityRepository implements TaskExecutionR
     public function remove(TaskExecutionInterface $execution)
     {
         $this->_em->remove($execution);
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function flush()
-    {
-        $this->_em->flush();
 
         return $this;
     }

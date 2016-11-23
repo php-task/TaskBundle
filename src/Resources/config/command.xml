@@ -7,6 +7,7 @@
             <argument type="string">task:run</argument>
             <argument type="service" id="task.runner"/>
             <argument type="service" id="task.scheduler"/>
+            <!-- add entity_manager if doctrine storage is enabled -->
 
             <tag name="console.command"/>
         </service>
@@ -21,6 +22,7 @@
         <service id="task.command.schedule_task" class="Task\TaskBundle\Command\ScheduleTaskCommand">
             <argument type="string">task:schedule</argument>
             <argument type="service" id="task.scheduler"/>
+            <!-- add entity_manager if doctrine storage is enabled -->
 
             <tag name="console.command"/>
         </service>

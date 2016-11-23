@@ -11,6 +11,7 @@
 
 namespace Task\TaskBundle\Command;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -33,16 +34,27 @@ class RunCommand extends Command
     private $scheduler;
 
     /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
      * @param string $name
      * @param TaskRunnerInterface $runner
      * @param TaskSchedulerInterface $scheduler
+     * @param EntityManagerInterface $entityManager
      */
-    public function __construct($name, TaskRunnerInterface $runner, TaskSchedulerInterface $scheduler)
-    {
+    public function __construct(
+        $name,
+        TaskRunnerInterface $runner,
+        TaskSchedulerInterface $scheduler,
+        EntityManagerInterface $entityManager = null
+    ) {
         parent::__construct($name);
 
         $this->runner = $runner;
         $this->scheduler = $scheduler;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -60,5 +72,9 @@ class RunCommand extends Command
     {
         $this->runner->runTasks();
         $this->scheduler->scheduleTasks();
+
+        if ($this->entityManager) {
+            $this->entityManager->flush();
+        }
     }
 }
