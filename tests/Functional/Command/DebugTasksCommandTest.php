@@ -26,8 +26,8 @@ class DebugTasksCommandTest extends BaseCommandTestCase
 
         /** @var TaskExecutionInterface[] $executions */
         $executions = [
-            $this->createTaskExecution($task, new \DateTime('-1 hour'), TaskStatus::COMPLETE),
-            $this->createTaskExecution($task, new \DateTime('-2 hour'), TaskStatus::COMPLETE),
+            $this->createTaskExecution($task, new \DateTime('-1 hour'), TaskStatus::COMPLETED),
+            $this->createTaskExecution($task, new \DateTime('-2 hour'), TaskStatus::COMPLETED),
         ];
 
         $executions[0]->setResult(strrev($executions[0]->getWorkload()));

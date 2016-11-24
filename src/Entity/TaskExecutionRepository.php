@@ -73,15 +73,15 @@ class TaskExecutionRepository extends EntityRepository implements TaskExecutionR
     /**
      * {@inheritdoc}
      */
-    public function findByStartTime(TaskInterface $task, \DateTime $scheduleTime)
+    public function findPending(TaskInterface $task)
     {
         try {
             return $this->createQueryBuilder('e')
                 ->innerJoin('e.task', 't')
                 ->where('t.uuid = :uuid')
-                ->andWhere('e.scheduleTime = :scheduleTime')
+                ->andWhere('e.status in (:status)')
                 ->setParameter('uuid', $task->getUuid())
-                ->setParameter('scheduleTime', $scheduleTime)
+                ->setParameter('status', [TaskStatus::PLANNED, TaskStatus::STARTED])
                 ->getQuery()
                 ->getSingleResult();
         } catch (NoResultException $e) {

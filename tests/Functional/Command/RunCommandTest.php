@@ -42,7 +42,7 @@ class RunCommandTest extends BaseCommandTestCase
             ]
         );
 
-        $this->assertEquals(TaskStatus::COMPLETE, $executions[0]->getStatus());
+        $this->assertEquals(TaskStatus::COMPLETED, $executions[0]->getStatus());
         $this->assertEquals(strrev('Test workload 1'), $executions[0]->getResult());
         $this->assertGreaterThan(0, $executions[0]->getDuration());
         $this->assertGreaterThanOrEqual($executions[0]->getStartTime(), $executions[0]->getEndTime());
@@ -53,7 +53,7 @@ class RunCommandTest extends BaseCommandTestCase
         $this->assertNull($executions[1]->getStartTime());
         $this->assertNull($executions[1]->getEndTime());
 
-        $this->assertEquals(TaskStatus::COMPLETE, $executions[2]->getStatus());
+        $this->assertEquals(TaskStatus::COMPLETED, $executions[2]->getStatus());
         $this->assertEquals(strrev('Test workload 3'), $executions[2]->getResult());
         $this->assertGreaterThan(0, $executions[2]->getDuration());
         $this->assertGreaterThanOrEqual($executions[2]->getStartTime(), $executions[2]->getEndTime());
