@@ -42,6 +42,7 @@ class TaskRepository extends EntityRepository implements TaskRepositoryInterface
     public function save(TaskInterface $task)
     {
         $this->_em->persist($task);
+        $this->_em->flush($task);
 
         return $this;
     }
@@ -52,6 +53,7 @@ class TaskRepository extends EntityRepository implements TaskRepositoryInterface
     public function remove(TaskInterface $task)
     {
         $this->_em->remove($task);
+        $this->_em->flush($task);
 
         return $this;
     }

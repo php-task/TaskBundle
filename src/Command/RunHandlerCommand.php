@@ -43,7 +43,8 @@ class RunHandlerCommand extends Command
      */
     protected function configure()
     {
-        $this->setDescription('Run pending tasks')
+        $this
+            ->setDescription('Run pending tasks')
             ->addArgument('handlerClass', InputArgument::REQUIRED)
             ->addArgument('workload', InputArgument::OPTIONAL);
     }
