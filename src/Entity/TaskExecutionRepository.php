@@ -81,7 +81,7 @@ class TaskExecutionRepository extends EntityRepository implements TaskExecutionR
                 ->where('t.uuid = :uuid')
                 ->andWhere('e.status in (:status)')
                 ->setParameter('uuid', $task->getUuid())
-                ->setParameter('status', [TaskStatus::PLANNED, TaskStatus::STARTED])
+                ->setParameter('status', [TaskStatus::PLANNED, TaskStatus::RUNNING])
                 ->getQuery()
                 ->getSingleResult();
         } catch (NoResultException $e) {
