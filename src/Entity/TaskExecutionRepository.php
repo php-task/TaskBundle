@@ -94,10 +94,18 @@ class TaskExecutionRepository extends EntityRepository implements TaskExecutionR
      */
     public function findByTask(TaskInterface $task)
     {
+        return $this->findByTaskUuid($task->getUuid());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findByTaskUuid($taskUuid)
+    {
         return $this->createQueryBuilder('e')
             ->innerJoin('e.task', 't')
             ->where('t.uuid = :uuid')
-            ->setParameter('uuid', $task->getUuid())
+            ->setParameter('uuid', $taskUuid)
             ->getQuery()
             ->getResult();
     }
