@@ -45,12 +45,22 @@ class ScheduleTaskCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Run pending tasks')
-            ->addArgument('handlerClass', InputArgument::REQUIRED)
-            ->addArgument('workload', InputArgument::OPTIONAL)
-            ->addOption('cron-expression', 'c', InputOption::VALUE_REQUIRED)
-            ->addOption('execution-date', null, InputOption::VALUE_REQUIRED)
-            ->addOption('end-date', null, InputOption::VALUE_REQUIRED);
+            ->setDescription('Schedule task')
+            ->setHelp(<<<'EOT'
+The <info>%command.name%</info> command schedules given handler.
+
+    $ %command.full_name% AppBundle\\Handler\\ImageHandler
+
+Execute without any arguments in order to see schedule a single task, use the
+<comment>--workload</comment> option in order to specify a workload or
+<comment>--cron-expression</comment> to create a recurring task.
+EOT
+            )
+            ->addArgument('handlerClass', InputArgument::REQUIRED, 'Handler which will be called')
+            ->addArgument('workload', InputArgument::OPTIONAL, 'This will be passed to the handler')
+            ->addOption('cron-expression', 'c', InputOption::VALUE_REQUIRED, 'Specifies interval for recurring task')
+            ->addOption('execution-date', null, InputOption::VALUE_REQUIRED, 'Specifies execution-date for single task')
+            ->addOption('end-date', null, InputOption::VALUE_REQUIRED, 'Specifies last run date for recurring tasks');
     }
 
     /**

@@ -50,7 +50,14 @@ class RunCommand extends Command
      */
     protected function configure()
     {
-        $this->setDescription('Run pending tasks');
+        $this->setDescription('Run pending tasks')
+            ->setHelp(<<<'EOT'
+The <info>%command.name%</info> command runs the pending task-executions. During the execution the status
+of the executions will be updated.
+
+    $ %command.full_name%
+EOT
+            );
     }
 
     /**
