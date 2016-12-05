@@ -44,9 +44,15 @@ class RunHandlerCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Run pending tasks')
-            ->addArgument('handlerClass', InputArgument::REQUIRED)
-            ->addArgument('workload', InputArgument::OPTIONAL);
+            ->setDescription('Run handler')
+            ->setHelp(<<<'EOT'
+The <info>%command.name%</info> command run given handler.
+
+    $ %command.full_name% AppBundle\\Handler\\ImageHandler ./img/test-image.jpg
+EOT
+            )
+        ->addArgument('handlerClass', InputArgument::REQUIRED, 'Handler which will be called')
+        ->addArgument('workload', InputArgument::OPTIONAL, 'This will be passed to the handler');
     }
 
     /**

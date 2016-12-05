@@ -45,8 +45,16 @@ class DebugTasksCommand extends Command
     protected function configure()
     {
         $this->setDescription('Debug tasks')
-            ->addOption('page', 'p', InputOption::VALUE_REQUIRED, '', 1)
-            ->addOption('page-size', null, InputOption::VALUE_REQUIRED, '', null);
+            ->setHelp(<<<'EOT'
+The <info>%command.name%</info> command dumps the information about tasks.
+
+    $ %command.full_name% -p 1 --page-size 10
+
+Pagination is possible with the optional options 'p' and 'page-size'.
+EOT
+            )
+            ->addOption('page', 'p', InputOption::VALUE_REQUIRED, 'Specifies page for pagination', 1)
+            ->addOption('page-size', null, InputOption::VALUE_REQUIRED, 'Specifies page-size for pagination', null);
     }
 
     /**
