@@ -42,21 +42,24 @@ class RunCommandTest extends BaseCommandTestCase
             ]
         );
 
-        $this->assertEquals(TaskStatus::COMPLETED, $executions[0]->getStatus());
-        $this->assertEquals(strrev('Test workload 1'), $executions[0]->getResult());
-        $this->assertGreaterThan(0, $executions[0]->getDuration());
-        $this->assertGreaterThanOrEqual($executions[0]->getStartTime(), $executions[0]->getEndTime());
+        $execution = $this->taskExecutionRepository->findByUuid($executions[0]->getUuid());
+        $this->assertEquals(TaskStatus::COMPLETED, $execution->getStatus());
+        $this->assertEquals(strrev('Test workload 1'), $execution->getResult());
+        $this->assertGreaterThan(0, $execution->getDuration());
+        $this->assertGreaterThanOrEqual($execution->getStartTime(), $execution->getEndTime());
 
-        $this->assertEquals(TaskStatus::PLANNED, $executions[1]->getStatus());
-        $this->assertNull($executions[1]->getResult());
-        $this->assertNull($executions[1]->getDuration());
-        $this->assertNull($executions[1]->getStartTime());
-        $this->assertNull($executions[1]->getEndTime());
+        $execution = $this->taskExecutionRepository->findByUuid($executions[1]->getUuid());
+        $this->assertEquals(TaskStatus::PLANNED, $execution->getStatus());
+        $this->assertNull($execution->getResult());
+        $this->assertNull($execution->getDuration());
+        $this->assertNull($execution->getStartTime());
+        $this->assertNull($execution->getEndTime());
 
-        $this->assertEquals(TaskStatus::COMPLETED, $executions[2]->getStatus());
-        $this->assertEquals(strrev('Test workload 3'), $executions[2]->getResult());
-        $this->assertGreaterThan(0, $executions[2]->getDuration());
-        $this->assertGreaterThanOrEqual($executions[2]->getStartTime(), $executions[2]->getEndTime());
+        $execution = $this->taskExecutionRepository->findByUuid($executions[2]->getUuid());
+        $this->assertEquals(TaskStatus::COMPLETED, $execution->getStatus());
+        $this->assertEquals(strrev('Test workload 3'), $execution->getResult());
+        $this->assertGreaterThan(0, $execution->getDuration());
+        $this->assertGreaterThanOrEqual($execution->getStartTime(), $execution->getEndTime());
 
         $result = $this->taskExecutionRepository->findAll(2, 3);
         $this->assertCount(1, $result);
@@ -86,21 +89,24 @@ class RunCommandTest extends BaseCommandTestCase
             ]
         );
 
-        $this->assertEquals(TaskStatus::FAILED, $executions[0]->getStatus());
-        $this->assertNull($executions[0]->getResult());
-        $this->assertGreaterThan(0, $executions[0]->getDuration());
-        $this->assertGreaterThanOrEqual($executions[0]->getStartTime(), $executions[0]->getEndTime());
+        $execution = $this->taskExecutionRepository->findByUuid($executions[0]->getUuid());
+        $this->assertEquals(TaskStatus::FAILED, $execution->getStatus());
+        $this->assertNull($execution->getResult());
+        $this->assertGreaterThan(0, $execution->getDuration());
+        $this->assertGreaterThanOrEqual($execution->getStartTime(), $execution->getEndTime());
 
-        $this->assertEquals(TaskStatus::PLANNED, $executions[1]->getStatus());
-        $this->assertNull($executions[1]->getResult());
-        $this->assertNull($executions[1]->getDuration());
-        $this->assertNull($executions[1]->getStartTime());
-        $this->assertNull($executions[1]->getEndTime());
+        $execution = $this->taskExecutionRepository->findByUuid($executions[1]->getUuid());
+        $this->assertEquals(TaskStatus::PLANNED, $execution->getStatus());
+        $this->assertNull($execution->getResult());
+        $this->assertNull($execution->getDuration());
+        $this->assertNull($execution->getStartTime());
+        $this->assertNull($execution->getEndTime());
 
-        $this->assertEquals(TaskStatus::FAILED, $executions[2]->getStatus());
-        $this->assertNull($executions[2]->getResult());
-        $this->assertGreaterThan(0, $executions[2]->getDuration());
-        $this->assertGreaterThanOrEqual($executions[2]->getStartTime(), $executions[2]->getEndTime());
+        $execution = $this->taskExecutionRepository->findByUuid($executions[2]->getUuid());
+        $this->assertEquals(TaskStatus::FAILED, $execution->getStatus());
+        $this->assertNull($execution->getResult());
+        $this->assertGreaterThan(0, $execution->getDuration());
+        $this->assertGreaterThanOrEqual($execution->getStartTime(), $execution->getEndTime());
 
         $result = $this->taskExecutionRepository->findAll(2, 3);
         $this->assertCount(1, $result);
