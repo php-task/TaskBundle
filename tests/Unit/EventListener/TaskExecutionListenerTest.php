@@ -13,7 +13,7 @@ namespace Task\TaskBundle\Tests\Unit\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Task\Event\TaskExecutionEvent;
-use Task\TaskBundle\EventListener\TaskExecutionListener;
+use Task\TaskBundle\EventListener\DoctrineTaskExecutionListener;
 
 /**
  * Tests for class TaskExecutionListener.
@@ -24,7 +24,7 @@ class TaskExecutionListenerTest extends \PHPUnit_Framework_TestCase
     {
         $entityManager = $this->prophesize(EntityManagerInterface::class);
 
-        $listener = new TaskExecutionListener($entityManager->reveal());
+        $listener = new DoctrineTaskExecutionListener($entityManager->reveal());
         $listener->clearEntityManagerAfterTask($this->prophesize(TaskExecutionEvent::class)->reveal());
 
         $entityManager->clear()->shouldBeCalled();

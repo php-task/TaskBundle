@@ -17,7 +17,7 @@ use Task\Event\TaskExecutionEvent;
 /**
  * Listens on task-execution events.
  */
-class TaskExecutionListener
+class DoctrineTaskExecutionListener
 {
     /**
      * @var EntityManagerInterface

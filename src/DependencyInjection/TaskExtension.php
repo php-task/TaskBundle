@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Task\Event\Events;
-use Task\TaskBundle\EventListener\TaskExecutionListener;
+use Task\TaskBundle\EventListener\DoctrineTaskExecutionListener;
 
 /**
  * Container extension for php-task library.
@@ -56,7 +56,10 @@ class TaskExtension extends Extension
     private function loadDoctrineAdapter(array $config, ContainerBuilder $container)
     {
         if ($config['clear']) {
-            $definition = new Definition(TaskExecutionListener::class, [new Reference('doctrine.orm.entity_manager', ContainerInterface::IGNORE_ON_INVALID_REFERENCE)]);
+            $definition = new Definition(
+                DoctrineTaskExecutionListener::class,
+                [new Reference('doctrine.orm.entity_manager', ContainerInterface::IGNORE_ON_INVALID_REFERENCE)]
+            );
             $definition->addTag(
                 'kernel.event_listener',
                 ['event' => Events::TASK_AFTER, 'method' => 'clearEntityManagerAfterTask']
