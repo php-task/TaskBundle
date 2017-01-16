@@ -119,7 +119,7 @@ class ScheduleTaskCommandTest extends BaseCommandTestCase
         $this->assertCount(1, $executions);
 
         $this->assertEquals(TestHandler::class, $executions[0]->getHandlerClass());
-        $this->assertEquals($date, $executions[0]->getScheduleTime());
+        $this->assertEquals($date, $executions[0]->getScheduleTime(), '', 2);
     }
 
     /**
