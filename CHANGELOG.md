@@ -1,5 +1,29 @@
 # Change Log
 
+## [1.0.0-RC1](https://github.com/php-task/TaskBundle/tree/1.0.0-RC1) (2017-02-13)
+[Full Changelog](https://github.com/php-task/TaskBundle/compare/0.3.1...1.0.0-RC1)
+
+**Implemented enhancements:**
+
+- Time measurement [\#11](https://github.com/php-task/TaskBundle/issues/11)
+- Clear entity-manager after each task to ensure clean environment  [\#34](https://github.com/php-task/TaskBundle/pull/34) ([wachterjohannes](https://github.com/wachterjohannes))
+
+**Closed issues:**
+
+- Description for the commands should be more specific. [\#31](https://github.com/php-task/TaskBundle/issues/31)
+
+**Merged pull requests:**
+
+- Updated composer to match symfony 3 [\#33](https://github.com/php-task/TaskBundle/pull/33) ([wachterjohannes](https://github.com/wachterjohannes))
+- Added command descriptions [\#32](https://github.com/php-task/TaskBundle/pull/32) ([wachterjohannes](https://github.com/wachterjohannes))
+- Added find-by-task-uuid function [\#30](https://github.com/php-task/TaskBundle/pull/30) ([wachterjohannes](https://github.com/wachterjohannes))
+- Rename findByStartTime method in repository [\#29](https://github.com/php-task/TaskBundle/pull/29) ([wachterjohannes](https://github.com/wachterjohannes))
+- Added selective flush to repositories [\#28](https://github.com/php-task/TaskBundle/pull/28) ([wachterjohannes](https://github.com/wachterjohannes))
+- Removed flush of repositories [\#27](https://github.com/php-task/TaskBundle/pull/27) ([wachterjohannes](https://github.com/wachterjohannes))
+- Added find-by-task and remove function [\#26](https://github.com/php-task/TaskBundle/pull/26) ([wachterjohannes](https://github.com/wachterjohannes))
+- Added find-by-uuid to task-repository [\#25](https://github.com/php-task/TaskBundle/pull/25) ([wachterjohannes](https://github.com/wachterjohannes))
+- Used uuid as doctrine-identifier [\#24](https://github.com/php-task/TaskBundle/pull/24) ([wachterjohannes](https://github.com/wachterjohannes))
+
 ## [0.3.1](https://github.com/php-task/TaskBundle/tree/0.3.1) (2016-11-07)
 [Full Changelog](https://github.com/php-task/TaskBundle/compare/0.3.0...0.3.1)
 
