@@ -129,18 +129,15 @@ class TaskExecutionRepository extends EntityRepository implements TaskExecutionR
     /**
      * {@inheritdoc}
      */
-    public function findScheduled(\DateTime $dateTime = null)
+    public function findScheduled()
     {
-        if ($dateTime === null) {
-            $dateTime = new \DateTime();
-        }
-
-        return $this->createQueryBuilder('e')
+        $query = $this->createQueryBuilder('e')
             ->innerJoin('e.task', 't')
-            ->where('e.status = :status AND e.scheduleTime < :dateTime')
+            ->where('e.status = :status')
+            ->andWhere('e.scheduleTime < CURRENT_TIMESTAMP()')
             ->setParameter('status', TaskStatus::PLANNED)
-            ->setParameter('dateTime', $dateTime)
-            ->getQuery()
-            ->getResult();
+            ->getQuery();
+
+        return $query->getResult();
     }
 }
