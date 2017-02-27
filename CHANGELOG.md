@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.0.0-RC2](https://github.com/php-task/TaskBundle/tree/1.0.0-RC2) (2017-02-27)
+[Full Changelog](https://github.com/php-task/TaskBundle/compare/1.0.0-RC1...1.0.0-RC2)
+
+**Merged pull requests:**
+
+- Fixed query to find pending executions [\#36](https://github.com/php-task/TaskBundle/pull/36) ([wachterjohannes](https://github.com/wachterjohannes))
+
 ## [1.0.0-RC1](https://github.com/php-task/TaskBundle/tree/1.0.0-RC1) (2017-02-13)
 [Full Changelog](https://github.com/php-task/TaskBundle/compare/0.3.1...1.0.0-RC1)
 
