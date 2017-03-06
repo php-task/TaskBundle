@@ -19,11 +19,13 @@ Additional features which are implemented in this bundle.
 ## Installation
 
 ```bash
-composer require php-task/task-bundle 1.0.x-dev
+composer require php-task/task-bundle
 ```
 
-## Contribution
+## Documentation
 
-__This project is under heavy development. Therefore we can not guarantee full backwards compatibility at the current stage.__
+See the official documentation on [http://php-task.readthedocs.io/en/latest/](http://php-task.readthedocs.io/en/latest/).
+
+## Contribution
 
 Pull requests are welcome. Please see our [CONTRIBUTING](https://github.com/php-task/TaskBundle/blob/master/CONTRIBUTING.md) guide.
