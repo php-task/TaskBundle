@@ -134,7 +134,8 @@ class TaskExecutionRepository extends EntityRepository implements TaskExecutionR
         $query = $this->createQueryBuilder('e')
             ->innerJoin('e.task', 't')
             ->where('e.status = :status')
-            ->andWhere('e.scheduleTime < CURRENT_TIMESTAMP()')
+            ->andWhere('e.scheduleTime < :date')
+            ->setParameter('date', new \DateTime())
             ->setParameter('status', TaskStatus::PLANNED)
             ->getQuery();
 
