@@ -16,5 +16,15 @@
             <argument type="string">TaskBundle:TaskExecution</argument>
         </service>
         <service id="task.storage.task_execution" alias="task.repository.task_execution"/>
+
+        <service id="task.command.schedule_system_tasks" class="Task\TaskBundle\Command\ScheduleSystemTasksCommand">
+            <argument type="string">task:schedule:system-tasks</argument>
+            <argument>%task.system_tasks%</argument>
+            <argument type="service" id="task.scheduler"/>
+            <argument type="service" id="task.repository.task"/>
+            <argument type="service" id="task.storage.task_execution"/>
+
+            <tag name="console.command"/>
+        </service>
     </services>
 </container>

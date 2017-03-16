@@ -7,6 +7,10 @@ use Doctrine\Common\DataFixtures\ProxyReferenceRepository;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Task\TaskBundle\Entity\Task;
+use Task\TaskBundle\Entity\TaskExecution;
+use Task\TaskInterface;
+use Task\TaskStatus;
 
 /**
  * Extends kernel-test-case with additional functions/properties.
@@ -51,5 +55,34 @@ abstract class BaseDatabaseTestCase extends KernelTestCase
         if ($connection->getDriver() instanceof \Doctrine\DBAL\Driver\PDOMySql\Driver) {
             $connection->executeUpdate('SET foreign_key_checks = 1;');
         }
+    }
+
+    /**
+     * Create a new task.
+     *
+     * @param string $handlerClass
+     *
+     * @return Task
+     */
+    protected function createTask($handlerClass = TestHandler::class)
+    {
+        return new Task($handlerClass);
+    }
+
+    /**
+     * Create a new task-execution.
+     *
+     * @param TaskInterface $task
+     * @param \DateTime $scheduleTime
+     * @param string $status
+     *
+     * @return TaskExecution
+     */
+    protected function createTaskExecution(TaskInterface $task, \DateTime $scheduleTime, $status = TaskStatus::PLANNED)
+    {
+        $execution = new TaskExecution($task, $task->getHandlerClass(), $scheduleTime);
+        $execution->setStatus($status);
+
+        return $execution;
     }
 }

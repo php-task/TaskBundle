@@ -197,33 +197,4 @@ class TaskExecutionRepositoryTest extends BaseDatabaseTestCase
 
         return $execution;
     }
-
-    /**
-     * Create a new task.
-     *
-     * @param string $handlerClass
-     *
-     * @return TaskInterface
-     */
-    private function createTask($handlerClass = TestHandler::class)
-    {
-        return new Task($handlerClass);
-    }
-
-    /**
-     * Create a new task-execution.
-     *
-     * @param TaskInterface $task
-     * @param \DateTime $scheduleTime
-     * @param string $status
-     *
-     * @return TaskExecutionInterface
-     */
-    private function createTaskExecution(TaskInterface $task, \DateTime $scheduleTime, $status = TaskStatus::PLANNED)
-    {
-        $execution = new TaskExecution($task, $task->getHandlerClass(), $scheduleTime);
-        $execution->setStatus($status);
-
-        return $execution;
-    }
 }

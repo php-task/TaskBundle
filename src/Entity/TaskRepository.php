@@ -12,6 +12,7 @@
 namespace Task\TaskBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 use Task\Storage\TaskRepositoryInterface;
 use Task\TaskInterface;
 
@@ -96,5 +97,25 @@ class TaskRepository extends EntityRepository implements TaskRepositoryInterface
             ->setParameter('dateTime', $dateTime)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * Returns task identified by system-key.
+     *
+     * @param string $systemKey
+     *
+     * @return TaskInterface
+     */
+    public function findBySystemKey($systemKey)
+    {
+        try {
+            return $this->createQueryBuilder('t')
+                ->where('t.systemKey = :systemKey')
+                ->setParameter('systemKey', $systemKey)
+                ->getQuery()
+                ->getSingleResult();
+        } catch (NoResultException $exception) {
+            return;
+        }
     }
 }

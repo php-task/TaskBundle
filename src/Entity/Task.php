@@ -25,6 +25,11 @@ class Task extends BaseTask
     private $intervalExpression;
 
     /**
+     * @var string
+     */
+    private $systemKey;
+
+    /**
      * @return mixed
      */
     public function getIntervalExpression()
@@ -32,6 +37,9 @@ class Task extends BaseTask
         return $this->intervalExpression;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getInterval()
     {
         if (null === $this->interval && null !== $this->intervalExpression) {
@@ -49,5 +57,29 @@ class Task extends BaseTask
         parent::setInterval($interval, $firstExecution, $lastExecution);
 
         $this->intervalExpression = $interval->getExpression();
+    }
+
+    /**
+     * Returns system-key.
+     *
+     * @return string
+     */
+    public function getSystemKey()
+    {
+        return $this->systemKey;
+    }
+
+    /**
+     * Set system-key.
+     *
+     * @param string $systemKey
+     *
+     * @return $this
+     */
+    public function setSystemKey($systemKey)
+    {
+        $this->systemKey = $systemKey;
+
+        return $this;
     }
 }

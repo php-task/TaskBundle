@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Functional\Command;
+namespace Task\TaskBundle\Functional\Command;
 
 use Symfony\Component\Console\Output\OutputInterface;
 use Task\TaskBundle\Tests\Functional\BaseCommandTestCase;
