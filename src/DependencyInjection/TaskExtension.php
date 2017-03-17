@@ -34,6 +34,9 @@ class TaskExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('task.system_tasks', $config['system_tasks']);
+        $container->setParameter('task.storage', $config['storage']);
+
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load(sprintf('storage/%s.xml', $config['storage']));
         $loader->load('task_event_listener.xml');

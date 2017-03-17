@@ -49,6 +49,16 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->arrayNode('system_tasks')
+                    ->prototype('array')
+                        ->children()
+                            ->booleanNode('enabled')->defaultTrue()->end()
+                            ->scalarNode('handler_class')->end()
+                            ->variableNode('workload')->defaultNull()->end()
+                            ->scalarNode('cron_expression')->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;

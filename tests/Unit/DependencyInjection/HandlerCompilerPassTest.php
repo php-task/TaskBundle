@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Unit\DependencyInjection;
+namespace Task\TaskBundle\Unit\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;

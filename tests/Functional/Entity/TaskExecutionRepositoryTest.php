@@ -6,9 +6,7 @@ use Task\Execution\TaskExecutionInterface;
 use Task\Storage\TaskExecutionRepositoryInterface;
 use Task\Storage\TaskRepositoryInterface;
 use Task\TaskBundle\Entity\Task;
-use Task\TaskBundle\Entity\TaskExecution;
 use Task\TaskBundle\Tests\Functional\BaseDatabaseTestCase;
-use Task\TaskBundle\Tests\Functional\TestHandler;
 use Task\TaskInterface;
 use Task\TaskStatus;
 
@@ -194,35 +192,6 @@ class TaskExecutionRepositoryTest extends BaseDatabaseTestCase
 
         $execution = $this->createTaskExecution($task, $scheduleTime, $status);
         $this->taskExecutionRepository->save($execution);
-
-        return $execution;
-    }
-
-    /**
-     * Create a new task.
-     *
-     * @param string $handlerClass
-     *
-     * @return TaskInterface
-     */
-    private function createTask($handlerClass = TestHandler::class)
-    {
-        return new Task($handlerClass);
-    }
-
-    /**
-     * Create a new task-execution.
-     *
-     * @param TaskInterface $task
-     * @param \DateTime $scheduleTime
-     * @param string $status
-     *
-     * @return TaskExecutionInterface
-     */
-    private function createTaskExecution(TaskInterface $task, \DateTime $scheduleTime, $status = TaskStatus::PLANNED)
-    {
-        $execution = new TaskExecution($task, $task->getHandlerClass(), $scheduleTime);
-        $execution->setStatus($status);
 
         return $execution;
     }

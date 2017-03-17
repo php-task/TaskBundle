@@ -1,5 +1,11 @@
 task:
     storage: doctrine
+    system_tasks:
+        testing:
+            enabled: true
+            handler_class: Task\TaskBundle\Tests\Functional\TestHandler
+            workload: ['test']
+            cron_expression: '* * * * *'
 
 doctrine:
     orm:
