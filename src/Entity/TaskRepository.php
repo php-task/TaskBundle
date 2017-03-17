@@ -118,4 +118,17 @@ class TaskRepository extends EntityRepository implements TaskRepositoryInterface
             return;
         }
     }
+
+    /**
+     * Returns all system-task.
+     *
+     * @return TaskInterface[]
+     */
+    public function findSystemTasks()
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.systemKey IS NOT NULL')
+            ->getQuery()
+            ->getResult();
+    }
 }

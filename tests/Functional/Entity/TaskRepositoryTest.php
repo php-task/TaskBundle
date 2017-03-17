@@ -19,7 +19,7 @@ class TaskRepositoryTest extends BaseDatabaseTestCase
         $this->taskRepository = self::$kernel->getContainer()->get('task.storage.task');
     }
 
-    public function testFinBySystemKey()
+    public function testFindBySystemKey()
     {
         if (self::$kernel->getContainer()->getParameter('kernel.storage') !== 'doctrine') {
             return $this->markTestSkipped('This testcase will only be called for doctrine storage.');
@@ -34,7 +34,7 @@ class TaskRepositoryTest extends BaseDatabaseTestCase
         $this->assertEquals($task->getUuid(), $result->getUuid());
     }
 
-    public function testFinBySystemKeyNotFound()
+    public function testFindBySystemKeyNotFound()
     {
         if (self::$kernel->getContainer()->getParameter('kernel.storage') !== 'doctrine') {
             return $this->markTestSkipped('This testcase will only be called for doctrine storage.');
@@ -44,5 +44,23 @@ class TaskRepositoryTest extends BaseDatabaseTestCase
         $this->taskRepository->save($task);
 
         $this->assertNull($this->taskRepository->findBySystemKey('test'));
+    }
+
+    public function testFindSystemTasks()
+    {
+        if (self::$kernel->getContainer()->getParameter('kernel.storage') !== 'doctrine') {
+            return $this->markTestSkipped('This testcase will only be called for doctrine storage.');
+        }
+
+        $task1 = $this->createTask();
+        $task1->setSystemKey('test');
+        $this->taskRepository->save($task1);
+
+        $task2 = $this->createTask();
+        $this->taskRepository->save($task2);
+
+        $result = $this->taskRepository->findSystemTasks();
+        $this->assertCount(1, $result);
+        $this->assertEquals($task1->getUuid(), $result[0]->getUuid());
     }
 }

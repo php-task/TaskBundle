@@ -98,6 +98,12 @@ EOT
             }
         }
 
+        foreach ($this->taskRepository->findSystemTasks() as $task) {
+            if (!in_array($task->getSystemKey(), array_keys($this->systemTasks))) {
+                $this->disableTask($task);
+            }
+        }
+
         $output->writeln('');
         $output->writeln('System-tasks successfully scheduled');
     }
@@ -112,7 +118,7 @@ EOT
     private function processSystemTask($systemKey, array $systemTask, OutputInterface $output)
     {
         if (!$systemTask['enabled']) {
-            $this->disableTask($systemKey);
+            $this->disableSystemTask($systemKey);
 
             $output->writeln(sprintf(' * System-task "%s" was <info>disabled</info>.', $systemKey));
 
@@ -144,12 +150,22 @@ EOT
      *
      * @param string $systemKey
      */
-    private function disableTask($systemKey)
+    private function disableSystemTask($systemKey)
     {
         if (!$task = $this->taskRepository->findBySystemKey($systemKey)) {
             return;
         }
 
+        $this->disableTask($task);
+    }
+
+    /**
+     * Disable given task identified.
+     *
+     * @param TaskInterface $task
+     */
+    public function disableTask(TaskInterface $task)
+    {
         $task->setInterval($task->getInterval(), $task->getFirstExecution(), new \DateTime());
         $this->abortPending($task);
     }
