@@ -11,6 +11,7 @@ use Task\Storage\TaskExecutionRepositoryInterface;
 use Task\TaskBundle\Builder\TaskBuilder;
 use Task\TaskBundle\Entity\TaskRepository;
 use Task\TaskInterface;
+use Task\TaskStatus;
 
 /**
  * Schedules configured system-tasks.
@@ -97,7 +98,6 @@ EOT
             }
         }
 
-
         $output->writeln('');
         $output->writeln('System-tasks successfully scheduled');
     }
@@ -151,7 +151,7 @@ EOT
         }
 
         $task->setInterval($task->getInterval(), $task->getFirstExecution(), new \DateTime());
-        $this->removePending($task);
+        $this->abortPending($task);
     }
 
     /**
@@ -177,21 +177,22 @@ EOT
 
         $task->setInterval(CronExpression::factory($systemTask['cron_expression']), $task->getFirstExecution());
 
-        $this->removePending($task);
+        $this->abortPending($task);
         $this->scheduler->scheduleTasks();
     }
 
     /**
-     * Remove pending execution for given task.
+     * Abort pending execution for given task.
      *
      * @param TaskInterface $task
      */
-    private function removePending(TaskInterface $task)
+    private function abortPending(TaskInterface $task)
     {
         if (!$execution = $this->taskExecutionRepository->findPending($task)) {
             return;
         }
 
-        $this->taskExecutionRepository->remove($execution);
+        $execution->setStatus(TaskStatus::ABORTED);
+        $this->taskExecutionRepository->save($execution);
     }
 }

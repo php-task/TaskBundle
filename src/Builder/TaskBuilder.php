@@ -13,31 +13,13 @@ namespace Task\TaskBundle\Builder;
 
 use Task\Builder\TaskBuilder as BaseTaskBuilder;
 use Task\Builder\TaskBuilderInterface;
-use Task\Scheduler\TaskSchedulerInterface;
 use Task\TaskBundle\Entity\Task;
-use Task\TaskInterface;
 
 /**
  * Extends base task-builder.
  */
 class TaskBuilder extends BaseTaskBuilder
 {
-    /**
-     * @var TaskInterface
-     */
-    private $task;
-
-    /**
-     * @param TaskInterface $task
-     * @param TaskSchedulerInterface $taskScheduler
-     */
-    public function __construct(TaskInterface $task, TaskSchedulerInterface $taskScheduler)
-    {
-        parent::__construct($task, $taskScheduler);
-
-        $this->task = $task;
-    }
-
     /**
      * Set system-key.
      *

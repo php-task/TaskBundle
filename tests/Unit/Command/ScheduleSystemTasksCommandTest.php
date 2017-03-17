@@ -2,14 +2,19 @@
 
 namespace Task\TaskBundle\Unit\Command;
 
+use Cron\CronExpression;
+use Prophecy\Argument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Task\Execution\TaskExecutionInterface;
 use Task\Scheduler\TaskSchedulerInterface;
 use Task\Storage\TaskExecutionRepositoryInterface;
 use Task\TaskBundle\Builder\TaskBuilder;
 use Task\TaskBundle\Command\ScheduleSystemTasksCommand;
 use Task\TaskBundle\Entity\TaskRepository;
 use Task\TaskBundle\Tests\Functional\TestHandler;
+use Task\TaskInterface;
+use Task\TaskStatus;
 
 class ScheduleSystemTasksCommandTest extends \PHPUnit_Framework_TestCase
 {
@@ -119,5 +124,115 @@ class ScheduleSystemTasksCommandTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    // TODO Tests for update and disable.
+    public function testExecuteDisable()
+    {
+        $command = $this->createCommand(
+            [
+                'testing' => [
+                    'enabled' => false,
+                    'handler_class' => TestHandler::class,
+                    'workload' => 'test',
+                    'cron_expression' => '* * * * *',
+                ],
+            ]
+        );
+
+        $task = $this->prophesize(TaskInterface::class);
+        $task->getInterval()->willReturn(CronExpression::factory('* * * * *'));
+        $task->getFirstExecution()->willReturn(new \DateTime());
+
+        $task->setInterval(
+            $task->reveal()->getInterval(),
+            $task->reveal()->getFirstExecution(),
+            Argument::that(
+                function ($date) {
+                    return $date <= new \DateTime('+1 Minute');
+                }
+            )
+        )->shouldBeCalled();
+
+        $this->taskRepository->findBySystemKey('testing')->willReturn($task->reveal());
+
+        $execution = $this->prophesize(TaskExecutionInterface::class);
+        $execution->setStatus(TaskStatus::ABORTED);
+
+        $this->taskExecutionRepository->findPending($task->reveal())->willReturn($execution->reveal());
+        $this->taskExecutionRepository->save($execution->reveal())->shouldBeCalled();
+
+        $command->run(
+            $this->prophesize(InputInterface::class)->reveal(),
+            $this->prophesize(OutputInterface::class)->reveal()
+        );
+    }
+
+    public function testExecuteUpdate()
+    {
+        $command = $this->createCommand(
+            [
+                'testing' => [
+                    'enabled' => true,
+                    'handler_class' => TestHandler::class,
+                    'workload' => 'test',
+                    'cron_expression' => '* * * * *',
+                ],
+            ]
+        );
+
+        $task = $this->prophesize(TaskInterface::class);
+        $task->getHandlerClass()->willReturn(TestHandler::class);
+        $task->getWorkload()->willReturn('test');
+        $task->getInterval()->willReturn(CronExpression::factory('@daily'));
+        $task->getFirstExecution()->willReturn(new \DateTime());
+
+        $task->setInterval(CronExpression::factory('* * * * *'), $task->reveal()->getFirstExecution())
+            ->shouldBeCalled();
+
+        $this->taskRepository->findBySystemKey('testing')->willReturn($task->reveal());
+
+        $execution = $this->prophesize(TaskExecutionInterface::class);
+        $execution->setStatus(TaskStatus::ABORTED);
+
+        $this->taskExecutionRepository->findPending($task->reveal())->willReturn($execution->reveal());
+        $this->taskExecutionRepository->save($execution->reveal())->shouldBeCalled();
+
+        $this->scheduler->scheduleTasks()->shouldBeCalled();
+
+        $command->run(
+            $this->prophesize(InputInterface::class)->reveal(),
+            $this->prophesize(OutputInterface::class)->reveal()
+        );
+    }
+
+    public function testExecuteUpdateNotSupported()
+    {
+        $command = $this->createCommand(
+            [
+                'testing' => [
+                    'enabled' => true,
+                    'handler_class' => TestHandler::class,
+                    'workload' => 'test',
+                    'cron_expression' => '* * * * *',
+                ],
+            ]
+        );
+
+        $task = $this->prophesize(TaskInterface::class);
+        $task->getHandlerClass()->willReturn('not-existing');
+        $task->getWorkload()->willReturn('new-workload');
+        $task->getInterval()->willReturn(CronExpression::factory('@daily'));
+        $task->getFirstExecution()->willReturn(new \DateTime());
+
+        $task->setInterval(Argument::cetera())->shouldNotBeCalled();
+
+        $this->taskRepository->findBySystemKey('testing')->willReturn($task->reveal());
+
+        $this->taskExecutionRepository->save(Argument::cetera())->shouldNotBeCalled();
+
+        $this->scheduler->scheduleTasks()->shouldNotBeCalled();
+
+        $command->run(
+            $this->prophesize(InputInterface::class)->reveal(),
+            $this->prophesize(OutputInterface::class)->reveal()
+        );
+    }
 }

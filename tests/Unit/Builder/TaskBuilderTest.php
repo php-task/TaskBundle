@@ -30,6 +30,5 @@ class TaskBuilderTest extends \PHPUnit_Framework_TestCase
 
         $taskBuilder = new TaskBuilder($task->reveal(), $scheduler->reveal());
         $taskBuilder->setSystemKey('test');
-
     }
 }

@@ -6,9 +6,7 @@ use Task\Execution\TaskExecutionInterface;
 use Task\Storage\TaskExecutionRepositoryInterface;
 use Task\Storage\TaskRepositoryInterface;
 use Task\TaskBundle\Entity\Task;
-use Task\TaskBundle\Entity\TaskExecution;
 use Task\TaskBundle\Tests\Functional\BaseDatabaseTestCase;
-use Task\TaskBundle\Tests\Functional\TestHandler;
 use Task\TaskInterface;
 use Task\TaskStatus;
 

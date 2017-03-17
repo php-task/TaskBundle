@@ -7,12 +7,16 @@ use Task\TaskBundle\Tests\Functional\BaseCommandTestCase;
 
 class ScheduleSystemTasksCommandTest extends BaseCommandTestCase
 {
-    public function testExecute()
+    public function setUp()
     {
+        self::bootKernel();
         if (self::$kernel->getContainer()->getParameter('kernel.storage') !== 'doctrine') {
             return $this->markTestSkipped('This testcase will only be called for doctrine storage.');
         }
+    }
 
+    public function testExecute()
+    {
         $this->commandTester->execute(
             [
                 'command' => $this->command->getName(),
@@ -24,7 +28,6 @@ class ScheduleSystemTasksCommandTest extends BaseCommandTestCase
 
         $taskRepository = self::$kernel->getContainer()->get('task.repository.task');
         $this->assertNotNull($taskRepository->findBySystemKey('testing'));
-
     }
 
     /**
