@@ -38,7 +38,7 @@ before_script:
   - STORAGE=doctrine tests/app/console doctrine:schema:create
 
 script:
-   - phpunit -c phpunit.xml.dist --coverage-clover=coverage.clover
+   - vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover=coverage.clover
 
 after_script:
   - if [[ $CODE_COVERAGE == 'true' ]]; then wget https://scrutinizer-ci.com/ocular.phar ; fi
