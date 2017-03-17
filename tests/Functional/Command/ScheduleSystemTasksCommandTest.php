@@ -13,6 +13,8 @@ class ScheduleSystemTasksCommandTest extends BaseCommandTestCase
         if (self::$kernel->getContainer()->getParameter('kernel.storage') !== 'doctrine') {
             return $this->markTestSkipped('This testcase will only be called for doctrine storage.');
         }
+
+        parent::setUp();
     }
 
     public function testExecute()
