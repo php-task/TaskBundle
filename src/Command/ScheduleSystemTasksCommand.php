@@ -99,8 +99,10 @@ EOT
         }
 
         foreach ($this->taskRepository->findSystemTasks() as $task) {
-            if (!in_array($task->getSystemKey(), array_keys($this->systemTasks))) {
-                $this->disableTask($task);
+            if (!in_array($task->getSystemKey(), array_keys($this->systemTasks)) && ($this->disableTask($task))) {
+                $output->writeln(
+                    sprintf(' * System-task "%s" was <comment>disabled</comment>', $task->getSystemKey())
+                );
             }
         }
 
@@ -118,9 +120,9 @@ EOT
     private function processSystemTask($systemKey, array $systemTask, OutputInterface $output)
     {
         if (!$systemTask['enabled']) {
-            $this->disableSystemTask($systemKey);
-
-            $output->writeln(sprintf(' * System-task "%s" was <info>disabled</info>.', $systemKey));
+            if ($this->disableSystemTask($systemKey)) {
+                $output->writeln(sprintf(' * System-task "%s" was <comment>disabled</comment>', $systemKey));
+            }
 
             return;
         }
@@ -128,7 +130,7 @@ EOT
         if ($task = $this->taskRepository->findBySystemKey($systemKey)) {
             $this->updateTask($systemKey, $systemTask, $task);
 
-            $output->writeln(sprintf(' * System-task "%s" was <info>updated</info>.', $systemKey));
+            $output->writeln(sprintf(' * System-task "%s" was <info>updated</info>', $systemKey));
 
             return;
         }
@@ -142,32 +144,39 @@ EOT
 
         $builder->schedule();
 
-        $output->writeln(sprintf(' * System-task "%s" was <info>created</info>.', $systemKey));
+        $output->writeln(sprintf(' * System-task "%s" was <info>created</info>', $systemKey));
     }
 
     /**
      * Disable task identified by system-key.
      *
      * @param string $systemKey
+     *
+     * @return bool
      */
     private function disableSystemTask($systemKey)
     {
         if (!$task = $this->taskRepository->findBySystemKey($systemKey)) {
-            return;
+            return false;
         }
 
         $this->disableTask($task);
+
+        return true;
     }
 
     /**
      * Disable given task identified.
      *
      * @param TaskInterface $task
+     *
+     * @return bool
      */
     public function disableTask(TaskInterface $task)
     {
         $task->setInterval($task->getInterval(), $task->getFirstExecution(), new \DateTime());
-        $this->abortPending($task);
+
+        return $this->abortPending($task);
     }
 
     /**
@@ -201,14 +210,18 @@ EOT
      * Abort pending execution for given task.
      *
      * @param TaskInterface $task
+     *
+     * @return bool
      */
     private function abortPending(TaskInterface $task)
     {
         if (!$execution = $this->taskExecutionRepository->findPending($task)) {
-            return;
+            return false;
         }
 
         $execution->setStatus(TaskStatus::ABORTED);
         $this->taskExecutionRepository->save($execution);
+
+        return true;
     }
 }
