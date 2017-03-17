@@ -1,7 +1,17 @@
 UPGRADE
 =======
 
+- [1.1.0](#1.1.0)
 - [0.4.0](#0.4.0)
+
+### 1.1.0
+
+In the database table `ta_tasks` a new field was introduced. Run following
+command to update the table.
+
+```bash
+bin/console doctrine:schema:update
+```
 
 ### 0.4.0
 
