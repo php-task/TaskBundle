@@ -54,7 +54,7 @@ class TaskExtension extends Extension
         }
 
         $this->loadDoctrineAdapter($config['adapters']['doctrine'], $container);
-        $this->loadLockingComponent($config['locking'], $loader);
+        $this->loadLockingComponent($config['locking'], $container, $loader);
     }
 
     /**
@@ -83,14 +83,16 @@ class TaskExtension extends Extension
      *
      * @param array $config
      * @param LoaderInterface $loader
+     * @param ContainerBuilder $container
      */
-    private function loadLockingComponent(array $config, LoaderInterface $loader)
+    private function loadLockingComponent(array $config, ContainerBuilder $container, LoaderInterface $loader)
     {
         if (!$config['enabled']) {
             return $loader->load('locking/null.xml');
         }
 
         $loader->load('locking/services.xml');
+        $container->setParameter('task.lock.ttl', $config['ttl']);
     }
 
     /**

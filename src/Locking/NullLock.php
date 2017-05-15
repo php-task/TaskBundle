@@ -11,7 +11,6 @@
 
 namespace Task\TaskBundle\Locking;
 
-use Task\Execution\TaskExecutionInterface;
 use Task\Lock\LockInterface;
 
 /**
@@ -22,7 +21,7 @@ class NullLock implements LockInterface
     /**
      * {@inheritdoc}
      */
-    public function acquire(TaskExecutionInterface $execution)
+    public function acquire($task)
     {
         return true;
     }
@@ -30,7 +29,7 @@ class NullLock implements LockInterface
     /**
      * {@inheritdoc}
      */
-    public function refresh(TaskExecutionInterface $execution)
+    public function refresh($task)
     {
         return true;
     }
@@ -38,7 +37,7 @@ class NullLock implements LockInterface
     /**
      * {@inheritdoc}
      */
-    public function release(TaskExecutionInterface $execution)
+    public function release($task)
     {
         return true;
     }
@@ -46,7 +45,7 @@ class NullLock implements LockInterface
     /**
      * {@inheritdoc}
      */
-    public function isAcquired(TaskExecutionInterface $execution)
+    public function isAcquired($task)
     {
         return false;
     }
