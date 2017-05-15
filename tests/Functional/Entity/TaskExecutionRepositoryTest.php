@@ -154,10 +154,8 @@ class TaskExecutionRepositoryTest extends BaseDatabaseTestCase
 
         $execution = $this->save($task, new \DateTime('-1 hour'));
 
-        $result = $this->taskExecutionRepository->findScheduled();
-
-        $this->assertCount(1, $result);
-        $this->assertEquals($execution->getUuid(), $result[0]->getUuid());
+        $result = $this->taskExecutionRepository->findNextScheduled();
+        $this->assertEquals($execution->getUuid(), $result->getUuid());
     }
 
     public function testFindScheduledFuture()
@@ -167,7 +165,7 @@ class TaskExecutionRepositoryTest extends BaseDatabaseTestCase
 
         $this->save($task, new \DateTime('+1 hour'));
 
-        $this->assertEmpty($this->taskExecutionRepository->findScheduled());
+        $this->assertNull($this->taskExecutionRepository->findNextScheduled());
     }
 
     /**

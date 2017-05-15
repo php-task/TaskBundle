@@ -140,6 +140,10 @@ class TaskExecutionRepository extends EntityRepository implements TaskExecutionR
             ->setMaxResults(1)
             ->getQuery();
 
-        return $query->getResult();
+        try {
+            return $query->getSingleResult();
+        } catch (NoResultException $exception) {
+            return null;
+        }
     }
 }

@@ -1,2 +1,8 @@
 parameters:
     kernel.secret: 12345
+
+task:
+    locking:
+        storages:
+            file:
+                directory: %kernel.cache_dir%/locks

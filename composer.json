@@ -11,9 +11,10 @@
     ],
     "require": {
         "php": "~5.5 || ~7.0",
-        "php-task/php-task": "dev-develop",
+        "php-task/php-task": "dev-feature/lock",
         "symfony/http-kernel": "^2.6 || ^3.0",
         "symfony/dependency-injection": "^2.6 || ^3.0",
+        "symfony/expression-language": "^2.6 || ^3.0",
         "symfony/config": "^2.6 || ^3.0",
         "symfony/console": "^2.6 || ^3.0",
         "doctrine/orm": "^2.5"
