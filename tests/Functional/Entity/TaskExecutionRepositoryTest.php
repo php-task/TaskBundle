@@ -168,6 +168,16 @@ class TaskExecutionRepositoryTest extends BaseDatabaseTestCase
         $this->assertNull($this->taskExecutionRepository->findNextScheduled());
     }
 
+    public function testFindScheduledSkipped()
+    {
+        $task = $this->createTask();
+        $this->taskRepository->save($task);
+
+        $this->save($task, new \DateTime('+1 hour'));
+
+        $this->assertNull($this->taskExecutionRepository->findNextScheduled());
+    }
+
     /**
      * Save a new execution to database.
      *
