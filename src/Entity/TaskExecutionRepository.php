@@ -129,16 +129,26 @@ class TaskExecutionRepository extends EntityRepository implements TaskExecutionR
     /**
      * {@inheritdoc}
      */
-    public function findScheduled()
+    public function findNextScheduled(\DateTime $dateTime = null, array $skippedExecutions = [])
     {
-        $query = $this->createQueryBuilder('e')
+        $queryBuilder = $this->createQueryBuilder('e')
             ->innerJoin('e.task', 't')
             ->where('e.status = :status')
             ->andWhere('e.scheduleTime < :date')
-            ->setParameter('date', new \DateTime())
+            ->setParameter('date', $dateTime ?: new \DateTime())
             ->setParameter('status', TaskStatus::PLANNED)
-            ->getQuery();
+            ->setMaxResults(1);
 
-        return $query->getResult();
+        $expr = $queryBuilder->expr();
+        if (!empty($skippedExecutions)) {
+            $queryBuilder->andWhere($expr->not($expr->in('e.uuid', ':skipped')))
+                ->setParameter('skipped', $skippedExecutions);
+        }
+
+        try {
+            return $queryBuilder->getQuery()->getSingleResult();
+        } catch (NoResultException $exception) {
+            return null;
+        }
     }
 }

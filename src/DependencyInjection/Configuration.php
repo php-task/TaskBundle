@@ -20,6 +20,19 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
+     * @var string[]
+     */
+    private $lockingStorageAliases = [];
+
+    /**
+     * @param \string[] $lockingStorageAliases
+     */
+    public function __construct(array $lockingStorageAliases)
+    {
+        $this->lockingStorageAliases = $lockingStorageAliases;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
@@ -43,9 +56,28 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('run')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->enumNode('mode')
-                            ->values(['off', 'listener'])
-                            ->defaultValue('off')
+                        ->enumNode('mode')->values(['off', 'listener'])->defaultValue('off')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('locking')
+                    ->canBeEnabled()
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->enumNode('storage')
+                            ->values(array_keys($this->lockingStorageAliases))
+                            ->defaultValue('file')
+                        ->end()
+                        ->integerNode('ttl')->defaultValue(600)->end()
+                        ->arrayNode('storages')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->arrayNode('file')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('directory')->defaultValue('%kernel.cache_dir%/tasks')->end()
+                                    ->end()
+                                ->end()
+                            ->end()
                         ->end()
                     ->end()
                 ->end()
@@ -62,5 +94,17 @@ class Configuration implements ConfigurationInterface
             ->end();
 
         return $treeBuilder;
+    }
+
+    /**
+     * Returns id for given storage-alias.
+     *
+     * @param string $alias
+     *
+     * @return string
+     */
+    public function getLockingStorageId($alias)
+    {
+        return $this->lockingStorageAliases[$alias];
     }
 }

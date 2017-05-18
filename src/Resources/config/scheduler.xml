@@ -19,7 +19,9 @@
         <service id="task.runner" class="Task\Runner\TaskRunner">
             <argument type="service" id="task.storage.task_execution"/>
             <argument type="service" id="task.handler.factory"/>
+            <argument type="service" id="task.lock"/>
             <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="logger" on-invalid="ignore"/>
         </service>
     </services>
 </container>
