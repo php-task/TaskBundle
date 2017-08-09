@@ -26,6 +26,7 @@ matrix:
 install:
    - composer self-update
    - composer update
+   - composer info
 
 before_script:
   - STORAGE=doctrine tests/app/console doctrine:database:create
@@ -41,4 +42,3 @@ after_script:
 cache:
   directories:
   - "$HOME/.composer/cache"
-  - vendor

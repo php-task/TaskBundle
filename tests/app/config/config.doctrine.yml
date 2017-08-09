@@ -6,6 +6,10 @@ task:
             handler_class: Task\TaskBundle\Tests\Functional\TestHandler
             workload: ['test']
             cron_expression: '* * * * *'
+    executor:
+        type: process
+        process:
+            console: '%kernel.root_dir%/console'
 
 doctrine:
     orm:
