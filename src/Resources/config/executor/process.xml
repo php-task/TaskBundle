@@ -5,6 +5,7 @@
     <services>
         <service id="task.executor.process" class="Task\TaskBundle\Executor\ProcessExecutor">
             <argument type="string">%task.executor.console%</argument>
+            <argument type="string">%kernel.environment%%</argument>
         </service>
     </services>
 </container>

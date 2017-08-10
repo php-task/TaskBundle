@@ -27,11 +27,18 @@ class ProcessExecutor implements ExecutorInterface
     private $consoleFile;
 
     /**
-     * @param string $consoleFile
+     * @var string
      */
-    public function __construct($consoleFile)
+    private $environment;
+
+    /**
+     * @param string $consoleFile
+     * @param string $environment
+     */
+    public function __construct($consoleFile, $environment)
     {
         $this->consoleFile = $consoleFile;
+        $this->environment = $environment;
     }
 
     /**
@@ -39,7 +46,9 @@ class ProcessExecutor implements ExecutorInterface
      */
     public function execute(TaskExecutionInterface $execution)
     {
-        $process = ProcessBuilder::create([$this->consoleFile, 'task:execute', $execution->getUuid()])->getProcess();
+        $process = ProcessBuilder::create(
+            [$this->consoleFile, 'task:execute', $execution->getUuid(), '-e ' . $this->environment]
+        )->getProcess();
 
         $process->run();
 
