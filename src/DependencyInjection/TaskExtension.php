@@ -11,6 +11,7 @@
 
 namespace Task\TaskBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -114,6 +115,12 @@ class TaskExtension extends Extension
 
         foreach ($config[$config['type']] as $key => $value) {
             $container->setParameter('task.executor.' . $key, $value);
+        }
+
+        if (!file_exists($container->getParameter('task.executor.console_path'))) {
+            throw new InvalidConfigurationException(
+                'Console file does not exists! Given in "task.executor.seperate.console".'
+            );
         }
     }
 

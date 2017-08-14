@@ -17,6 +17,7 @@
         "symfony/expression-language": "^2.6 || ^3.0",
         "symfony/config": "^2.6 || ^3.0",
         "symfony/console": "^2.6 || ^3.0",
+        "symfony/process": "^2.6 || ^3.0",
         "doctrine/orm": "^2.5"
     },
     "require-dev": {

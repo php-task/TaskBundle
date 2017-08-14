@@ -24,9 +24,6 @@ use Task\Storage\TaskExecutionRepositoryInterface;
  */
 class ExecuteCommand extends Command
 {
-    const START_RESULT = '<?result';
-    const END_RESULT = '?>';
-
     /**
      * @var TaskHandlerFactoryInterface
      */
@@ -76,12 +73,13 @@ class ExecuteCommand extends Command
         } catch (\Exception $e) {
             $errOutput->writeln($e->__toString());
 
+            // Process exit-code: 0 = OK, >1 = FAIL
             return 1;
         }
 
-        $output->write(self::START_RESULT);
         $output->write($result);
-        $output->write(self::END_RESULT);
+
+        return 0;
     }
 
     /**

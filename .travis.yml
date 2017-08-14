@@ -41,4 +41,4 @@ after_script:
 
 cache:
   directories:
-  - "$HOME/.composer/cache"
+    - "$HOME/.composer/cache"

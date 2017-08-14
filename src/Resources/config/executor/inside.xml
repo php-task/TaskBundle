@@ -3,9 +3,8 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="task.executor.process" class="Task\TaskBundle\Executor\ProcessExecutor">
-            <argument type="string">%task.executor.console%</argument>
-            <argument type="string">%kernel.environment%%</argument>
+        <service id="task.executor.inside" class="Task\Runner\InsideProcessExecutor">
+            <argument type="service" id="task.handler.factory"/>
         </service>
     </services>
 </container>

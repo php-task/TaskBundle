@@ -14,7 +14,7 @@ namespace Task\TaskBundle\Executor;
 /**
  * Exception wrapper which transports the serialized exception from console to the runner.
  */
-class ProcessException extends \Exception
+class SeparateProcessException extends \Exception
 {
     /**
      * @var string

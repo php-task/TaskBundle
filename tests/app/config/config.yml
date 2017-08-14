@@ -5,4 +5,4 @@ task:
     locking:
         storages:
             file:
-                directory: %kernel.cache_dir%/locks
+                directory: '%kernel.cache_dir%/locks'
