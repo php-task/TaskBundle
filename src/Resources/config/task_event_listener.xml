@@ -11,6 +11,7 @@
         <parameter key="task.events.finished" type="constant">Task\Event\Events::TASK_FINISHED</parameter>
         <parameter key="task.events.passed" type="constant">Task\Event\Events::TASK_PASSED</parameter>
         <parameter key="task.events.failed" type="constant">Task\Event\Events::TASK_FAILED</parameter>
+        <parameter key="task.events.retried" type="constant">Task\Event\Events::TASK_RETRIED</parameter>
     </parameters>
 
 </container>
