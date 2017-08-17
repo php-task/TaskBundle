@@ -13,7 +13,7 @@ namespace Task\TaskBundle\Executor;
 
 use Symfony\Component\Process\ProcessBuilder;
 use Task\Execution\TaskExecutionInterface;
-use Task\Runner\ExecutorInterface;
+use Task\Executor\ExecutorInterface;
 
 /**
  * Uses a separate process to start the executions via console-command.
