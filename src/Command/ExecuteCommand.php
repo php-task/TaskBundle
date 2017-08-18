@@ -16,6 +16,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Task\Executor\FailedException;
 use Task\Handler\TaskHandlerFactoryInterface;
 use Task\Storage\TaskExecutionRepositoryInterface;
 
@@ -63,15 +64,20 @@ class ExecuteCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $errOutput = $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : $output;
+        $errorOutput = $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : $output;
 
         $execution = $this->executionRepository->findByUuid($input->getArgument('uuid'));
         $handler = $this->handlerFactory->create($execution->getHandlerClass());
 
         try {
             $result = $handler->handle($execution->getWorkload());
-        } catch (\Exception $e) {
-            $errOutput->writeln($e->__toString());
+        } catch (\Exception $exception) {
+            if ($exception instanceof FailedException) {
+                $errorOutput->writeln(FailedException::class);
+                $exception = $exception->getPrevious();
+            }
+
+            $errorOutput->writeln($exception->__toString());
 
             // Process exit-code: 0 = OK, >1 = FAIL
             return 1;
