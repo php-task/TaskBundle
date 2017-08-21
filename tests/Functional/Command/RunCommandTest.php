@@ -64,7 +64,14 @@ class RunCommandTest extends BaseCommandTestCase
         $result = $this->taskExecutionRepository->findAll(2, 3);
         $this->assertCount(1, $result);
 
-        $this->assertEquals($intervalTask, $result[0]->getTask());
+        $task = $result[0]->getTask();
+        $this->assertEquals($intervalTask->getUuid(), $task->getUuid());
+        $this->assertEquals($intervalTask->getHandlerClass(), $task->getHandlerClass());
+        $this->assertEquals($intervalTask->getWorkload(), $task->getWorkload());
+        $this->assertLessThanOrEqual($intervalTask->getFirstExecution(), $task->getFirstExecution());
+        $this->assertLessThanOrEqual($intervalTask->getLastExecution(), $task->getLastExecution());
+        $this->assertEquals($intervalTask->getInterval(), $task->getInterval());
+
         $this->assertEquals(TaskStatus::PLANNED, $result[0]->getStatus());
         $this->assertEquals(TestHandler::class, $result[0]->getHandlerClass());
         $this->assertEquals('Test workload 3', $result[0]->getWorkload());
@@ -111,7 +118,14 @@ class RunCommandTest extends BaseCommandTestCase
         $result = $this->taskExecutionRepository->findAll(2, 3);
         $this->assertCount(1, $result);
 
-        $this->assertEquals($intervalTask, $result[0]->getTask());
+        $task = $result[0]->getTask();
+        $this->assertEquals($intervalTask->getUuid(), $task->getUuid());
+        $this->assertEquals($intervalTask->getHandlerClass(), $task->getHandlerClass());
+        $this->assertEquals($intervalTask->getWorkload(), $task->getWorkload());
+        $this->assertLessThanOrEqual($intervalTask->getFirstExecution(), $task->getFirstExecution());
+        $this->assertLessThanOrEqual($intervalTask->getLastExecution(), $task->getLastExecution());
+        $this->assertEquals($intervalTask->getInterval(), $task->getInterval());
+
         $this->assertEquals(TaskStatus::PLANNED, $result[0]->getStatus());
         $this->assertEquals(FailTestHandler::class, $result[0]->getHandlerClass());
         $this->assertEquals('Test workload 3', $result[0]->getWorkload());

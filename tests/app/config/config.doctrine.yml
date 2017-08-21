@@ -6,10 +6,14 @@ task:
             handler_class: Task\TaskBundle\Tests\Functional\TestHandler
             workload: ['test']
             cron_expression: '* * * * *'
+    executor:
+        type: separate
+        separate:
+            console_path: '%kernel.root_dir%/console'
 
 doctrine:
     orm:
-        auto_generate_proxy_classes: %kernel.debug%
+        auto_generate_proxy_classes: '%kernel.debug%'
         auto_mapping: true
     dbal:
         driver: pdo_sqlite

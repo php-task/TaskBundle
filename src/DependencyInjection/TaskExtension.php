@@ -11,6 +11,7 @@
 
 namespace Task\TaskBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -55,6 +56,7 @@ class TaskExtension extends Extension
 
         $this->loadDoctrineAdapter($config['adapters']['doctrine'], $container);
         $this->loadLockingComponent($config['locking'], $container, $loader);
+        $this->loadExecutorComponent($config['executor'], $container, $loader);
     }
 
     /**
@@ -93,6 +95,33 @@ class TaskExtension extends Extension
 
         $loader->load('locking/services.xml');
         $container->setParameter('task.lock.ttl', $config['ttl']);
+    }
+
+    /**
+     * Load services for executor component.
+     *
+     * @param array $config
+     * @param LoaderInterface $loader
+     * @param ContainerBuilder $container
+     */
+    private function loadExecutorComponent(array $config, ContainerBuilder $container, LoaderInterface $loader)
+    {
+        $loader->load('executor/' . $config['type'] . '.xml');
+        $container->setAlias('task.executor', 'task.executor.' . $config['type']);
+
+        if (!array_key_exists($config['type'], $config)) {
+            return;
+        }
+
+        foreach ($config[$config['type']] as $key => $value) {
+            $container->setParameter('task.executor.' . $key, $value);
+        }
+
+        if (!file_exists($container->getParameter('task.executor.console_path'))) {
+            throw new InvalidConfigurationException(
+                'Console file does not exists! Given in "task.executor.seperate.console".'
+            );
+        }
     }
 
     /**

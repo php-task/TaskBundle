@@ -37,13 +37,16 @@ class BootstrapTest extends KernelTestCase
             case 'array':
                 $this->assertInstanceOf(ArrayTaskRepository::class, $taskRepository);
                 $this->assertInstanceOf(ArrayTaskExecutionRepository::class, $taskExecutionRepository);
+
                 break;
             case 'doctrine':
                 $this->assertInstanceOf(TaskRepository::class, $taskRepository);
                 $this->assertInstanceOf(TaskExecutionRepository::class, $taskExecutionRepository);
+
                 break;
             default:
                 $this->fail('storage not supported');
+
                 break;
         }
     }
