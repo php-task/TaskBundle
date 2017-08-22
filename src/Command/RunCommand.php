@@ -14,7 +14,6 @@ namespace Task\TaskBundle\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Task\Runner\ExitException;
 use Task\Runner\TaskRunnerInterface;
 use Task\Scheduler\TaskSchedulerInterface;
 

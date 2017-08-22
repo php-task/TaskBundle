@@ -61,7 +61,7 @@ class SeparateProcessExecutor implements ExecutorInterface
         $attempts = $this->getMaximumAttempts($execution->getHandlerClass());
         $lastException = null;
 
-        for ($attempt = 0; $attempt < $attempts; $attempt++) {
+        for ($attempt = 0; $attempt < $attempts; ++$attempt) {
             try {
                 return $this->handle($execution);
             } catch (FailedException $exception) {

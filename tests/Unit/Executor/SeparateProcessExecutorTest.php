@@ -173,7 +173,7 @@ class SeparateProcessExecutorTest extends \PHPUnit_Framework_TestCase
         $attempts = 1;
         $this->execution->incrementAttempts()->will(
             function () use (&$attempts) {
-                $attempts++;
+                ++$attempts;
 
                 return $this;
             }
