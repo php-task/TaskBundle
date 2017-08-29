@@ -40,7 +40,7 @@ class ExecutionProcessFactory
     public function create($uuid)
     {
         return $process = ProcessBuilder::create(
-            [$this->consolePath, 'task:execute', $uuid, '-e ' . $this->environment]
+            [$this->consolePath, 'task:execute', $uuid, '--env=' . $this->environment]
         )->getProcess();
     }
 }
