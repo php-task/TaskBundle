@@ -89,6 +89,7 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->scalarNode('console_path')->defaultValue('%kernel.root_dir%/../bin/console')->end()
+                                ->floatNode('process_timeout')->defaultNull()->end()
                             ->end()
                         ->end()
                     ->end()

@@ -21,12 +21,19 @@ class ExecutionProcessFactory
     private $environment;
 
     /**
+     * @var float|null
+     */
+    private $processTimeout;
+
+    /**
      * @param string $consolePath
+     * @param float|null $processTimeout
      * @param string $environment
      */
-    public function __construct($consolePath, $environment)
+    public function __construct($consolePath, $processTimeout, $environment)
     {
         $this->consolePath = $consolePath;
+        $this->processTimeout = $processTimeout;
         $this->environment = $environment;
     }
 
@@ -40,7 +47,9 @@ class ExecutionProcessFactory
     public function create($uuid)
     {
         return $process = ProcessBuilder::create(
-            [$this->consolePath, 'task:execute', $uuid, '--env=' . $this->environment]
-        )->getProcess();
+                [$this->consolePath, 'task:execute', $uuid, '--env=' . $this->environment]
+            )
+            ->setTimeout($this->processTimeout)
+            ->getProcess();
     }
 }
