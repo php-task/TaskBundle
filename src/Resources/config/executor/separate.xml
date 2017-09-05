@@ -11,6 +11,7 @@
 
         <service id="task.executor.separate.process_factory" class="Task\TaskBundle\Executor\ExecutionProcessFactory">
             <argument type="string">%task.executor.console_path%</argument>
+            <argument type="string">%task.executor.process_timeout%</argument>
             <argument type="string">%kernel.environment%</argument>
         </service>
     </services>
