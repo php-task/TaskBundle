@@ -26,6 +26,8 @@ class SeparateProcessException extends \Exception
      */
     public function __construct($errorOutput)
     {
+        parent::__construct($errorOutput);
+
         $this->errorOutput = $errorOutput;
     }
 
