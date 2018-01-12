@@ -44,7 +44,7 @@ class TestKernel extends Kernel
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $this->storage = getenv(self::STORAGE_VAR_NAME);
-        if ($this->storage === false) {
+        if (false === $this->storage) {
             $this->storage = 'array';
         }
 

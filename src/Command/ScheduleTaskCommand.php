@@ -80,16 +80,16 @@ EOT
 
         $taskBuilder = $this->scheduler->createTask($handlerClass, $workload);
 
-        if ($cronExpression !== null) {
+        if (null !== $cronExpression) {
             $endDate = null;
-            if ($endDateString !== null) {
+            if (null !== $endDateString) {
                 $endDate = new \DateTime($endDateString);
             }
 
             $taskBuilder->cron($cronExpression, new \DateTime(), $endDate);
         }
 
-        if ($executionDateString !== null) {
+        if (null !== $executionDateString) {
             $taskBuilder->executeAt(new \DateTime($executionDateString));
         }
 
