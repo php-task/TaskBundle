@@ -21,7 +21,7 @@ class TaskRepositoryTest extends BaseDatabaseTestCase
 
     public function testFindBySystemKey()
     {
-        if (self::$kernel->getContainer()->getParameter('kernel.storage') !== 'doctrine') {
+        if ('doctrine' !== self::$kernel->getContainer()->getParameter('kernel.storage')) {
             return $this->markTestSkipped('This testcase will only be called for doctrine storage.');
         }
 
@@ -36,7 +36,7 @@ class TaskRepositoryTest extends BaseDatabaseTestCase
 
     public function testFindBySystemKeyNotFound()
     {
-        if (self::$kernel->getContainer()->getParameter('kernel.storage') !== 'doctrine') {
+        if ('doctrine' !== self::$kernel->getContainer()->getParameter('kernel.storage')) {
             return $this->markTestSkipped('This testcase will only be called for doctrine storage.');
         }
 
@@ -48,7 +48,7 @@ class TaskRepositoryTest extends BaseDatabaseTestCase
 
     public function testFindSystemTasks()
     {
-        if (self::$kernel->getContainer()->getParameter('kernel.storage') !== 'doctrine') {
+        if ('doctrine' !== self::$kernel->getContainer()->getParameter('kernel.storage')) {
             return $this->markTestSkipped('This testcase will only be called for doctrine storage.');
         }
 

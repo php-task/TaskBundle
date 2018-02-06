@@ -21,6 +21,7 @@ use Symfony\Component\DependencyInjection\Reference;
 class HandlerCompilerPass implements CompilerPassInterface
 {
     const REGISTRY_ID = 'task.handler.factory';
+
     const HANDLER_TAG = 'task.handler';
 
     /**

@@ -131,7 +131,7 @@ class SeparateProcessExecutor implements ExecutorInterface
      */
     private function createException($errorOutput)
     {
-        if (strpos($errorOutput, FailedException::class) !== 0) {
+        if (0 !== strpos($errorOutput, FailedException::class)) {
             return new SeparateProcessException($errorOutput);
         }
 
