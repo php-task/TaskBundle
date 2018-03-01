@@ -1,7 +1,7 @@
 {
     "name": "php-task/task-bundle",
     "description": "Symfony integration for php-task library",
-    "type": "bundle",
+    "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
         {
