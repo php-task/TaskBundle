@@ -17,7 +17,7 @@
         <field name="intervalExpression" type="string" length="255" nullable="true"/>
         <field name="firstExecution" type="datetime" nullable="true"/>
         <field name="lastExecution" type="datetime" nullable="true"/>
-        <field name="systemKey" type="string" nullable="true" unique="true"/>
+        <field name="systemKey" type="string" nullable="true" unique="true" length="191"/>
         <field name="workload" type="object"/>
 
     </entity>
