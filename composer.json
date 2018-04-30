@@ -36,5 +36,11 @@
         "psr-4": {
             "Task\\TaskBundle\\Tests\\": "tests"
         }
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-aliases": {
+            "dev-master": "2.0-dev"
+        }
     }
 }
