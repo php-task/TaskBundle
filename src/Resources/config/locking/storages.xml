@@ -3,7 +3,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="task.lock.storage.file" class="Task\Lock\Storage\FileLockStorage">
+        <service id="task.lock.storage.file" class="Task\Lock\Storage\FileLockStorage" public="true">
             <argument type="expression">parameter('task.lock.storages.file')['directory']</argument>
 
             <tag name="task.lock.storage" alias="file"/>

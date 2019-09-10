@@ -89,7 +89,7 @@ class TaskExtension extends Extension
      */
     private function loadLockingComponent(array $config, ContainerBuilder $container, LoaderInterface $loader)
     {
-        if (!$config['enabled']) {
+        if (!$config['enabled'] || 'null' === $config['storage']) {
             return $loader->load('locking/null.xml');
         }
 
@@ -135,7 +135,7 @@ class TaskExtension extends Extension
     {
         $taggedServices = $container->findTaggedServiceIds('task.lock.storage');
 
-        $result = [];
+        $result = ['null'];
         foreach ($taggedServices as $id => $tags) {
             foreach ($tags as $tag) {
                 $result[$tag['alias']] = $id;
