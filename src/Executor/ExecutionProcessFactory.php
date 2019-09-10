@@ -3,7 +3,6 @@
 namespace Task\TaskBundle\Executor;
 
 use Symfony\Component\Process\Process;
-use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * Factory for execution-process.
@@ -46,10 +45,8 @@ class ExecutionProcessFactory
      */
     public function create($uuid)
     {
-        return $process = ProcessBuilder::create(
-                [$this->consolePath, 'task:execute', $uuid, '--env=' . $this->environment]
-            )
-            ->setTimeout($this->processTimeout)
-            ->getProcess();
+        return $process = (new Process(
+            implode(' ', [$this->consolePath, 'task:execute', $uuid, '--env=' . $this->environment])
+        ))->setTimeout($this->processTimeout);
     }
 }
