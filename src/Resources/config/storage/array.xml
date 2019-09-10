@@ -3,7 +3,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="task.storage.task" class="Task\Storage\ArrayStorage\ArrayTaskRepository"/>
-        <service id="task.storage.task_execution" class="Task\Storage\ArrayStorage\ArrayTaskExecutionRepository"/>
+        <service id="task.storage.task" class="Task\Storage\ArrayStorage\ArrayTaskRepository" public="true"/>
+        <service id="task.storage.task_execution" class="Task\Storage\ArrayStorage\ArrayTaskExecutionRepository" public="true"/>
     </services>
 </container>

@@ -62,6 +62,7 @@ class TestKernel extends Kernel
         $loader->load('services.xml');
 
         $container->setParameter('kernel.storage', $this->storage);
+        $container->setParameter('container.build_id', hash('crc32', 'Abc123423456789'));
 
         return $container;
     }
@@ -71,16 +72,32 @@ class TestKernel extends Kernel
      */
     protected function initializeContainer()
     {
-        $fresh = false;
+        static $first = true;
 
-        $container = $this->buildContainer();
-        $container->compile();
+        if ('test' !== $this->getEnvironment()) {
+            parent::initializeContainer();
 
-        $this->container = $container;
-        $this->container->set('kernel', $this);
-
-        if (!$fresh && $this->container->has('cache_warmer')) {
-            $this->container->get('cache_warmer')->warmUp($this->container->getParameter('kernel.cache_dir'));
+            return;
         }
+
+        $debug = $this->debug;
+
+        if (!$first) {
+            // disable debug mode on all but the first initialization
+            $this->debug = false;
+        }
+
+        // will not work with --process-isolation
+        $first = false;
+
+        try {
+            parent::initializeContainer();
+        } catch (\Exception $e) {
+            $this->debug = $debug;
+
+            throw $e;
+        }
+
+        $this->debug = $debug;
     }
 }

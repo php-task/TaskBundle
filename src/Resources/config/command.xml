@@ -3,7 +3,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="task.command.run" class="Task\TaskBundle\Command\RunCommand">
+        <service id="task.command.run" class="Task\TaskBundle\Command\RunCommand" public="true">
             <argument type="string">task:run</argument>
             <argument type="service" id="task.runner"/>
             <argument type="service" id="task.scheduler"/>
@@ -12,14 +12,14 @@
             <tag name="console.command"/>
         </service>
 
-        <service id="task.command.run_handler" class="Task\TaskBundle\Command\RunHandlerCommand">
+        <service id="task.command.run_handler" class="Task\TaskBundle\Command\RunHandlerCommand" public="true">
             <argument type="string">task:run:handler</argument>
             <argument type="service" id="task.handler.factory"/>
 
             <tag name="console.command"/>
         </service>
 
-        <service id="task.command.executor" class="Task\TaskBundle\Command\ExecuteCommand">
+        <service id="task.command.executor" class="Task\TaskBundle\Command\ExecuteCommand" public="true">
             <argument type="string">task:execute</argument>
             <argument type="service" id="task.handler.factory"/>
             <argument type="service" id="task.storage.task_execution"/>
@@ -27,7 +27,7 @@
             <tag name="console.command"/>
         </service>
 
-        <service id="task.command.schedule_task" class="Task\TaskBundle\Command\ScheduleTaskCommand">
+        <service id="task.command.schedule_task" class="Task\TaskBundle\Command\ScheduleTaskCommand" public="true">
             <argument type="string">task:schedule</argument>
             <argument type="service" id="task.scheduler"/>
             <!-- add entity_manager if doctrine storage is enabled -->
@@ -35,7 +35,7 @@
             <tag name="console.command"/>
         </service>
 
-        <service id="task.command.debug_tasks" class="Task\TaskBundle\Command\DebugTasksCommand">
+        <service id="task.command.debug_tasks" class="Task\TaskBundle\Command\DebugTasksCommand" public="true">
             <argument type="string">debug:tasks</argument>
             <argument type="service" id="task.storage.task_execution"/>
 
