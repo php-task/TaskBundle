@@ -94,5 +94,7 @@ EOT
         }
 
         $taskBuilder->schedule();
+
+        return 0;
     }
 }

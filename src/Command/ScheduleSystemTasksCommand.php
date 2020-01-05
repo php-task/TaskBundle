@@ -108,6 +108,8 @@ EOT
 
         $output->writeln('');
         $output->writeln('System-tasks successfully scheduled');
+
+        return 0;
     }
 
     /**

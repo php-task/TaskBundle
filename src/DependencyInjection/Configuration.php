@@ -11,6 +11,7 @@
 
 namespace Task\TaskBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -37,9 +38,9 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
+        $treeBuilder = new TreeBuilder('task');
 
-        $treeBuilder->root('task')
+        $this->getRootNodeWithoutDeprecation($treeBuilder, 'task')
             ->children()
                 ->enumNode('storage')->values(['array', 'doctrine'])->defaultValue('doctrine')->end()
                 ->arrayNode('adapters')
@@ -119,5 +120,16 @@ class Configuration implements ConfigurationInterface
     public function getLockingStorageId($alias)
     {
         return $this->lockingStorageAliases[$alias];
+    }
+
+    /**
+     * @internal
+     *
+     * @return ArrayNodeDefinition|\Symfony\Component\Config\Definition\Builder\NodeDefinition
+     */
+    public static function getRootNodeWithoutDeprecation(TreeBuilder $builder, string $name, string $type = 'array')
+    {
+        // BC layer for symfony/config 4.1 and older
+        return \method_exists($builder, 'getRootNode') ? $builder->getRootNode() : $builder->root($name, $type);
     }
 }
