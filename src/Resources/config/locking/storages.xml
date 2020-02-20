@@ -8,5 +8,9 @@
 
             <tag name="task.lock.storage" alias="file"/>
         </service>
+        <service id="task.lock.storage.cache" class="Task\TaskBundle\Locking\CacheLockStorage" public="true">
+            <argument type="service" id="cache.app"></argument>
+            <tag name="task.lock.storage" alias="cache"/>
+        </service>
     </services>
 </container>
