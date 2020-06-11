@@ -47,7 +47,9 @@ class CacheLockStorage implements LockStorageInterface
     {
         /** @var CacheItemInterface $cacheItem */
         $cacheItem = $this->cache->getItem(self::KEY_PREFIX . $key);
+        $cacheItem->set('LOCK');
         $cacheItem->expiresAfter($ttl);
+        $this->cache->save($cacheItem);
         return true;
     }
 
@@ -57,7 +59,7 @@ class CacheLockStorage implements LockStorageInterface
     public function delete($key)
     {
         try {
-            return $this->cache->delete(self::KEY_PREFIX . $key);
+            return $this->cache->deleteItem(self::KEY_PREFIX . $key);
         } catch (InvalidArgumentException $e) {
             return false;
         }
@@ -74,3 +76,4 @@ class CacheLockStorage implements LockStorageInterface
     }
 
 }
+
