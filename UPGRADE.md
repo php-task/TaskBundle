@@ -1,9 +1,18 @@
 UPGRADE
 =======
 
+- [2.0.0](#2.0.0) 
 - [1.2.0](#1.2.0)
 - [1.1.0](#1.1.0)
 - [0.4.0](#0.4.0)
+
+### 2.0.0 (unreleased)
+
+For the utf8mb4 compatibility with mysql some fields need to be shorten:
+
+```bash
+bin/console doctrine:schema:update
+```
 
 ### 1.2.0
 
