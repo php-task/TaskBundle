@@ -6,7 +6,7 @@ UPGRADE
 - [1.1.0](#1.1.0)
 - [0.4.0](#0.4.0)
 
-### 2.0.0 (unreleased)
+### 2.0.0
 
 For the utf8mb4 compatibility with mysql some fields need to be shorten:
 
