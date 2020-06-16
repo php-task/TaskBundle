@@ -67,5 +67,7 @@ EOT
     {
         $this->runner->runTasks();
         $this->scheduler->scheduleTasks();
+
+        return 0;
     }
 }

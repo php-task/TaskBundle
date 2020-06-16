@@ -11,6 +11,7 @@
 
 namespace Task\TaskBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -37,9 +38,16 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
+        $treeBuilder = new TreeBuilder('task');
 
-        $treeBuilder->root('task')
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $treeBuilder->root('task');
+        }
+
+        $rootNode
             ->children()
                 ->enumNode('storage')->values(['array', 'doctrine'])->defaultValue('doctrine')->end()
                 ->arrayNode('adapters')

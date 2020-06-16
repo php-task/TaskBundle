@@ -57,6 +57,12 @@ matrix:
     - php: 7.3
       env:
         - STORAGE=doctrine
+    - php: 7.4
+      env:
+        - STORAGE=array
+    - php: 7.4
+      env:
+        - STORAGE=doctrine
 
 before_install:
   - if [[ -z $CODE_COVERAGE ]]; then phpenv config-rm xdebug.ini ; fi

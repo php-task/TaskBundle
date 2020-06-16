@@ -45,8 +45,14 @@ class ExecutionProcessFactory
      */
     public function create($uuid)
     {
-        return $process = (new Process(
-            implode(' ', [$this->consolePath, 'task:execute', $uuid, '--env=' . $this->environment])
-        ))->setTimeout($this->processTimeout);
+        $command = implode(' ', [$this->consolePath, 'task:execute', $uuid, '--env=' . $this->environment]);
+
+        if (method_exists(Process::class, 'fromShellCommandline')) {
+            $process = Process::fromShellCommandline($command);
+        } else {
+            $process = new Process($command);
+        }
+
+        return $process->setTimeout($this->processTimeout);
     }
 }
