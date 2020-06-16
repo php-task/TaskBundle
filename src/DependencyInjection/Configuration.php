@@ -40,7 +40,14 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder('task');
 
-        $this->getRootNodeWithoutDeprecation($treeBuilder, 'task')
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $treeBuilder->root('task');
+        }
+
+        $rootNode
             ->children()
                 ->enumNode('storage')->values(['array', 'doctrine'])->defaultValue('doctrine')->end()
                 ->arrayNode('adapters')
@@ -120,16 +127,5 @@ class Configuration implements ConfigurationInterface
     public function getLockingStorageId($alias)
     {
         return $this->lockingStorageAliases[$alias];
-    }
-
-    /**
-     * @internal
-     *
-     * @return ArrayNodeDefinition|\Symfony\Component\Config\Definition\Builder\NodeDefinition
-     */
-    public static function getRootNodeWithoutDeprecation(TreeBuilder $builder, string $name, string $type = 'array')
-    {
-        // BC layer for symfony/config 4.1 and older
-        return \method_exists($builder, 'getRootNode') ? $builder->getRootNode() : $builder->root($name, $type);
     }
 }
