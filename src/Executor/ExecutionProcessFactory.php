@@ -45,8 +45,8 @@ class ExecutionProcessFactory
      */
     public function create($uuid)
     {
-        return $process = (new Process(
+        return $process = (new Process([
             implode(' ', [$this->consolePath, 'task:execute', $uuid, '--env=' . $this->environment])
-        ))->setTimeout($this->processTimeout);
+        ]))->setTimeout($this->processTimeout);
     }
 }
