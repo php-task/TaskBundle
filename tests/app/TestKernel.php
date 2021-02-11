@@ -100,4 +100,14 @@ class TestKernel extends Kernel
 
         $this->debug = $debug;
     }
+
+    protected function getKernelParameters()
+    {
+        return array_merge(
+            parent::getKernelParameters(),
+            [
+                'kernel.test_root_dir' => __DIR__,
+            ]
+        );
+    }
 }

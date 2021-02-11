@@ -8,3 +8,4 @@ composer.phar
 /tests/app/cache/
 /tests/app/logs/
 /tests/app/data/
+var/

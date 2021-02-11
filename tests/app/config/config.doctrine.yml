@@ -9,7 +9,7 @@ task:
     executor:
         type: separate
         separate:
-            console_path: '%kernel.root_dir%/console'
+            console_path: '%kernel.test_root_dir%/console'
 
 doctrine:
     orm:
@@ -23,4 +23,4 @@ doctrine:
         user: root
         password: ~
         charset: UTF8
-        path: '%kernel.root_dir%/data/database.sqlite'
+        path: '%kernel.test_root_dir%/data/database.sqlite'
