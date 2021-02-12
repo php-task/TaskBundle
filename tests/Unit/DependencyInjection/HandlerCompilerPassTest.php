@@ -11,6 +11,7 @@
 
 namespace Task\TaskBundle\Unit\DependencyInjection;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
@@ -19,7 +20,7 @@ use Task\TaskBundle\DependencyInjection\HandlerCompilerPass;
 /**
  * Tests for class HandlerCompilerPass.
  */
-class HandlerCompilerPassTest extends \PHPUnit_Framework_TestCase
+class HandlerCompilerPassTest extends TestCase
 {
     public function testProcess()
     {

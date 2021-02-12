@@ -11,6 +11,7 @@
 
 namespace Task\TaskBundle\Tests\Unit\Executor;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Process\Process;
 use Task\Execution\TaskExecutionInterface;
 use Task\Executor\FailedException;
@@ -22,7 +23,7 @@ use Task\TaskBundle\Executor\ExecutionProcessFactory;
 use Task\TaskBundle\Executor\SeparateProcessException;
 use Task\TaskBundle\Executor\SeparateProcessExecutor;
 
-class SeparateProcessExecutorTest extends \PHPUnit_Framework_TestCase
+class SeparateProcessExecutorTest extends TestCase
 {
     /**
      * @var TaskHandlerFactoryInterface

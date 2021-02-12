@@ -12,13 +12,14 @@
 namespace Task\TaskBundle\Tests\Unit\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\TestCase;
 use Task\Event\TaskExecutionEvent;
 use Task\TaskBundle\EventListener\DoctrineTaskExecutionListener;
 
 /**
  * Tests for class TaskExecutionListener.
  */
-class TaskExecutionListenerTest extends \PHPUnit_Framework_TestCase
+class TaskExecutionListenerTest extends TestCase
 {
     public function testClearEntityManagerAfterTask()
     {

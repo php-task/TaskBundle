@@ -11,6 +11,7 @@
 
 namespace Task\TaskBundle\Tests\Unit\EventListener;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\Event;
 use Task\Runner\TaskRunnerInterface;
 use Task\TaskBundle\EventListener\RunListener;
@@ -18,7 +19,7 @@ use Task\TaskBundle\EventListener\RunListener;
 /**
  * Tests for class RunListener.
  */
-class RunListenerTest extends \PHPUnit_Framework_TestCase
+class RunListenerTest extends TestCase
 {
     public function testRun()
     {
