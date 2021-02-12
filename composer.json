@@ -22,7 +22,7 @@
     },
     "require-dev": {
         "symfony/debug": "^2.8 || ^3.4 || ^4.0 || ^5.0",
-        "symfony/framework-bundle": "^2.8 || ^3.4 || ^4.0 || ^5.0",
+        "symfony/framework-bundle": "^2.8.18 || ^3.4 || ^4.0 || ^5.0",
         "symfony/finder": "^2.8 || ^3.4 || ^4.0 || ^5.0",
         "symfony/yaml": "^2.8 || ^3.4 || ^4.0 || ^5.0",
         "symfony/phpunit-bridge": "^5.2.3",
@@ -39,7 +39,6 @@
             "Task\\TaskBundle\\Tests\\": "tests"
         }
     },
-    "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
             "dev-master": "2.x-dev"

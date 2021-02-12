@@ -59,6 +59,7 @@ jobs:
                       storage: array
 
                     - php-version: '7.4'
+                      coverage: '--coverage-clover=coverage.clover'
                       storage: doctrine
                     - php-version: '7.4'
                       storage: array
@@ -87,16 +88,16 @@ jobs:
                   composer-options: --prefer-dist --no-suggest
 
             - name: Doctrine
-              if: "${{ matrix.coverage }} == 'doctrine'"
+              if: matrix.storage == 'doctrine'
               run: |
                   tests/app/console doctrine:database:create
                   tests/app/console doctrine:schema:create
 
             - name: Execute test
-              run: vendor/bin/simple-phpunit -c phpunit.xml.dist --coverage-clover=coverage.clover
+              run: vendor/bin/simple-phpunit -c phpunit.xml.dist ${{ matrix.matrix.coverage }}
 
             - name: Coverage
-              if: ${{ matrix.coverage }}
+              if: matrix.coverage
               run: |
                   wget https://scrutinizer-ci.com/ocular.phar
                   php ocular.phar code-coverage:upload --access-token="230ec5e01daf5bb3e46ea304fb20348b52d80de73463ec08ee9c96fcd1349e35" --format=php-clover coverage.clover
