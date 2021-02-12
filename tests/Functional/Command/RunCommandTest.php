@@ -43,7 +43,7 @@ class RunCommandTest extends BaseCommandTestCase
         );
 
         $execution = $this->taskExecutionRepository->findByUuid($executions[0]->getUuid());
-        $this->assertEquals(TaskStatus::COMPLETED, $execution->getStatus(), $execution->getException());
+        $this->assertEquals(TaskStatus::COMPLETED, $execution->getStatus(), $execution->getException() ?: '');
         $this->assertEquals(strrev('Test workload 1'), $execution->getResult());
         $this->assertGreaterThan(0, $execution->getDuration());
         $this->assertGreaterThanOrEqual($execution->getStartTime(), $execution->getEndTime());

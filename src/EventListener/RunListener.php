@@ -11,7 +11,8 @@
 
 namespace Task\TaskBundle\EventListener;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\Event as LegacyEvent;
+use Symfony\Contracts\EventDispatcher\Event;
 use Task\Runner\TaskRunnerInterface;
 
 /**
@@ -35,9 +36,9 @@ class RunListener
     /**
      * Run scheduled tasks.
      *
-     * @param Event $event
+     * @param Event|LegacyEvent $event
      */
-    public function run(Event $event)
+    public function run($event)
     {
         $this->taskRunner->runTasks();
     }

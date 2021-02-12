@@ -3,6 +3,7 @@
 namespace Task\TaskBundle\Unit\Command;
 
 use Cron\CronExpression;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -16,7 +17,7 @@ use Task\TaskBundle\Entity\TaskRepository;
 use Task\TaskBundle\Tests\Functional\TestHandler;
 use Task\TaskStatus;
 
-class ScheduleSystemTasksCommandTest extends \PHPUnit_Framework_TestCase
+class ScheduleSystemTasksCommandTest extends TestCase
 {
     /**
      * @var TaskSchedulerInterface

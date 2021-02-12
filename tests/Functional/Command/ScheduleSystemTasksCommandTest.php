@@ -26,7 +26,7 @@ class ScheduleSystemTasksCommandTest extends BaseCommandTestCase
         );
 
         $output = $this->commandTester->getDisplay();
-        $this->assertContains('System-tasks successfully scheduled', $output);
+        $this->assertStringContainsString('System-tasks successfully scheduled', $output);
 
         $taskRepository = self::$kernel->getContainer()->get('task.repository.task');
         $this->assertNotNull($taskRepository->findBySystemKey('testing'));

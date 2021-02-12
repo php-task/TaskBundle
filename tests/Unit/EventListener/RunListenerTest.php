@@ -11,18 +11,25 @@
 
 namespace Task\TaskBundle\Tests\Unit\EventListener;
 
-use Symfony\Component\EventDispatcher\Event;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\EventDispatcher\Event as LegacyEvent;
+use Symfony\Contracts\EventDispatcher\Event;
 use Task\Runner\TaskRunnerInterface;
 use Task\TaskBundle\EventListener\RunListener;
 
 /**
  * Tests for class RunListener.
  */
-class RunListenerTest extends \PHPUnit_Framework_TestCase
+class RunListenerTest extends TestCase
 {
     public function testRun()
     {
-        $event = $this->prophesize(Event::class);
+        if (\class_exists(LegacyEvent::class)) {
+            $event = $this->prophesize(LegacyEvent::class);
+        } else {
+            $event = $this->prophesize(Event::class);
+        }
+
         $taskRunner = $this->prophesize(TaskRunnerInterface::class);
 
         $listener = new RunListener($taskRunner->reveal());

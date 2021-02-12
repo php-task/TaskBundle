@@ -2,13 +2,14 @@
 
 namespace Task\TaskBundle\Unit\Builder;
 
+use PHPUnit\Framework\TestCase;
 use Task\Scheduler\TaskSchedulerInterface;
 use Task\TaskBundle\Builder\NotSupportedMethodException;
 use Task\TaskBundle\Builder\TaskBuilder;
 use Task\TaskBundle\Entity\Task;
 use Task\TaskInterface;
 
-class TaskBuilderTest extends \PHPUnit_Framework_TestCase
+class TaskBuilderTest extends TestCase
 {
     public function testSetSystemKey()
     {
@@ -23,7 +24,7 @@ class TaskBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testSetSystemKeyNotSupported()
     {
-        $this->setExpectedException(NotSupportedMethodException::class);
+        $this->expectException(NotSupportedMethodException::class);
 
         $task = $this->prophesize(TaskInterface::class);
         $scheduler = $this->prophesize(TaskSchedulerInterface::class);

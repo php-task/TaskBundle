@@ -11,6 +11,7 @@
 
 namespace Task\TaskBundle\Tests\Unit\Handler;
 
+use PHPUnit\Framework\TestCase;
 use Task\Handler\TaskHandlerNotExistsException;
 use Task\TaskBundle\Handler\TaskHandlerFactory;
 use Task\TaskBundle\Tests\Functional\TestHandler;
@@ -18,7 +19,7 @@ use Task\TaskBundle\Tests\Functional\TestHandler;
 /**
  * Tests for class TaskHandlerFactory.
  */
-class TaskHandlerFactoryTest extends \PHPUnit_Framework_TestCase
+class TaskHandlerFactoryTest extends TestCase
 {
     public function testCreate()
     {
@@ -30,7 +31,7 @@ class TaskHandlerFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateNotExists()
     {
-        $this->setExpectedException(TaskHandlerNotExistsException::class);
+        $this->expectException(TaskHandlerNotExistsException::class);
 
         $taskHandlerFactory = new TaskHandlerFactory([TestHandler::class => new TestHandler()]);
 
@@ -39,7 +40,7 @@ class TaskHandlerFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateNoHandler()
     {
-        $this->setExpectedException(TaskHandlerNotExistsException::class);
+        $this->expectException(TaskHandlerNotExistsException::class);
 
         $taskHandlerFactory = new TaskHandlerFactory([]);
 

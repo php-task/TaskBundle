@@ -1,0 +1,103 @@
+name: PHP Test
+
+on:
+    pull_request:
+    push:
+        branches:
+            - 'master'
+            - '[0-9]+.x'
+            - '[0-9]+.[0-9]+'
+            - '[0-9]+.[0-9]+.x'
+
+jobs:
+    test:
+        name: '${{ matrix.php-version }} ${{ matrix.dependencies }}, Storage ${{ matrix.storage }}, Coverage ${{ matrix.coverage }}'
+        runs-on: ubuntu-20.04
+        env:
+            COVERAGE: ${{ matrix.coverage }}
+            STORAGE: ${{ matrix.storage }}
+
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    - php-version: '5.6'
+                      dependencies: 'lowest'
+                      storage: doctrine
+                    - php-version: '5.6'
+                      storage: doctrine
+                    - php-version: '5.6'
+                      storage: array
+
+                    - php-version: '7.0'
+                      dependencies: 'lowest'
+                      storage: doctrine
+                    - php-version: '7.0'
+                      storage: doctrine
+                    - php-version: '7.0'
+                      storage: array
+
+                    - php-version: '7.1'
+                      dependencies: 'lowest'
+                      storage: doctrine
+                    - php-version: '7.1'
+                      storage: doctrine
+                    - php-version: '7.1'
+                      storage: array
+
+                    - php-version: '7.2'
+                      dependencies: 'lowest'
+                      storage: doctrine
+                    - php-version: '7.2'
+                      storage: doctrine
+                    - php-version: '7.2'
+                      storage: array
+
+                    - php-version: '7.3'
+                      storage: doctrine
+                    - php-version: '7.3'
+                      storage: array
+
+                    - php-version: '7.4'
+                      coverage: '--coverage-clover=coverage.clover'
+                      storage: doctrine
+                    - php-version: '7.4'
+                      storage: array
+
+                    - php-version: '8.0'
+                      storage: doctrine
+                    - php-version: '8.0'
+                      storage: array
+
+        steps:
+            - name: Checkout project
+              uses: actions/checkout@v2
+
+            - name: Install and configure PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php-version }}
+                  extensions: "pdo, pdo_sqlite"
+                  coverage: "pcov"
+                  tools: 'composer:v2'
+
+            - name: Install dependencies with Composer
+              uses: ramsey/composer-install@v1
+              with:
+                  dependency-versions: ${{ matrix.dependencies }}
+                  composer-options: --prefer-dist --no-suggest
+
+            - name: Doctrine
+              if: matrix.storage == 'doctrine'
+              run: |
+                  tests/app/console doctrine:database:create
+                  tests/app/console doctrine:schema:create
+
+            - name: Execute test
+              run: vendor/bin/simple-phpunit -c phpunit.xml.dist ${{ matrix.matrix.coverage }}
+
+            - name: Coverage
+              if: matrix.coverage
+              run: |
+                  wget https://scrutinizer-ci.com/ocular.phar
+                  php ocular.phar code-coverage:upload --access-token="230ec5e01daf5bb3e46ea304fb20348b52d80de73463ec08ee9c96fcd1349e35" --format=php-clover coverage.clover
