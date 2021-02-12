@@ -12,6 +12,7 @@
 namespace Task\TaskBundle\Tests\Functional\Handler;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Task\Handler\TaskHandlerNotExistsException;
 use Task\TaskBundle\Handler\TaskHandlerFactory;
 use Task\TaskBundle\Tests\Functional\TestHandler;
 
@@ -38,11 +39,10 @@ class TaskHandlerFactoryTest extends KernelTestCase
         $this->assertInstanceOf(TestHandler::class, $this->taskHandlerFactory->create(TestHandler::class));
     }
 
-    /**
-     * @expectedException \Task\Handler\TaskHandlerNotExistsException
-     */
     public function testCreateNotExists()
     {
+        $this->expectException(TaskHandlerNotExistsException::class);
+
         $this->taskHandlerFactory->create(\stdClass::class);
     }
 }

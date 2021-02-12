@@ -46,11 +46,11 @@ class DebugTasksCommandTest extends BaseCommandTestCase
         );
 
         $output = $this->commandTester->getDisplay();
-        $this->assertContains($executions[0]->getUuid(), $output);
-        $this->assertContains($executions[1]->getUuid(), $output);
-        $this->assertContains('100000ms', $output);
-        $this->assertContains('100ms', $output);
-        $this->assertContains('completed', $output);
+        $this->assertStringContainsString($executions[0]->getUuid(), $output);
+        $this->assertStringContainsString($executions[1]->getUuid(), $output);
+        $this->assertStringContainsString('100000ms', $output);
+        $this->assertStringContainsString('100ms', $output);
+        $this->assertStringContainsString('completed', $output);
     }
 
     public function testExecutePaginated()
@@ -76,9 +76,9 @@ class DebugTasksCommandTest extends BaseCommandTestCase
         );
 
         $output = $this->commandTester->getDisplay();
-        $this->assertContains($executions[0]->getUuid(), $output);
-        $this->assertContains($executions[1]->getUuid(), $output);
-        $this->assertNotContains($executions[2]->getUuid(), $output);
+        $this->assertStringContainsString($executions[0]->getUuid(), $output);
+        $this->assertStringContainsString($executions[1]->getUuid(), $output);
+        $this->assertStringNotContainsString($executions[2]->getUuid(), $output);
 
         $this->commandTester->execute(
             [
@@ -89,9 +89,9 @@ class DebugTasksCommandTest extends BaseCommandTestCase
         );
 
         $output = $this->commandTester->getDisplay();
-        $this->assertNotContains($executions[0]->getUuid(), $output);
-        $this->assertNotContains($executions[1]->getUuid(), $output);
-        $this->assertContains($executions[2]->getUuid(), $output);
+        $this->assertStringNotContainsString($executions[0]->getUuid(), $output);
+        $this->assertStringNotContainsString($executions[1]->getUuid(), $output);
+        $this->assertStringContainsString($executions[2]->getUuid(), $output);
 
         $this->commandTester->execute(
             [
@@ -102,9 +102,9 @@ class DebugTasksCommandTest extends BaseCommandTestCase
         );
 
         $output = $this->commandTester->getDisplay();
-        $this->assertNotContains($executions[0]->getUuid(), $output);
-        $this->assertNotContains($executions[1]->getUuid(), $output);
-        $this->assertNotContains($executions[2]->getUuid(), $output);
+        $this->assertStringNotContainsString($executions[0]->getUuid(), $output);
+        $this->assertStringNotContainsString($executions[1]->getUuid(), $output);
+        $this->assertStringNotContainsString($executions[2]->getUuid(), $output);
     }
 
     /**

@@ -33,7 +33,7 @@ class RunHandlerCommandTest extends BaseCommandTestCase
         );
 
         $output = $this->commandTester->getDisplay();
-        $this->assertContains('No workload.', $output);
+        $this->assertStringContainsString('No workload.', $output);
     }
 
     public function testExecuteWithWorkload()
@@ -50,7 +50,7 @@ class RunHandlerCommandTest extends BaseCommandTestCase
         );
 
         $output = $this->commandTester->getDisplay();
-        $this->assertContains(strrev('Test workload 1'), $output);
+        $this->assertStringContainsString(strrev('Test workload 1'), $output);
     }
 
     public function testExecuteWithWorkloadNoVerbosity()

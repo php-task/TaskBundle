@@ -24,7 +24,7 @@ class TaskBuilderTest extends TestCase
 
     public function testSetSystemKeyNotSupported()
     {
-        $this->setExpectedException(NotSupportedMethodException::class);
+        $this->expectException(NotSupportedMethodException::class);
 
         $task = $this->prophesize(TaskInterface::class);
         $scheduler = $this->prophesize(TaskSchedulerInterface::class);

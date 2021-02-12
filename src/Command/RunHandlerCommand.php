@@ -72,5 +72,7 @@ EOT
         if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
             $output->writeln(sprintf('Result: %s', json_encode($result)));
         }
+
+        return 0;
     }
 }

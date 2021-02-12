@@ -31,7 +31,7 @@ class TaskHandlerFactoryTest extends TestCase
 
     public function testCreateNotExists()
     {
-        $this->setExpectedException(TaskHandlerNotExistsException::class);
+        $this->expectException(TaskHandlerNotExistsException::class);
 
         $taskHandlerFactory = new TaskHandlerFactory([TestHandler::class => new TestHandler()]);
 
@@ -40,7 +40,7 @@ class TaskHandlerFactoryTest extends TestCase
 
     public function testCreateNoHandler()
     {
-        $this->setExpectedException(TaskHandlerNotExistsException::class);
+        $this->expectException(TaskHandlerNotExistsException::class);
 
         $taskHandlerFactory = new TaskHandlerFactory([]);
 

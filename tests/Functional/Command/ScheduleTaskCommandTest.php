@@ -94,7 +94,7 @@ class ScheduleTaskCommandTest extends BaseCommandTestCase
         $this->assertEquals(TestHandler::class, $tasks[0]->getHandlerClass());
         $this->assertEquals('Test workload 1', $tasks[0]->getWorkload());
         $this->assertEquals('0 * * * *', $tasks[0]->getInterval());
-        $this->assertEquals($date, $tasks[0]->getLastExecution(), '', 2);
+        $this->assertEquals($date->format('Y-m-d H:i:s'), $tasks[0]->getLastExecution()->format('Y-m-d H:i:s'));
     }
 
     public function testExecuteWithExecutionDate()
