@@ -23,6 +23,7 @@
             <argument type="string">task:execute</argument>
             <argument type="service" id="task.handler.factory"/>
             <argument type="service" id="task.storage.task_execution"/>
+            <argument type="service" id="event_dispatcher"/>
 
             <tag name="console.command"/>
         </service>

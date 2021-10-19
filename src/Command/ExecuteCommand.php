@@ -16,6 +16,9 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Task\Event\Events;
+use Task\Event\TaskEvent;
 use Task\Executor\FailedException;
 use Task\Handler\TaskHandlerFactoryInterface;
 use Task\Storage\TaskExecutionRepositoryInterface;
@@ -36,6 +39,11 @@ class ExecuteCommand extends Command
     private $executionRepository;
 
     /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
+
+    /**
      * @param string $name
      * @param TaskHandlerFactoryInterface $handlerFactory
      * @param TaskExecutionRepositoryInterface $executionRepository
@@ -43,12 +51,14 @@ class ExecuteCommand extends Command
     public function __construct(
         $name,
         TaskHandlerFactoryInterface $handlerFactory,
-        TaskExecutionRepositoryInterface $executionRepository
+        TaskExecutionRepositoryInterface $executionRepository,
+        EventDispatcherInterface $dispatcher
     ) {
         parent::__construct($name);
 
         $this->handlerFactory = $handlerFactory;
         $this->executionRepository = $executionRepository;
+        $this->eventDispatcher = $dispatcher;
     }
 
     /**
@@ -70,7 +80,9 @@ class ExecuteCommand extends Command
         $handler = $this->handlerFactory->create($execution->getHandlerClass());
 
         try {
+            $this->eventDispatcher->dispatch(new TaskEvent($execution->getTask()),Events::TASK_BEFORE);
             $result = $handler->handle($execution->getWorkload());
+            $this->eventDispatcher->dispatch(new TaskEvent($execution),Events::TASK_AFTER);
         } catch (\Exception $exception) {
             if ($exception instanceof FailedException) {
                 $errorOutput->writeln(FailedException::class);
