@@ -17,8 +17,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Task\Event\Events;
 use Task\Event\TaskEvent;
+use Task\Event\TaskExecutionEvent;
 use Task\Executor\FailedException;
 use Task\Handler\TaskHandlerFactoryInterface;
 use Task\Storage\TaskExecutionRepositoryInterface;
@@ -80,9 +82,9 @@ class ExecuteCommand extends Command
         $handler = $this->handlerFactory->create($execution->getHandlerClass());
 
         try {
-            $this->eventDispatcher->dispatch(new TaskEvent($execution->getTask()),Events::TASK_BEFORE);
+            $this->dispatch(Events::TASK_BEFORE, new TaskEvent($execution->getTask()));
             $result = $handler->handle($execution->getWorkload());
-            $this->eventDispatcher->dispatch(new TaskEvent($execution),Events::TASK_AFTER);
+            $this->dispatch(Events::TASK_AFTER, new TaskExecutionEvent($execution->getTask(), $execution));
         } catch (\Exception $exception) {
             if ($exception instanceof FailedException) {
                 $errorOutput->writeln(FailedException::class);
@@ -106,5 +108,14 @@ class ExecuteCommand extends Command
     public function isHidden()
     {
         return true;
+    }
+
+    private function dispatch($eventName, $event)
+    {
+        if (class_exists(LegacyEventDispatcherProxy::class)) {
+            return $this->eventDispatcher->dispatch($event, $eventName);
+        } else {
+            return $this->eventDispatcher->dispatch($eventName, $event);
+        }
     }
 }
