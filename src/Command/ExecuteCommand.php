@@ -16,6 +16,11 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
+use Task\Event\Events;
+use Task\Event\TaskEvent;
+use Task\Event\TaskExecutionEvent;
 use Task\Executor\FailedException;
 use Task\Handler\TaskHandlerFactoryInterface;
 use Task\Storage\TaskExecutionRepositoryInterface;
@@ -36,6 +41,11 @@ class ExecuteCommand extends Command
     private $executionRepository;
 
     /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
+
+    /**
      * @param string $name
      * @param TaskHandlerFactoryInterface $handlerFactory
      * @param TaskExecutionRepositoryInterface $executionRepository
@@ -43,12 +53,14 @@ class ExecuteCommand extends Command
     public function __construct(
         $name,
         TaskHandlerFactoryInterface $handlerFactory,
-        TaskExecutionRepositoryInterface $executionRepository
+        TaskExecutionRepositoryInterface $executionRepository,
+        EventDispatcherInterface $dispatcher
     ) {
         parent::__construct($name);
 
         $this->handlerFactory = $handlerFactory;
         $this->executionRepository = $executionRepository;
+        $this->eventDispatcher = $dispatcher;
     }
 
     /**
@@ -70,7 +82,9 @@ class ExecuteCommand extends Command
         $handler = $this->handlerFactory->create($execution->getHandlerClass());
 
         try {
+            $this->dispatch(Events::TASK_BEFORE, new TaskEvent($execution->getTask()));
             $result = $handler->handle($execution->getWorkload());
+            $this->dispatch(Events::TASK_AFTER, new TaskExecutionEvent($execution->getTask(), $execution));
         } catch (\Exception $exception) {
             if ($exception instanceof FailedException) {
                 $errorOutput->writeln(FailedException::class);
@@ -94,5 +108,14 @@ class ExecuteCommand extends Command
     public function isHidden()
     {
         return true;
+    }
+
+    private function dispatch($eventName, $event)
+    {
+        if (class_exists(LegacyEventDispatcherProxy::class)) {
+            return $this->eventDispatcher->dispatch($event, $eventName);
+        } else {
+            return $this->eventDispatcher->dispatch($eventName, $event);
+        }
     }
 }
