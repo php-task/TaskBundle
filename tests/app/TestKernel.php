@@ -13,6 +13,7 @@ use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\Kernel;
 use Task\TaskBundle\TaskBundle;
@@ -29,7 +30,7 @@ class TestKernel extends Kernel
     /**
      * {@inheritdoc}
      */
-    public function registerBundles()
+    public function registerBundles(): array
     {
         return [
             new FrameworkBundle(),
@@ -41,7 +42,7 @@ class TestKernel extends Kernel
     /**
      * {@inheritdoc}
      */
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         $this->storage = getenv(self::STORAGE_VAR_NAME);
         if (false === $this->storage) {
@@ -55,7 +56,7 @@ class TestKernel extends Kernel
     /**
      * {@inheritdoc}
      */
-    protected function buildContainer()
+    protected function buildContainer(): ContainerBuilder
     {
         $container = parent::buildContainer();
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/config'));
@@ -70,7 +71,7 @@ class TestKernel extends Kernel
     /**
      * {@inheritdoc}
      */
-    protected function initializeContainer()
+    protected function initializeContainer(): void
     {
         static $first = true;
 
@@ -92,7 +93,7 @@ class TestKernel extends Kernel
 
         try {
             parent::initializeContainer();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->debug = $debug;
 
             throw $e;
@@ -101,7 +102,7 @@ class TestKernel extends Kernel
         $this->debug = $debug;
     }
 
-    protected function getKernelParameters()
+    protected function getKernelParameters(): array
     {
         return array_merge(
             parent::getKernelParameters(),

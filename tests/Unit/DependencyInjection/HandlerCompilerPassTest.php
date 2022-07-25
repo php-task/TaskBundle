@@ -36,13 +36,14 @@ class HandlerCompilerPassTest extends TestCase
         $serviceDefinition = $this->prophesize(Definition::class);
         $container->findDefinition(HandlerCompilerPass::REGISTRY_ID)->willReturn($serviceDefinition);
 
-        $compilerPass = new HandlerCompilerPass();
-        $compilerPass->process($container->reveal());
-
         $serviceDefinition->replaceArgument(
             0,
             [\stdClass::class => new Reference('service1'), self::class => new Reference('service2')]
-        )->shouldBeCalled();
+        )->shouldBeCalled()
+            ->willReturn($serviceDefinition->reveal());
+
+        $compilerPass = new HandlerCompilerPass();
+        $compilerPass->process($container->reveal());
     }
 
     public function testProcessNoTaggedService()
@@ -55,9 +56,11 @@ class HandlerCompilerPassTest extends TestCase
         $serviceDefinition = $this->prophesize(Definition::class);
         $container->findDefinition(HandlerCompilerPass::REGISTRY_ID)->willReturn($serviceDefinition);
 
+        $serviceDefinition->replaceArgument(0, [])
+            ->shouldBeCalled()
+            ->willReturn($serviceDefinition->reveal());
+
         $compilerPass = new HandlerCompilerPass();
         $compilerPass->process($container->reveal());
-
-        $serviceDefinition->replaceArgument(0, [])->shouldBeCalled();
     }
 }

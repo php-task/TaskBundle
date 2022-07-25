@@ -5,7 +5,7 @@ namespace Task\TaskBundle\Unit\Command;
 use Cron\CronExpression;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Task\Execution\TaskExecutionInterface;
 use Task\Scheduler\TaskSchedulerInterface;
@@ -85,7 +85,7 @@ class ScheduleSystemTasksCommandTest extends TestCase
         $taskBuilder->schedule()->shouldBeCalled();
 
         $command->run(
-            $this->prophesize(InputInterface::class)->reveal(),
+            new StringInput(''),
             $this->prophesize(OutputInterface::class)->reveal()
         );
     }
@@ -135,7 +135,7 @@ class ScheduleSystemTasksCommandTest extends TestCase
         $taskBuilder2->schedule()->shouldBeCalled();
 
         $command->run(
-            $this->prophesize(InputInterface::class)->reveal(),
+            new StringInput(''),
             $this->prophesize(OutputInterface::class)->reveal()
         );
     }
@@ -178,7 +178,7 @@ class ScheduleSystemTasksCommandTest extends TestCase
         $this->taskExecutionRepository->save($execution->reveal())->shouldBeCalled();
 
         $command->run(
-            $this->prophesize(InputInterface::class)->reveal(),
+            new StringInput(''),
             $this->prophesize(OutputInterface::class)->reveal()
         );
     }
@@ -218,7 +218,7 @@ class ScheduleSystemTasksCommandTest extends TestCase
         $this->scheduler->scheduleTasks()->shouldBeCalled();
 
         $command->run(
-            $this->prophesize(InputInterface::class)->reveal(),
+            new StringInput(''),
             $this->prophesize(OutputInterface::class)->reveal()
         );
     }
@@ -253,7 +253,7 @@ class ScheduleSystemTasksCommandTest extends TestCase
         $this->scheduler->scheduleTasks()->shouldNotBeCalled();
 
         $command->run(
-            $this->prophesize(InputInterface::class)->reveal(),
+            new StringInput(''),
             $this->prophesize(OutputInterface::class)->reveal()
         );
     }
@@ -287,7 +287,7 @@ class ScheduleSystemTasksCommandTest extends TestCase
         $this->taskExecutionRepository->save($execution->reveal())->shouldBeCalled();
 
         $command->run(
-            $this->prophesize(InputInterface::class)->reveal(),
+            new StringInput(''),
             $this->prophesize(OutputInterface::class)->reveal()
         );
     }
