@@ -27,7 +27,7 @@ class RunCommandTest extends BaseCommandTestCase
     {
         $singleTask = $this->createTask('Test workload 1');
         $laterTask = $this->createTask('Test workload 2');
-        $intervalTask = $this->createTask('Test workload 3', CronExpression::factory('@daily'));
+        $intervalTask = $this->createTask('Test workload 3', new CronExpression('@daily'));
 
         /** @var TaskExecutionInterface[] $executions */
         $executions = [
@@ -81,7 +81,7 @@ class RunCommandTest extends BaseCommandTestCase
     {
         $singleTask = $this->createTask('Test workload 1', null, FailTestHandler::class);
         $laterTask = $this->createTask('Test workload 2', null, FailTestHandler::class);
-        $intervalTask = $this->createTask('Test workload 3', CronExpression::factory('@daily'), FailTestHandler::class);
+        $intervalTask = $this->createTask('Test workload 3', new CronExpression('@daily'), FailTestHandler::class);
 
         /** @var TaskExecutionInterface[] $executions */
         $executions = [
