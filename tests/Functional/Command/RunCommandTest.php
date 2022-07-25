@@ -70,7 +70,11 @@ class RunCommandTest extends BaseCommandTestCase
         $this->assertEquals($intervalTask->getWorkload(), $task->getWorkload());
         $this->assertLessThanOrEqual($intervalTask->getFirstExecution(), $task->getFirstExecution());
         $this->assertLessThanOrEqual($intervalTask->getLastExecution(), $task->getLastExecution());
-        $this->assertEquals($intervalTask->getInterval(), $task->getInterval());
+
+        $this->assertEquals($intervalTask->getInterval()->getExpression(), $task->getInterval()->getExpression());
+        $this->assertEquals($intervalTask->getInterval()->getNextRunDate(), $task->getInterval()->getNextRunDate());
+        $this->assertEquals($intervalTask->getInterval()->getParts(), $task->getInterval()->getParts());
+        $this->assertEquals($intervalTask->getInterval()->getPreviousRunDate(), $task->getInterval()->getPreviousRunDate());
 
         $this->assertEquals(TaskStatus::PLANNED, $result[0]->getStatus());
         $this->assertEquals(TestHandler::class, $result[0]->getHandlerClass());
@@ -124,7 +128,11 @@ class RunCommandTest extends BaseCommandTestCase
         $this->assertEquals($intervalTask->getWorkload(), $task->getWorkload());
         $this->assertLessThanOrEqual($intervalTask->getFirstExecution(), $task->getFirstExecution());
         $this->assertLessThanOrEqual($intervalTask->getLastExecution(), $task->getLastExecution());
-        $this->assertEquals($intervalTask->getInterval(), $task->getInterval());
+
+        $this->assertEquals($intervalTask->getInterval()->getExpression(), $task->getInterval()->getExpression());
+        $this->assertEquals($intervalTask->getInterval()->getNextRunDate(), $task->getInterval()->getNextRunDate());
+        $this->assertEquals($intervalTask->getInterval()->getParts(), $task->getInterval()->getParts());
+        $this->assertEquals($intervalTask->getInterval()->getPreviousRunDate(), $task->getInterval()->getPreviousRunDate());
 
         $this->assertEquals(TaskStatus::PLANNED, $result[0]->getStatus());
         $this->assertEquals(FailTestHandler::class, $result[0]->getHandlerClass());
