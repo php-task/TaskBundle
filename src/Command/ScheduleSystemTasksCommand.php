@@ -63,7 +63,7 @@ class ScheduleSystemTasksCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Schedule system-tasks')->setHelp(
             <<<'EOT'
@@ -79,7 +79,7 @@ EOT
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln(sprintf('Schedule %s system-tasks:', count($this->systemTasks)));
         $output->writeln('');

@@ -69,7 +69,7 @@ abstract class BaseCommandTestCase extends KernelTestCase
      */
     protected $commandTester;
 
-    public function setUp()
+    protected function setUp(): void
     {
         self::bootKernel();
 

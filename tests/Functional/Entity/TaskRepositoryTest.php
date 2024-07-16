@@ -12,7 +12,7 @@ class TaskRepositoryTest extends BaseDatabaseTestCase
      */
     protected $taskRepository;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -22,7 +22,7 @@ class TaskRepositoryTest extends BaseDatabaseTestCase
     public function testFindBySystemKey()
     {
         if ('doctrine' !== self::$kernel->getContainer()->getParameter('kernel.storage')) {
-            return $this->markTestSkipped('This testcase will only be called for doctrine storage.');
+            $this->markTestSkipped('This testcase will only be called for doctrine storage.');
         }
 
         $task = $this->createTask();
@@ -37,7 +37,7 @@ class TaskRepositoryTest extends BaseDatabaseTestCase
     public function testFindBySystemKeyNotFound()
     {
         if ('doctrine' !== self::$kernel->getContainer()->getParameter('kernel.storage')) {
-            return $this->markTestSkipped('This testcase will only be called for doctrine storage.');
+            $this->markTestSkipped('This testcase will only be called for doctrine storage.');
         }
 
         $task = $this->createTask();
@@ -49,7 +49,7 @@ class TaskRepositoryTest extends BaseDatabaseTestCase
     public function testFindSystemTasks()
     {
         if ('doctrine' !== self::$kernel->getContainer()->getParameter('kernel.storage')) {
-            return $this->markTestSkipped('This testcase will only be called for doctrine storage.');
+            $this->markTestSkipped('This testcase will only be called for doctrine storage.');
         }
 
         $task1 = $this->createTask();

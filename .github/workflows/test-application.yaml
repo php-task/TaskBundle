@@ -24,13 +24,34 @@ jobs:
                     - php-version: '8.0'
                       coverage: '--coverage-clover=coverage.clover'
                       storage: doctrine
+                      phpunit-config: 'phpunit-9.xml.dist'
                     - php-version: '8.0'
                       storage: array
+                      phpunit-config: 'phpunit-9.xml.dist'
 
                     - php-version: '8.1'
                       storage: doctrine
+                      phpunit-config: 'phpunit-9.xml.dist'
                     - php-version: '8.1'
                       storage: array
+                      phpunit-config: 'phpunit-9.xml.dist'
+
+                    - php-version: '8.2'
+                      storage: doctrine
+                    - php-version: '8.2'
+                      storage: array
+
+                    - php-version: '8.3'
+                      storage: doctrine
+                    - php-version: '8.3'
+                      storage: array
+
+                    - php-version: '8.4'
+                      storage: doctrine
+                      composer-flags: --ignore-platform-reqs
+                    - php-version: '8.4'
+                      storage: array
+                      composer-flags: --ignore-platform-reqs
         steps:
             - name: Checkout project
               uses: actions/checkout@v2
@@ -51,7 +72,7 @@ jobs:
               uses: ramsey/composer-install@v2
               with:
                   dependency-versions: ${{ matrix.dependencies }}
-                  composer-options: --prefer-dist --no-suggest
+                  composer-options: --prefer-dist --no-suggest ${{ matrix.composer-flags }}
 
             - name: Doctrine
               if: matrix.storage == 'doctrine'
@@ -60,7 +81,7 @@ jobs:
                   tests/app/console doctrine:schema:create
 
             - name: Execute test
-              run: vendor/bin/simple-phpunit -c phpunit.xml.dist ${{ matrix.matrix.coverage }}
+              run: vendor/bin/phpunit -c ${{ matrix.phpunit-config || 'phpunit.xml.dist' }} ${{ matrix.coverage }}
 
             - name: Coverage
               if: matrix.coverage

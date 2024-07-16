@@ -26,7 +26,7 @@ class TaskHandlerFactoryTest extends KernelTestCase
      */
     private $taskHandlerFactory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

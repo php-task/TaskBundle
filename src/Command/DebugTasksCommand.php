@@ -42,7 +42,7 @@ class DebugTasksCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Debug tasks')
             ->setHelp(<<<'EOT'
@@ -60,7 +60,7 @@ EOT
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $page = $input->getOption('page');
         $pageSize = $input->getOption('page-size');
