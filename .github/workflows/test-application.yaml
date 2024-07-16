@@ -24,13 +24,17 @@ jobs:
                     - php-version: '8.0'
                       coverage: '--coverage-clover=coverage.clover'
                       storage: doctrine
+                      phpunit-config: 'phpunit-9.xml.dist'
                     - php-version: '8.0'
                       storage: array
+                      phpunit-config: 'phpunit-9.xml.dist'
 
                     - php-version: '8.1'
                       storage: doctrine
+                      phpunit-config: 'phpunit-9.xml.dist'
                     - php-version: '8.1'
                       storage: array
+                      phpunit-config: 'phpunit-9.xml.dist'
 
                     - php-version: '8.2'
                       storage: doctrine
@@ -77,7 +81,7 @@ jobs:
                   tests/app/console doctrine:schema:create
 
             - name: Execute test
-              run: vendor/bin/simple-phpunit -c phpunit.xml.dist ${{ matrix.matrix.coverage }}
+              run: vendor/bin/phpunit -c ${{ matrix.phpunit-config || 'phpunit.xml.dist' }} ${{ matrix.coverage }}
 
             - name: Coverage
               if: matrix.coverage
