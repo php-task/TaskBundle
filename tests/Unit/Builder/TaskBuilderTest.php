@@ -3,6 +3,7 @@
 namespace Task\TaskBundle\Unit\Builder;
 
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Task\Scheduler\TaskSchedulerInterface;
 use Task\TaskBundle\Builder\NotSupportedMethodException;
 use Task\TaskBundle\Builder\TaskBuilder;
@@ -11,6 +12,8 @@ use Task\TaskInterface;
 
 class TaskBuilderTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testSetSystemKey()
     {
         $task = $this->prophesize(Task::class);

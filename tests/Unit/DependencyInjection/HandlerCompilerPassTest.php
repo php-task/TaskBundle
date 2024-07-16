@@ -12,6 +12,7 @@
 namespace Task\TaskBundle\Unit\DependencyInjection;
 
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
@@ -22,6 +23,8 @@ use Task\TaskBundle\DependencyInjection\HandlerCompilerPass;
  */
 class HandlerCompilerPassTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testProcess()
     {
         $container = $this->prophesize(ContainerBuilder::class);

@@ -12,6 +12,7 @@
 namespace Task\TaskBundle\Tests\Unit\Executor;
 
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\Process\Process;
 use Task\Execution\TaskExecutionInterface;
 use Task\Executor\FailedException;
@@ -25,6 +26,8 @@ use Task\TaskBundle\Executor\SeparateProcessExecutor;
 
 class SeparateProcessExecutorTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var TaskHandlerFactoryInterface
      */

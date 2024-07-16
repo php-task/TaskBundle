@@ -5,6 +5,7 @@ namespace Task\TaskBundle\Unit\Command;
 use Cron\CronExpression;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Task\Execution\TaskExecutionInterface;
@@ -19,6 +20,8 @@ use Task\TaskStatus;
 
 class ScheduleSystemTasksCommandTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var TaskSchedulerInterface
      */

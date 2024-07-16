@@ -22,7 +22,7 @@ abstract class BaseDatabaseTestCase extends KernelTestCase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    protected function setUp(): void
     {
         self::bootKernel();
 
