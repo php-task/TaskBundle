@@ -31,6 +31,23 @@ jobs:
                       storage: doctrine
                     - php-version: '8.1'
                       storage: array
+
+                    - php-version: '8.2'
+                      storage: doctrine
+                    - php-version: '8.2'
+                      storage: array
+
+                    - php-version: '8.3'
+                      storage: doctrine
+                    - php-version: '8.3'
+                      storage: array
+
+                    - php-version: '8.4'
+                      storage: doctrine
+                      composer-flags: --ignore-platform-reqs
+                    - php-version: '8.4'
+                      storage: array
+                      composer-flags: --ignore-platform-reqs
         steps:
             - name: Checkout project
               uses: actions/checkout@v2
@@ -51,7 +68,7 @@ jobs:
               uses: ramsey/composer-install@v2
               with:
                   dependency-versions: ${{ matrix.dependencies }}
-                  composer-options: --prefer-dist --no-suggest
+                  composer-options: --prefer-dist --no-suggest ${{ matrix.composer-flags }}
 
             - name: Doctrine
               if: matrix.storage == 'doctrine'
