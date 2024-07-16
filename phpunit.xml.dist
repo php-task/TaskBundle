@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.2/phpunit.xsd" backupGlobals="false" colors="true" bootstrap="tests/bootstrap.php" cacheDirectory=".phpunit.cache">
-  <php>
-    <ini name="error_reporting" value="-1"/>
-    <ini name="date.timezone" value="UTC"/>
-    <server name="KERNEL_DIR" value="tests/app"/>
-    <server name="KERNEL_CLASS" value="TestKernel"/>
-  </php>
-  <testsuites>
-    <testsuite name="php-task Library Test Suite">
-      <directory>./tests/</directory>
-    </testsuite>
-  </testsuites>
-  <source>
-    <include>
-      <directory>./</directory>
-    </include>
-    <exclude>
-      <directory>./vendor</directory>
-      <directory>./tests</directory>
-    </exclude>
-  </source>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.2/phpunit.xsd"
+         backupGlobals="false"
+         colors="true"
+         bootstrap="tests/bootstrap.php"
+         cacheDirectory=".phpunit.cache">
+    <php>
+        <ini name="error_reporting" value="-1"/>
+        <ini name="date.timezone" value="UTC"/>
+        <server name="KERNEL_DIR" value="tests/app"/>
+        <server name="KERNEL_CLASS" value="TestKernel"/>
+    </php>
+
+    <testsuites>
+        <testsuite name="php-task Library Test Suite">
+            <directory>./tests/</directory>
+        </testsuite>
+    </testsuites>
+
+    <source>
+        <include>
+            <directory>./</directory>
+        </include>
+        <exclude>
+            <directory>./vendor</directory>
+            <directory>./tests</directory>
+        </exclude>
+    </source>
 </phpunit>
