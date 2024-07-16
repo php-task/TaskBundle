@@ -7,7 +7,7 @@ use Task\TaskBundle\Tests\Functional\BaseCommandTestCase;
 
 class ScheduleSystemTasksCommandTest extends BaseCommandTestCase
 {
-    public function setUp()
+    protected function setUp(): void
     {
         self::bootKernel();
         if ('doctrine' !== self::$kernel->getContainer()->getParameter('kernel.storage')) {

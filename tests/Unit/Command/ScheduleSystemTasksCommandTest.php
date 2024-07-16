@@ -34,7 +34,7 @@ class ScheduleSystemTasksCommandTest extends TestCase
      */
     private $taskExecutionRepository;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->scheduler = $this->prophesize(TaskSchedulerInterface::class);
         $this->taskRepository = $this->prophesize(TaskRepository::class);

@@ -25,7 +25,7 @@ class TaskExecutionRepositoryTest extends BaseDatabaseTestCase
      */
     protected $taskRepository;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -65,7 +65,7 @@ class SeparateProcessExecutorTest extends TestCase
      */
     private $process;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->handlerFactory = $this->prophesize(TaskHandlerFactoryInterface::class);
         $this->executionRepository = $this->prophesize(TaskExecutionRepositoryInterface::class);
