@@ -48,7 +48,7 @@ class RunCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Run pending tasks')
             ->setHelp(<<<'EOT'
@@ -63,7 +63,7 @@ EOT
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->runner->runTasks();
         $this->scheduler->scheduleTasks();
