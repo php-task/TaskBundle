@@ -11,6 +11,8 @@ $loader = require $file;
 
 require __DIR__ . '/app/TestKernel.php';
 
-AnnotationRegistry::registerLoader([$loader, 'loadClass']);
+if (\class_exists(AnnotationRegistry::class)) {
+    AnnotationRegistry::registerLoader([$loader, 'loadClass']);
+}
 
 return $loader;
