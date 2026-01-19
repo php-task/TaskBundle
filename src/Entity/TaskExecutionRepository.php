@@ -36,8 +36,8 @@ class TaskExecutionRepository extends EntityRepository implements TaskExecutionR
      */
     public function save(TaskExecutionInterface $execution)
     {
-        $this->_em->persist($execution);
-        $this->_em->flush($execution);
+        $this->getEntityManager()->persist($execution);
+        $this->getEntityManager()->flush($execution);
 
         return $this;
     }
@@ -47,8 +47,8 @@ class TaskExecutionRepository extends EntityRepository implements TaskExecutionR
      */
     public function remove(TaskExecutionInterface $execution)
     {
-        $this->_em->remove($execution);
-        $this->_em->flush($execution);
+        $this->getEntityManager()->remove($execution);
+        $this->getEntityManager()->flush($execution);
 
         return $this;
     }
@@ -56,7 +56,7 @@ class TaskExecutionRepository extends EntityRepository implements TaskExecutionR
     /**
      * {@inheritdoc}
      */
-    public function findAll($page = 1, $pageSize = null)
+    public function findAllPaginated(int $page = 1, ?int $pageSize = null): array
     {
         $query = $this->createQueryBuilder('e')
             ->innerJoin('e.task', 't')

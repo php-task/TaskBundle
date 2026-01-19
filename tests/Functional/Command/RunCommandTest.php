@@ -61,7 +61,7 @@ class RunCommandTest extends BaseCommandTestCase
         $this->assertGreaterThan(0, $execution->getDuration());
         $this->assertGreaterThanOrEqual($execution->getStartTime(), $execution->getEndTime());
 
-        $result = $this->taskExecutionRepository->findAll(2, 3);
+        $result = $this->taskExecutionRepository->findAllPaginated(2, 3);
         $this->assertCount(1, $result);
 
         $task = $result[0]->getTask();
@@ -119,7 +119,7 @@ class RunCommandTest extends BaseCommandTestCase
         $this->assertGreaterThan(0, $execution->getDuration());
         $this->assertGreaterThanOrEqual($execution->getStartTime(), $execution->getEndTime());
 
-        $result = $this->taskExecutionRepository->findAll(2, 3);
+        $result = $this->taskExecutionRepository->findAllPaginated(2, 3);
         $this->assertCount(1, $result);
 
         $task = $result[0]->getTask();

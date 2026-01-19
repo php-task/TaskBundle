@@ -44,8 +44,8 @@ class TaskRepository extends EntityRepository implements SystemTaskRepositoryInt
      */
     public function save(TaskInterface $task)
     {
-        $this->_em->persist($task);
-        $this->_em->flush($task);
+        $this->getEntityManager()->persist($task);
+        $this->getEntityManager()->flush($task);
 
         return $this;
     }
@@ -55,8 +55,8 @@ class TaskRepository extends EntityRepository implements SystemTaskRepositoryInt
      */
     public function remove(TaskInterface $task)
     {
-        $this->_em->remove($task);
-        $this->_em->flush($task);
+        $this->getEntityManager()->remove($task);
+        $this->getEntityManager()->flush($task);
 
         return $this;
     }
@@ -64,7 +64,7 @@ class TaskRepository extends EntityRepository implements SystemTaskRepositoryInt
     /**
      * {@inheritdoc}
      */
-    public function findAll($page = 1, $pageSize = null): array
+    public function findAllPaginated(int $page = 1, ?int $pageSize = null): array
     {
         $query = $this->createQueryBuilder('t')
             ->getQuery();

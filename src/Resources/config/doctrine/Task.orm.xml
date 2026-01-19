@@ -18,7 +18,7 @@
         <field name="firstExecution" type="datetime" nullable="true"/>
         <field name="lastExecution" type="datetime" nullable="true"/>
         <field name="systemKey" type="string" nullable="true" unique="true" length="191"/>
-        <field name="workload" type="object"/>
+        <field name="workload" type="json"/>
 
     </entity>
 </doctrine-mapping>

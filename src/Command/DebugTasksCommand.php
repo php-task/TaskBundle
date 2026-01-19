@@ -65,7 +65,7 @@ EOT
         $page = $input->getOption('page');
         $pageSize = $input->getOption('page-size');
 
-        $executions = $this->taskExecutionRepository->findAll($page, $pageSize);
+        $executions = $this->taskExecutionRepository->findAllPaginated($page, $pageSize);
 
         $table = new Table($output);
         $table->setHeaders(['uuid', 'status', 'handler', 'schedule time', 'end time', 'duration']);

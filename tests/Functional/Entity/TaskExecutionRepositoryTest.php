@@ -85,7 +85,7 @@ class TaskExecutionRepositoryTest extends BaseDatabaseTestCase
             $executions[$execution->getUuid()] = $execution;
         }
 
-        $result = $this->taskExecutionRepository->findAll(1, 2);
+        $result = $this->taskExecutionRepository->findAllPaginated(1, 2);
 
         $this->assertCount(2, $result);
         foreach ($result as $item) {
@@ -93,7 +93,7 @@ class TaskExecutionRepositoryTest extends BaseDatabaseTestCase
             unset($executions[$item->getUuid()]);
         }
 
-        $result = $this->taskExecutionRepository->findAll(2, 2);
+        $result = $this->taskExecutionRepository->findAllPaginated(2, 2);
 
         $this->assertCount(1, $result);
         foreach ($result as $item) {
