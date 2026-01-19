@@ -152,7 +152,7 @@ class TaskExecutionRepositoryTest extends BaseDatabaseTestCase
         $task = $this->createTask();
         $this->taskRepository->save($task);
 
-        $execution = $this->save($task, new \DateTime('-1 hour'));
+        $execution = $this->save($task, new \DateTimeImmutable('-1 hour'));
 
         $result = $this->taskExecutionRepository->findNextScheduled();
         $this->assertEquals($execution->getUuid(), $result->getUuid());
@@ -163,7 +163,7 @@ class TaskExecutionRepositoryTest extends BaseDatabaseTestCase
         $task = $this->createTask();
         $this->taskRepository->save($task);
 
-        $this->save($task, new \DateTime('+1 hour'));
+        $this->save($task, new \DateTimeImmutable('+1 hour'));
 
         $this->assertNull($this->taskExecutionRepository->findNextScheduled());
     }
@@ -173,7 +173,7 @@ class TaskExecutionRepositoryTest extends BaseDatabaseTestCase
         $task = $this->createTask();
         $this->taskRepository->save($task);
 
-        $this->save($task, new \DateTime('+1 hour'));
+        $this->save($task, new \DateTimeImmutable('+1 hour'));
 
         $this->assertNull($this->taskExecutionRepository->findNextScheduled());
     }
@@ -182,15 +182,15 @@ class TaskExecutionRepositoryTest extends BaseDatabaseTestCase
      * Save a new execution to database.
      *
      * @param TaskInterface $task
-     * @param \DateTime $scheduleTime
+     * @param \DateTimeImmutable $scheduleTime
      * @param string $status
      *
      * @return TaskExecutionInterface
      */
-    private function save(TaskInterface $task = null, \DateTime $scheduleTime = null, $status = TaskStatus::PLANNED)
+    private function save(TaskInterface $task = null, \DateTimeImmutable $scheduleTime = null, $status = TaskStatus::PLANNED)
     {
         if (!$scheduleTime) {
-            $scheduleTime = new \DateTime();
+            $scheduleTime = new \DateTimeImmutable();
         }
 
         if (!$task) {

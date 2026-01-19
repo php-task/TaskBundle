@@ -177,7 +177,7 @@ EOT
      */
     public function disableTask(TaskInterface $task)
     {
-        $task->setInterval($task->getInterval(), $task->getFirstExecution(), new \DateTime());
+        $task->setInterval($task->getInterval(), $task->getFirstExecution(), new \DateTimeImmutable());
 
         return $this->abortPending($task);
     }

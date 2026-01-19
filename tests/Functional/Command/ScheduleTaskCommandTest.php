@@ -77,14 +77,14 @@ class ScheduleTaskCommandTest extends BaseCommandTestCase
 
     public function testExecuteWithWorkloadAndIntervalAndEndDate()
     {
-        $date = new \DateTime('+1 day');
+        $date = new \DateTimeImmutable('+1 day');
         $this->commandTester->execute(
             [
                 'command' => $this->command->getName(),
                 'handlerClass' => TestHandler::class,
                 'workload' => 'Test workload 1',
                 '--cron-expression' => '0 * * * *',
-                '--end-date' => $date->format(\DateTime::RFC3339),
+                '--end-date' => $date->format(\DateTimeImmutable::RFC3339),
             ]
         );
 
@@ -99,7 +99,7 @@ class ScheduleTaskCommandTest extends BaseCommandTestCase
 
     public function testExecuteWithExecutionDate()
     {
-        $date = new \DateTime('+1 day');
+        $date = new \DateTimeImmutable('+1 day');
         $this->commandTester->execute(
             [
                 'command' => $this->command->getName(),

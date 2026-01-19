@@ -26,7 +26,7 @@ class TaskExecutionRepository extends EntityRepository implements TaskExecutionR
     /**
      * {@inheritdoc}
      */
-    public function create(TaskInterface $task, \DateTime $scheduleTime)
+    public function create(TaskInterface $task, \DateTimeImmutable $scheduleTime)
     {
         return new TaskExecution($task, $task->getHandlerClass(), $scheduleTime, $task->getWorkload());
     }
@@ -129,13 +129,13 @@ class TaskExecutionRepository extends EntityRepository implements TaskExecutionR
     /**
      * {@inheritdoc}
      */
-    public function findNextScheduled(\DateTime $dateTime = null, array $skippedExecutions = [])
+    public function findNextScheduled(\DateTimeImmutable $dateTime = null, array $skippedExecutions = [])
     {
         $queryBuilder = $this->createQueryBuilder('e')
             ->innerJoin('e.task', 't')
             ->where('e.status = :status')
             ->andWhere('e.scheduleTime < :date')
-            ->setParameter('date', $dateTime ?: new \DateTime())
+            ->setParameter('date', $dateTime ?: new \DateTimeImmutable())
             ->setParameter('status', TaskStatus::PLANNED)
             ->setMaxResults(1);
 

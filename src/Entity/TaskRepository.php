@@ -11,7 +11,6 @@
 
 namespace Task\TaskBundle\Entity;
 
-use DateTime;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 use Task\TaskInterface;
@@ -82,17 +81,17 @@ class TaskRepository extends EntityRepository implements SystemTaskRepositoryInt
      */
     public function findEndBeforeNow()
     {
-        return $this->findEndBefore(new \DateTime());
+        return $this->findEndBefore(new \DateTimeImmutable());
     }
 
     /**
      * Returns task where last-execution is before given date-time.
      *
-     * @param \DateTime $dateTime
+     * @param \DateTimeImmutable $dateTime
      *
      * @return TaskInterface[]
      */
-    public function findEndBefore(\DateTime $dateTime)
+    public function findEndBefore(\DateTimeImmutable $dateTime)
     {
         return $this->createQueryBuilder('t')
             ->where('t.lastExecution IS NULL OR t.lastExecution > :dateTime')

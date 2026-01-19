@@ -76,8 +76,8 @@ EOT
                     $execution->getUuid(),
                     $execution->getStatus(),
                     $execution->getHandlerClass(),
-                    $execution->getScheduleTime()->format(\DateTime::RFC3339),
-                    !$execution->getEndTime() ? '' : $execution->getEndTime()->format(\DateTime::RFC3339),
+                    $execution->getScheduleTime()->format(\DateTimeImmutable::RFC3339),
+                    !$execution->getEndTime() ? '' : $execution->getEndTime()->format(\DateTimeImmutable::RFC3339),
                     (round($execution->getDuration(), 6) * 1000000) . 'ms',
                 ]
             );

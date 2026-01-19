@@ -102,7 +102,7 @@ abstract class BaseCommandTestCase extends KernelTestCase
     {
         $task = $this->taskRepository->create($handlerClass, $workload);
         if ($cronExpression) {
-            $task->setInterval($cronExpression, new \DateTime(), new \DateTime('+1 year'));
+            $task->setInterval($cronExpression, new \DateTimeImmutable(), new \DateTimeImmutable('+1 year'));
         }
         $this->taskRepository->save($task);
 
@@ -113,12 +113,12 @@ abstract class BaseCommandTestCase extends KernelTestCase
      * Create task-execution.
      *
      * @param TaskInterface $task
-     * @param \DateTime $scheduleTime
+     * @param \DateTimeImmutable $scheduleTime
      * @param string $status
      *
      * @return TaskExecutionInterface
      */
-    protected function createTaskExecution(TaskInterface $task, \DateTime $scheduleTime, $status = TaskStatus::PLANNED)
+    protected function createTaskExecution(TaskInterface $task, \DateTimeImmutable $scheduleTime, $status = TaskStatus::PLANNED)
     {
         $execution = $this->taskExecutionRepository->create($task, $scheduleTime);
         $execution->setStatus($status);

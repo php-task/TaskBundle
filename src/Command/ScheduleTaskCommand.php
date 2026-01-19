@@ -83,14 +83,14 @@ EOT
         if (null !== $cronExpression) {
             $endDate = null;
             if (null !== $endDateString) {
-                $endDate = new \DateTime($endDateString);
+                $endDate = new \DateTimeImmutable($endDateString);
             }
 
-            $taskBuilder->cron($cronExpression, new \DateTime(), $endDate);
+            $taskBuilder->cron($cronExpression, new \DateTimeImmutable(), $endDate);
         }
 
         if (null !== $executionDateString) {
-            $taskBuilder->executeAt(new \DateTime($executionDateString));
+            $taskBuilder->executeAt(new \DateTimeImmutable($executionDateString));
         }
 
         $taskBuilder->schedule();

@@ -31,9 +31,9 @@ class RunCommandTest extends BaseCommandTestCase
 
         /** @var TaskExecutionInterface[] $executions */
         $executions = [
-            $this->createTaskExecution($singleTask, new \DateTime('-1 hour')),
-            $this->createTaskExecution($laterTask, new \DateTime('+1 hour')),
-            $this->createTaskExecution($intervalTask, new \DateTime('-2 hour')),
+            $this->createTaskExecution($singleTask, new \DateTimeImmutable('-1 hour')),
+            $this->createTaskExecution($laterTask, new \DateTimeImmutable('+1 hour')),
+            $this->createTaskExecution($intervalTask, new \DateTimeImmutable('-2 hour')),
         ];
 
         $this->commandTester->execute(
@@ -89,9 +89,9 @@ class RunCommandTest extends BaseCommandTestCase
 
         /** @var TaskExecutionInterface[] $executions */
         $executions = [
-            $this->createTaskExecution($singleTask, new \DateTime('-1 hour')),
-            $this->createTaskExecution($laterTask, new \DateTime('+1 hour')),
-            $this->createTaskExecution($intervalTask, new \DateTime('-2 hour')),
+            $this->createTaskExecution($singleTask, new \DateTimeImmutable('-1 hour')),
+            $this->createTaskExecution($laterTask, new \DateTimeImmutable('+1 hour')),
+            $this->createTaskExecution($intervalTask, new \DateTimeImmutable('-2 hour')),
         ];
 
         $this->commandTester->execute(

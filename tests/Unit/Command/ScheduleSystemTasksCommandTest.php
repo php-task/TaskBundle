@@ -158,7 +158,7 @@ class ScheduleSystemTasksCommandTest extends TestCase
 
         $task = $this->prophesize(Task::class);
         $task->getInterval()->willReturn(CronExpression::factory('* * * * *'));
-        $task->getFirstExecution()->willReturn(new \DateTime());
+        $task->getFirstExecution()->willReturn(new \DateTimeImmutable());
         $task->getSystemKey()->willReturn('testing');
 
         $task->setInterval(
@@ -166,7 +166,7 @@ class ScheduleSystemTasksCommandTest extends TestCase
             $task->reveal()->getFirstExecution(),
             Argument::that(
                 function ($date) {
-                    return $date <= new \DateTime('+1 Minute');
+                    return $date <= new \DateTimeImmutable('+1 Minute');
                 }
             )
         )->shouldBeCalled();
@@ -204,7 +204,7 @@ class ScheduleSystemTasksCommandTest extends TestCase
         $task->getHandlerClass()->willReturn(TestHandler::class);
         $task->getWorkload()->willReturn('test');
         $task->getInterval()->willReturn(CronExpression::factory('@daily'));
-        $task->getFirstExecution()->willReturn(new \DateTime());
+        $task->getFirstExecution()->willReturn(new \DateTimeImmutable());
 
         $task->setInterval(CronExpression::factory('* * * * *'), $task->reveal()->getFirstExecution())->shouldBeCalled(
             );
@@ -244,7 +244,7 @@ class ScheduleSystemTasksCommandTest extends TestCase
         $task->getHandlerClass()->willReturn('not-existing');
         $task->getWorkload()->willReturn('new-workload');
         $task->getInterval()->willReturn(CronExpression::factory('@daily'));
-        $task->getFirstExecution()->willReturn(new \DateTime());
+        $task->getFirstExecution()->willReturn(new \DateTimeImmutable());
 
         $task->setInterval(Argument::cetera())->shouldNotBeCalled();
 
@@ -267,7 +267,7 @@ class ScheduleSystemTasksCommandTest extends TestCase
 
         $task = $this->prophesize(Task::class);
         $task->getInterval()->willReturn(CronExpression::factory('* * * * *'));
-        $task->getFirstExecution()->willReturn(new \DateTime());
+        $task->getFirstExecution()->willReturn(new \DateTimeImmutable());
         $task->getSystemKey()->willReturn('testing');
 
         $task->setInterval(
@@ -275,7 +275,7 @@ class ScheduleSystemTasksCommandTest extends TestCase
             $task->reveal()->getFirstExecution(),
             Argument::that(
                 function ($date) {
-                    return $date <= new \DateTime('+1 Minute');
+                    return $date <= new \DateTimeImmutable('+1 Minute');
                 }
             )
         )->shouldBeCalled();

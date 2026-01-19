@@ -73,12 +73,12 @@ abstract class BaseDatabaseTestCase extends KernelTestCase
      * Create a new task-execution.
      *
      * @param TaskInterface $task
-     * @param \DateTime $scheduleTime
+     * @param \DateTimeImmutable $scheduleTime
      * @param string $status
      *
      * @return TaskExecution
      */
-    protected function createTaskExecution(TaskInterface $task, \DateTime $scheduleTime, $status = TaskStatus::PLANNED)
+    protected function createTaskExecution(TaskInterface $task, \DateTimeImmutable $scheduleTime, $status = TaskStatus::PLANNED)
     {
         $execution = new TaskExecution($task, $task->getHandlerClass(), $scheduleTime);
         $execution->setStatus($status);
