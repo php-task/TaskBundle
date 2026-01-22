@@ -31,9 +31,9 @@ class RunCommandTest extends BaseCommandTestCase
 
         /** @var TaskExecutionInterface[] $executions */
         $executions = [
-            $this->createTaskExecution($singleTask, new \DateTime('-1 hour')),
-            $this->createTaskExecution($laterTask, new \DateTime('+1 hour')),
-            $this->createTaskExecution($intervalTask, new \DateTime('-2 hour')),
+            $this->createTaskExecution($singleTask, new \DateTimeImmutable('-1 hour')),
+            $this->createTaskExecution($laterTask, new \DateTimeImmutable('+1 hour')),
+            $this->createTaskExecution($intervalTask, new \DateTimeImmutable('-2 hour')),
         ];
 
         $this->commandTester->execute(
@@ -61,7 +61,7 @@ class RunCommandTest extends BaseCommandTestCase
         $this->assertGreaterThan(0, $execution->getDuration());
         $this->assertGreaterThanOrEqual($execution->getStartTime(), $execution->getEndTime());
 
-        $result = $this->taskExecutionRepository->findAll(2, 3);
+        $result = $this->taskExecutionRepository->findAllPaginated(2, 3);
         $this->assertCount(1, $result);
 
         $task = $result[0]->getTask();
@@ -89,9 +89,9 @@ class RunCommandTest extends BaseCommandTestCase
 
         /** @var TaskExecutionInterface[] $executions */
         $executions = [
-            $this->createTaskExecution($singleTask, new \DateTime('-1 hour')),
-            $this->createTaskExecution($laterTask, new \DateTime('+1 hour')),
-            $this->createTaskExecution($intervalTask, new \DateTime('-2 hour')),
+            $this->createTaskExecution($singleTask, new \DateTimeImmutable('-1 hour')),
+            $this->createTaskExecution($laterTask, new \DateTimeImmutable('+1 hour')),
+            $this->createTaskExecution($intervalTask, new \DateTimeImmutable('-2 hour')),
         ];
 
         $this->commandTester->execute(
@@ -119,7 +119,7 @@ class RunCommandTest extends BaseCommandTestCase
         $this->assertGreaterThan(0, $execution->getDuration());
         $this->assertGreaterThanOrEqual($execution->getStartTime(), $execution->getEndTime());
 
-        $result = $this->taskExecutionRepository->findAll(2, 3);
+        $result = $this->taskExecutionRepository->findAllPaginated(2, 3);
         $this->assertCount(1, $result);
 
         $task = $result[0]->getTask();

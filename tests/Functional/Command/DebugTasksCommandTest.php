@@ -26,8 +26,8 @@ class DebugTasksCommandTest extends BaseCommandTestCase
 
         /** @var TaskExecutionInterface[] $executions */
         $executions = [
-            $this->createTaskExecution($task, new \DateTime('-1 hour'), TaskStatus::COMPLETED),
-            $this->createTaskExecution($task, new \DateTime('-2 hour'), TaskStatus::COMPLETED),
+            $this->createTaskExecution($task, new \DateTimeImmutable('-1 hour'), TaskStatus::COMPLETED),
+            $this->createTaskExecution($task, new \DateTimeImmutable('-2 hour'), TaskStatus::COMPLETED),
         ];
 
         $executions[0]->setResult(strrev($executions[0]->getWorkload()));
@@ -59,9 +59,9 @@ class DebugTasksCommandTest extends BaseCommandTestCase
 
         /** @var TaskExecutionInterface[] $executions */
         $executions = [
-            $this->createTaskExecution($task, new \DateTime('-1 hour')),
-            $this->createTaskExecution($task, new \DateTime('-2 hour')),
-            $this->createTaskExecution($task, new \DateTime('+1 hour')),
+            $this->createTaskExecution($task, new \DateTimeImmutable('-1 hour')),
+            $this->createTaskExecution($task, new \DateTimeImmutable('-2 hour')),
+            $this->createTaskExecution($task, new \DateTimeImmutable('+1 hour')),
         ];
 
         if (self::$kernel->getContainer()->has('doctrine')) {
