@@ -14,13 +14,13 @@
         </id>
 
         <field name="handlerClass" type="string" length="255"/>
-        <field name="workload" type="json"/>
+        <field name="workload" type="text"/>
         <field name="duration" type="float" nullable="true"/>
         <field name="startTime" type="datetime_immutable" nullable="true"/>
         <field name="endTime" type="datetime_immutable" nullable="true"/>
         <field name="scheduleTime" column="schedule_time" type="datetime_immutable"/>
         <field name="exception" type="text" nullable="true"/>
-        <field name="result" type="json" nullable="true"/>
+        <field name="result" type="text" nullable="true"/>
         <field name="status" type="string" length="20"/>
         <field name="attempts" type="integer"/>
 
