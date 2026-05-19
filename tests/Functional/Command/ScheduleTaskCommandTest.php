@@ -28,12 +28,12 @@ class ScheduleTaskCommandTest extends BaseCommandTestCase
             ]
         );
 
-        $tasks = $this->taskRepository->findAll();
+        $tasks = $this->taskRepository->findAllPaginated(1);
         $this->assertCount(1, $tasks);
 
         $this->assertEquals(TestHandler::class, $tasks[0]->getHandlerClass());
 
-        $executions = $this->taskExecutionRepository->findAll();
+        $executions = $this->taskExecutionRepository->findAllPaginated(1);
         $this->assertCount(1, $executions);
 
         $this->assertEquals(TestHandler::class, $executions[0]->getHandlerClass());
@@ -49,7 +49,7 @@ class ScheduleTaskCommandTest extends BaseCommandTestCase
             ]
         );
 
-        $tasks = $this->taskRepository->findAll();
+        $tasks = $this->taskRepository->findAllPaginated(1);
         $this->assertCount(1, $tasks);
 
         $this->assertEquals(TestHandler::class, $tasks[0]->getHandlerClass());
@@ -67,7 +67,7 @@ class ScheduleTaskCommandTest extends BaseCommandTestCase
             ]
         );
 
-        $tasks = $this->taskRepository->findAll();
+        $tasks = $this->taskRepository->findAllPaginated(1);
         $this->assertCount(1, $tasks);
 
         $this->assertEquals(TestHandler::class, $tasks[0]->getHandlerClass());
@@ -88,7 +88,7 @@ class ScheduleTaskCommandTest extends BaseCommandTestCase
             ]
         );
 
-        $tasks = $this->taskRepository->findAll();
+        $tasks = $this->taskRepository->findAllPaginated(1);
         $this->assertCount(1, $tasks);
 
         $this->assertEquals(TestHandler::class, $tasks[0]->getHandlerClass());
@@ -109,13 +109,13 @@ class ScheduleTaskCommandTest extends BaseCommandTestCase
             ]
         );
 
-        $tasks = $this->taskRepository->findAll();
+        $tasks = $this->taskRepository->findAllPaginated(1);
         $this->assertCount(1, $tasks);
 
         $this->assertEquals(TestHandler::class, $tasks[0]->getHandlerClass());
         $this->assertGreaterThanOrEqual($date, $tasks[0]->getFirstExecution());
 
-        $executions = $this->taskExecutionRepository->findAll();
+        $executions = $this->taskExecutionRepository->findAllPaginated(1);
         $this->assertCount(1, $executions);
 
         $this->assertEquals(TestHandler::class, $executions[0]->getHandlerClass());
