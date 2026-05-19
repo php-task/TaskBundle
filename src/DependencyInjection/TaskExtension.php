@@ -22,12 +22,40 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Task\Event\Events;
 use Task\TaskBundle\EventListener\DoctrineTaskExecutionListener;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
 /**
  * Container extension for php-task library.
  */
-class TaskExtension extends Extension
+class TaskExtension extends Extension implements PrependExtensionInterface
 {
+    public function prepend(ContainerBuilder $container)
+    {
+        $configs = $container->getExtensionConfig($this->getAlias());
+        $configuration = $this->getConfiguration($configs, $container);
+        $resolvingBag = $container->getParameterBag();
+        $configs = $resolvingBag->resolveValue($configs);
+        $config = $this->processConfiguration($configuration, $configs);
+
+        if ($container->hasExtension('doctrine') && 'doctrine' === $config['storage']) {
+            $container->prependExtensionConfig(
+                'doctrine',
+                [
+                    'orm' => [
+                        'mappings' => [
+                            'TaskBundle' => [
+                                'type' => 'xml',
+                                'dir' => __DIR__ . '/../Resources/config/doctrine',
+                                'prefix' => 'Task\TaskBundle\Entity',
+                                'alias' => 'TaskBundle',
+                            ],
+                        ],
+                    ],
+                ]
+            );
+        }
+    }
+
     /**
      * {@inheritdoc}
      */

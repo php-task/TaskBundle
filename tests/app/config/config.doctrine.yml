@@ -14,7 +14,7 @@ task:
 doctrine:
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
-        auto_mapping: true
+        auto_mapping: false
     dbal:
         driver: pdo_sqlite
         host: localhost
