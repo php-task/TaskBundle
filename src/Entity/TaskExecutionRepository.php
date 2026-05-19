@@ -26,12 +26,8 @@ class TaskExecutionRepository extends EntityRepository implements TaskExecutionR
     /**
      * {@inheritdoc}
      */
-    public function create(TaskInterface $task, \DateTimeInterface $scheduleTime)
+    public function create(TaskInterface $task, \DateTimeImmutable $scheduleTime)
     {
-        if (!$scheduleTime instanceof \DateTimeImmutable) {
-            $scheduleTime = \DateTimeImmutable::createFromInterface($scheduleTime);
-        }
-
         return new TaskExecution($task, $task->getHandlerClass(), $scheduleTime, $task->getWorkload());
     }
 
