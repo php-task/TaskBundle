@@ -77,7 +77,8 @@ jobs:
             - name: Doctrine
               if: matrix.storage == 'doctrine'
               run: |
-                  tests/app/console doctrine:database:create
+                  mkdir -p tests/app/data
+                  touch tests/app/data/database.sqlite
                   tests/app/console doctrine:schema:create
 
             - name: Execute test

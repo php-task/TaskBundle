@@ -65,7 +65,7 @@ class TaskExecutionRepositoryTest extends BaseDatabaseTestCase
             $executions[$execution->getUuid()] = $execution;
         }
 
-        $result = $this->taskExecutionRepository->findAll();
+        $result = $this->taskExecutionRepository->findAllPaginated(1);
 
         $this->assertCount(3, $result);
         foreach ($result as $item) {

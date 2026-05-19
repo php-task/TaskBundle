@@ -18,4 +18,12 @@ use Task\Execution\TaskExecution as BaseTaskExecution;
  */
 class TaskExecution extends BaseTaskExecution
 {
+    public function getResult()
+    {
+        if (null === $this->result) {
+            return null;
+        }
+
+        return parent::getResult();
+    }
 }
