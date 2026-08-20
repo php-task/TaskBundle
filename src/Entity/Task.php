@@ -52,7 +52,7 @@ class Task extends BaseTask
     /**
      * {@inheritdoc}
      */
-    public function setInterval(CronExpression $interval, \DateTimeImmutable $firstExecution = null, \DateTimeImmutable $lastExecution = null)
+    public function setInterval(CronExpression $interval, \DateTimeImmutable|null $firstExecution = null, \DateTimeImmutable|null $lastExecution = null)
     {
         parent::setInterval($interval, $firstExecution, $lastExecution);
 
