@@ -98,7 +98,7 @@ abstract class BaseCommandTestCase extends KernelTestCase
      *
      * @return TaskInterface
      */
-    protected function createTask($workload, CronExpression $cronExpression = null, $handlerClass = TestHandler::class)
+    protected function createTask($workload, ?CronExpression $cronExpression = null, $handlerClass = TestHandler::class)
     {
         $task = $this->taskRepository->create($handlerClass, $workload);
         if ($cronExpression) {
