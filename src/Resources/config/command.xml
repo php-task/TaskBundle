@@ -9,14 +9,14 @@
             <argument type="service" id="task.scheduler"/>
             <!-- add entity_manager if doctrine storage is enabled -->
 
-            <tag name="console.command"/>
+            <tag name="console.command" command="task:run"/>
         </service>
 
         <service id="task.command.run_handler" class="Task\TaskBundle\Command\RunHandlerCommand" public="true">
             <argument type="string">task:run:handler</argument>
             <argument type="service" id="task.handler.factory"/>
 
-            <tag name="console.command"/>
+            <tag name="console.command" command="task:run:handler"/>
         </service>
 
         <service id="task.command.executor" class="Task\TaskBundle\Command\ExecuteCommand" public="true">
@@ -25,7 +25,7 @@
             <argument type="service" id="task.storage.task_execution"/>
             <argument type="service" id="event_dispatcher"/>
 
-            <tag name="console.command"/>
+            <tag name="console.command" command="task:execute"/>
         </service>
 
         <service id="task.command.schedule_task" class="Task\TaskBundle\Command\ScheduleTaskCommand" public="true">
@@ -33,14 +33,14 @@
             <argument type="service" id="task.scheduler"/>
             <!-- add entity_manager if doctrine storage is enabled -->
 
-            <tag name="console.command"/>
+            <tag name="console.command" command="task:schedule"/>
         </service>
 
         <service id="task.command.debug_tasks" class="Task\TaskBundle\Command\DebugTasksCommand" public="true">
             <argument type="string">debug:tasks</argument>
             <argument type="service" id="task.storage.task_execution"/>
 
-            <tag name="console.command"/>
+            <tag name="console.command" command="debug:tasks"/>
         </service>
     </services>
 </container>
