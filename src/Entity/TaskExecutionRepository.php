@@ -129,7 +129,7 @@ class TaskExecutionRepository extends EntityRepository implements TaskExecutionR
     /**
      * {@inheritdoc}
      */
-    public function findNextScheduled(\DateTimeImmutable $dateTime = null, array $skippedExecutions = [])
+    public function findNextScheduled(?\DateTimeImmutable $dateTime = null, array $skippedExecutions = [])
     {
         $queryBuilder = $this->createQueryBuilder('e')
             ->innerJoin('e.task', 't')
