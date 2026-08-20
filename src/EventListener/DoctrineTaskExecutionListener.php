@@ -27,7 +27,7 @@ class DoctrineTaskExecutionListener
     /**
      * @param EntityManagerInterface $entityManager
      */
-    public function __construct(EntityManagerInterface $entityManager = null)
+    public function __construct(?EntityManagerInterface $entityManager = null)
     {
         $this->entityManager = $entityManager;
     }

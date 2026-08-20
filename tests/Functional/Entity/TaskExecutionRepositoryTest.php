@@ -187,7 +187,7 @@ class TaskExecutionRepositoryTest extends BaseDatabaseTestCase
      *
      * @return TaskExecutionInterface
      */
-    private function save(TaskInterface $task = null, \DateTimeImmutable $scheduleTime = null, $status = TaskStatus::PLANNED)
+    private function save(?TaskInterface $task = null, ?\DateTimeImmutable $scheduleTime = null, $status = TaskStatus::PLANNED)
     {
         if (!$scheduleTime) {
             $scheduleTime = new \DateTimeImmutable();
