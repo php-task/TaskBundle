@@ -18,13 +18,13 @@
         <service id="task.storage.task_execution" alias="task.repository.task_execution" public="true"/>
 
         <service id="task.command.schedule_system_tasks" class="Task\TaskBundle\Command\ScheduleSystemTasksCommand" public="true">
-            <argument type="string">task:schedule:system-tasks</argument>
+            <argument>null</argument>
             <argument>%task.system_tasks%</argument>
             <argument type="service" id="task.scheduler"/>
             <argument type="service" id="task.repository.task"/>
             <argument type="service" id="task.storage.task_execution"/>
 
-            <tag name="console.command"/>
+            <tag name="console.command" command="task:schedule:system-tasks"/>
         </service>
     </services>
 </container>

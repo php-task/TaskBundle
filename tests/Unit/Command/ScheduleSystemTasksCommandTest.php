@@ -52,7 +52,7 @@ class ScheduleSystemTasksCommandTest extends TestCase
     protected function createCommand(array $systemTasks)
     {
         return new ScheduleSystemTasksCommand(
-            'task:schedule:system-tasks',
+            null,
             $systemTasks,
             $this->scheduler->reveal(),
             $this->taskRepository->reveal(),
