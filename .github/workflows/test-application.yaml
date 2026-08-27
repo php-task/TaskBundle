@@ -48,10 +48,16 @@ jobs:
 
                     - php-version: '8.4'
                       storage: doctrine
-                      composer-flags: --ignore-platform-reqs
                     - php-version: '8.4'
                       storage: array
+
+                    - php-version: '8.5'
+                      storage: doctrine
                       composer-flags: --ignore-platform-reqs
+                    - php-version: '8.5'
+                      storage: array
+                      composer-flags: --ignore-platform-reqs
+
         steps:
             - name: Checkout project
               uses: actions/checkout@v2
