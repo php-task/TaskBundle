@@ -51,6 +51,29 @@ class TestKernel extends Kernel
 
         $loader->load(sprintf('%s/config/config.yml', __DIR__));
         $loader->load(sprintf('%s/config/config.%s.yml', __DIR__, $this->storage));
+
+        // The "doctrine.orm.enable_native_lazy_objects" option was only added in
+        // doctrine/doctrine-bundle 2.15 (which requires PHP >= 8.1). Older
+        // doctrine-bundle versions, resolved by Composer on PHP 8.0, reject this
+        // key as unrecognized, so only set it when the installed bundle supports it.
+        if ('doctrine' === $this->storage && $this->doctrineBundleSupportsNativeLazyObjects()) {
+            $loader->load(sprintf('%s/config/config.doctrine_native_lazy_objects.yml', __DIR__));
+        }
+    }
+
+    private function doctrineBundleSupportsNativeLazyObjects(): bool
+    {
+        if (!class_exists(\Composer\InstalledVersions::class)) {
+            return false;
+        }
+
+        if (!\Composer\InstalledVersions::isInstalled('doctrine/doctrine-bundle')) {
+            return false;
+        }
+
+        $version = \Composer\InstalledVersions::getVersion('doctrine/doctrine-bundle');
+
+        return null !== $version && \version_compare($version, '2.15.0', '>=');
     }
 
     /**

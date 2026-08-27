@@ -15,7 +15,6 @@ doctrine:
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
         auto_mapping: false
-        enable_native_lazy_objects: '%task_test.native_lazy_objects%'
     dbal:
         driver: pdo_sqlite
         host: localhost

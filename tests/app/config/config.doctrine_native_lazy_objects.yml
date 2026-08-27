@@ -1,0 +1,3 @@
+doctrine:
+    orm:
+        enable_native_lazy_objects: '%task_test.native_lazy_objects%'
