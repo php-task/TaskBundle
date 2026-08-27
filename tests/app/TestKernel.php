@@ -32,11 +32,23 @@ class TestKernel extends Kernel
      */
     public function registerBundles(): array
     {
-        return [
+        $bundles = [
             new FrameworkBundle(),
-            new DoctrineBundle(),
             new TaskBundle(),
         ];
+
+        if ('doctrine' === $this->getStorage()) {
+            $bundles[] = new DoctrineBundle();
+        }
+
+        return $bundles;
+    }
+
+    private function getStorage(): string
+    {
+        $storage = getenv(self::STORAGE_VAR_NAME);
+
+        return false === $storage ? 'array' : $storage;
     }
 
     /**
@@ -44,10 +56,7 @@ class TestKernel extends Kernel
      */
     public function registerContainerConfiguration(LoaderInterface $loader): void
     {
-        $this->storage = getenv(self::STORAGE_VAR_NAME);
-        if (false === $this->storage) {
-            $this->storage = 'array';
-        }
+        $this->storage = $this->getStorage();
 
         $loader->load(sprintf('%s/config/config.yml', __DIR__));
         $loader->load(sprintf('%s/config/config.%s.yml', __DIR__, $this->storage));
@@ -58,6 +67,14 @@ class TestKernel extends Kernel
         // key as unrecognized, so only set it when the installed bundle supports it.
         if ('doctrine' === $this->storage && $this->doctrineBundleSupportsNativeLazyObjects()) {
             $loader->load(sprintf('%s/config/config.doctrine_native_lazy_objects.yml', __DIR__));
+        }
+
+        // The "doctrine.orm.auto_generate_proxy_classes" (and "proxy_dir") options
+        // were removed in doctrine/doctrine-bundle 3.0, since ORM 3.4+ no longer
+        // relies on generated proxy classes in the same way. Only set the option
+        // when the installed bundle still recognises it.
+        if ('doctrine' === $this->storage && $this->doctrineBundleSupportsAutoGenerateProxyClasses()) {
+            $loader->load(sprintf('%s/config/config.doctrine_auto_generate_proxy_classes.yml', __DIR__));
         }
     }
 
@@ -74,6 +91,21 @@ class TestKernel extends Kernel
         $version = \Composer\InstalledVersions::getVersion('doctrine/doctrine-bundle');
 
         return null !== $version && \version_compare($version, '2.15.0', '>=');
+    }
+
+    private function doctrineBundleSupportsAutoGenerateProxyClasses(): bool
+    {
+        if (!class_exists(\Composer\InstalledVersions::class)) {
+            return true;
+        }
+
+        if (!\Composer\InstalledVersions::isInstalled('doctrine/doctrine-bundle')) {
+            return true;
+        }
+
+        $version = \Composer\InstalledVersions::getVersion('doctrine/doctrine-bundle');
+
+        return null !== $version && \version_compare($version, '3.0.0', '<');
     }
 
     /**
