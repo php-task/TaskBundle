@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\HttpKernel\Kernel;
 use Task\TaskBundle\TaskBundle;
 
@@ -59,11 +59,15 @@ class TestKernel extends Kernel
     protected function buildContainer(): ContainerBuilder
     {
         $container = parent::buildContainer();
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/config'));
-        $loader->load('services.xml');
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/config'));
+        $loader->load('services.php');
 
         $container->setParameter('kernel.storage', $this->storage);
         $container->setParameter('container.build_id', hash('crc32', 'Abc123423456789'));
+        // Doctrine ORM requires either native lazy objects (PHP 8.4+) or the
+        // (Symfony < 8) VarExporter-based lazy ghost implementation. Only enable
+        // native lazy objects when running on a PHP version that supports them.
+        $container->setParameter('task_test.native_lazy_objects', \PHP_VERSION_ID >= 80400);
 
         return $container;
     }

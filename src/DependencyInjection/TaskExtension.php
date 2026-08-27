@@ -71,15 +71,15 @@ class TaskExtension extends Extension implements PrependExtensionInterface
             $container->setParameter('task.lock.storages.' . $key, $config['locking']['storages'][$key]);
         }
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load(sprintf('storage/%s.xml', $config['storage']));
-        $loader->load('task_event_listener.xml');
-        $loader->load('scheduler.xml');
-        $loader->load('command.xml');
-        $loader->load('locking/services.xml');
+        $loader = new Loader\PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load(sprintf('storage/%s.php', $config['storage']));
+        $loader->load('task_event_listener.php');
+        $loader->load('scheduler.php');
+        $loader->load('command.php');
+        $loader->load('locking/services.php');
 
         if ($config['run']['mode'] === 'listener') {
-            $loader->load('listener.xml');
+            $loader->load('listener.php');
         }
 
         $this->loadDoctrineAdapter($config['adapters']['doctrine'], $container);
@@ -118,10 +118,10 @@ class TaskExtension extends Extension implements PrependExtensionInterface
     private function loadLockingComponent(array $config, ContainerBuilder $container, LoaderInterface $loader)
     {
         if (!$config['enabled'] || 'null' === $config['storage']) {
-            return $loader->load('locking/null.xml');
+            return $loader->load('locking/null.php');
         }
 
-        $loader->load('locking/services.xml');
+        $loader->load('locking/services.php');
         $container->setParameter('task.lock.ttl', $config['ttl']);
     }
 
@@ -134,7 +134,7 @@ class TaskExtension extends Extension implements PrependExtensionInterface
      */
     private function loadExecutorComponent(array $config, ContainerBuilder $container, LoaderInterface $loader)
     {
-        $loader->load('executor/' . $config['type'] . '.xml');
+        $loader->load('executor/' . $config['type'] . '.php');
         $container->setAlias('task.executor', 'task.executor.' . $config['type']);
 
         if (!array_key_exists($config['type'], $config)) {
@@ -178,8 +178,8 @@ class TaskExtension extends Extension implements PrependExtensionInterface
      */
     public function getConfiguration(array $config, ContainerBuilder $container)
     {
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('locking/storages.xml');
+        $loader = new Loader\PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('locking/storages.php');
 
         return new Configuration($this->getLockingStorageAliases($container));
     }

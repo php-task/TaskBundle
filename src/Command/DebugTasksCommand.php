@@ -78,7 +78,7 @@ EOT
                     $execution->getHandlerClass(),
                     $execution->getScheduleTime()->format(\DateTimeImmutable::RFC3339),
                     !$execution->getEndTime() ? '' : $execution->getEndTime()->format(\DateTimeImmutable::RFC3339),
-                    (round($execution->getDuration(), 6) * 1000000) . 'ms',
+                    (round($execution->getDuration() ?? 0.0, 6) * 1000000) . 'ms',
                 ]
             );
         }
