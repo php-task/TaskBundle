@@ -81,7 +81,11 @@ abstract class BaseCommandTestCase extends KernelTestCase
         $command = $this->getCommand();
 
         $this->application = new Application(self::$kernel);
-        $this->application->add($command);
+        if (method_exists($this->application, 'addCommand')) {
+            $this->application->addCommand($command);
+        } else {
+            $this->application->add($command);
+        }
 
         $this->command = $this->application->find($command->getName());
         $this->commandTester = new CommandTester($this->command);
